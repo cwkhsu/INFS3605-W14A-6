@@ -4,3 +4,6 @@ INFS3605 Information Systems Innovation &amp; Transformation Capstone Project : 
 Karen Hsu - Developer
 
 Felicity Chen - UX
+
+Michelle Nguyen - Product Owner
+
