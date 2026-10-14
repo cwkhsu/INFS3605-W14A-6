@@ -8,3 +8,5 @@ Felicity Chen - UX
 Michelle Nguyen - Product Owner
 
 Jessica Lam - Business Analyst
+
+Jenny Dang - Scrum Master
