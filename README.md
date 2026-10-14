@@ -7,3 +7,4 @@ Felicity Chen - UX
 
 Michelle Nguyen - Product Owner
 
+Jessica Lam - Business Analyst
