@@ -1,4 +1,4 @@
-# [CafeCast Intelligence]
+# CafeCast Intelligence
 
 ## Who uses it
 Cafe owners
