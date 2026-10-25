@@ -81,6 +81,19 @@ th{color:var(--muted);font-weight:500;font-size:.76rem;white-space:nowrap}
 .rec{padding:12px 0;border-bottom:1px solid var(--line);font-size:.95rem;line-height:1.45}
 .rec:last-child{border-bottom:none}
 .rec .btn{margin-top:10px}
+.status-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:14px 0 18px}
+.status-box{background:var(--bg);border-radius:14px;padding:12px 14px}
+.status-box strong{display:block;font-size:1.35rem;line-height:1.15;margin-top:3px}
+.action-list{margin:12px 0;border-top:1px solid var(--line)}
+.action-row{display:grid;grid-template-columns:minmax(120px,1fr) auto;gap:12px;padding:12px 0;border-bottom:1px solid var(--line);align-items:start}
+.action-row .why{color:var(--muted);font-size:.82rem;line-height:1.35;margin-top:3px}
+.action-row .qty{text-align:right;font-weight:600;white-space:nowrap}
+.section-label{font-size:.76rem;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.04em;margin-top:14px}
+.reason-short{color:var(--ink);font-size:.84rem;line-height:1.35;max-width:420px}
+.reason-detail{color:var(--muted);font-size:.8rem;line-height:1.4;max-width:520px}
+.order-state{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 16px}
+.state-chip{border-radius:980px;padding:7px 11px;background:var(--bg);font-size:.82rem;color:var(--muted)}
+.state-chip strong{color:var(--ink)}
 .agent{display:flex;gap:14px;align-items:center;background:var(--card);border-radius:18px;padding:14px 18px;margin-bottom:18px;box-shadow:0 1px 2px rgba(0,0,0,.04)}
 .agent-txt{flex:1;font-size:.92rem;line-height:1.45}
 .pulse{width:12px;height:12px;border-radius:50%;background:var(--accent2);flex:0 0 auto;box-shadow:0 0 0 0 rgba(48,209,88,.6);animation:pulse 2s infinite}
@@ -112,7 +125,7 @@ details[open] summary{margin-bottom:12px}
 .stat-line{display:flex;justify-content:space-between;gap:8px;padding:6px 0;font-size:.92rem}
 @media(max-width:900px){.c5,.c7{grid-column:span 12}.grid2{grid-template-columns:1fr}}
 @media(max-width:700px){nav{justify-content:flex-start}input,select{font-size:16px}}
-@media(max-width:520px){.fgrid{grid-template-columns:1fr}.row{flex-direction:column;align-items:stretch}.field{flex:1 1 100%}.agent{flex-wrap:wrap}}
+@media(max-width:520px){.fgrid{grid-template-columns:1fr}.row{flex-direction:column;align-items:stretch}.field{flex:1 1 100%}.agent{flex-wrap:wrap}.status-grid{grid-template-columns:1fr}.action-row{grid-template-columns:1fr}.action-row .qty{text-align:left}}
 </style>
 </head>
 <body>
@@ -132,9 +145,9 @@ details[open] summary{margin-bottom:12px}
    CafeCast: perishable ordering agent for independent cafés
    Single-file prototype. Data lives in this browser (localStorage).
    ========================================================= */
-const KEY_BASE='cafecast_v2';
+const KEY_BASE='cafecast_v3';
 const DATASETS={demo:'Demo caf\u00e9 (original)',littlefern:'Little Fern Caf\u00e9 (spreadsheet data)'};
-let DS=(()=>{ try{ const d=localStorage.getItem('cafecast_dataset'); return DATASETS[d]?d:'demo'; }catch(e){ return 'demo'; } })();
+let DS=(()=>{ try{ const d=localStorage.getItem('cafecast_dataset'); return DATASETS[d]?d:'littlefern'; }catch(e){ return 'littlefern'; } })();
 const keyFor=d=>d==='demo'?KEY_BASE:KEY_BASE+'_'+d;
 const DAY=864e5;
 const $=id=>document.getElementById(id);
@@ -158,7 +171,7 @@ const roundQty=(i,x)=>x<=0?0:(+i.pack>0?r2(Math.ceil(x/(+i.pack)-1e-9)*(+i.pack)
 
 /* ---------------- DATA ---------------- */
 let db=null;
-function load(){ try{ const d=JSON.parse(localStorage.getItem(keyFor(DS))); if(d&&d.v===2){ d.extras=d.extras||[]; d.notes=d.notes||[]; return d; } }catch(e){} return seed(); }
+function load(){ try{ const d=JSON.parse(localStorage.getItem(keyFor(DS))); if(d&&d.v===3){ d.extras=d.extras||[]; d.notes=d.notes||[]; return d; } }catch(e){} return seed(); }
 function save(){ try{ localStorage.setItem(keyFor(DS),JSON.stringify(db)); }catch(e){} }
 function seed(){ return DS==='littlefern'?seedLittleFern():seedDemo(); }
 
@@ -174,7 +187,7 @@ function seedDemo(){
   const cups =ing('Takeaway cups','ea',0.12,'Roast House','orders@roasthouse.example',200,1000,3,null,false,[[600,null]]);
   const R=(i,q)=>({ing:i.id,qty:q});
   const M=(name,price,recipe)=>({id:cid(),name,price,recipe,src:'setup',noPerishables:false});
-  db={v:2,
+  db={v:3,
     ingredients:[milk,oat,eggs,bread,avo,beans,cups],
     menu:[
       M('Flat White',5,[R(milk,.2),R(beans,.02)]),
@@ -186,7 +199,7 @@ function seedDemo(){
       M('Smashed Avo & Poached Eggs',19.5,[R(bread,.25),R(avo,1),R(eggs,2)])
     ],
     sales:[], waste:[], orders:[], events:[], extras:[], notes:[], drafts:{}, skip:{}, wasteChecks:{}, importKeys:{}, dismissed:{},
-    settings:{buffer:10,cover:2,mode:'email',modeSet:false,webhook:'',lat:-33.917,lon:151.231,place:'Kensington, NSW',state:'AU-NSW',
+    settings:{buffer:10,cover:2,mode:'email',modeSet:true,webhook:'',lat:-33.917,lon:151.231,place:'Kensington, NSW',state:'AU-NSW',
       holidayUplift:10,tmKey:'',showAll:false,stockCountTs:startOfDay(Date.now()),lastImport:null,lastScan:null,lastScanTs:null,scanNote:''}
   };
   // a few past waste entries so the weekly waste insight has something to show
@@ -215,8 +228,8 @@ function seedLittleFern(){
     src:type==='Owner input'?'Owner input':`Café calendar · ${type}${dist?` · ${dist} km away`:''}${att?` · ~${att} people`:''}`}));
   const extras=D.extras.map(([k,ms,q,text])=>({id:cid(),date:iso(k),menuIds:ms.map(x=>mids[x]).filter(Boolean),qty:q,text}));
   const notes=D.notes.map(([k,type,text,by])=>({id:cid(),date:iso(k),type,text,by}));
-  db={v:2,dataset:'littlefern',ingredients,menu,sales,waste,orders:[],events,extras,notes,drafts:{},skip:{},wasteChecks:{},importKeys:{},dismissed:{},
-    settings:{buffer:D.cafe.buffer,cover:2,mode:'email',modeSet:false,webhook:'',lat:D.cafe.lat,lon:D.cafe.lon,place:D.cafe.place,state:'AU-NSW',holidayUplift:10,tmKey:'',showAll:false,
+  db={v:3,dataset:'littlefern',ingredients,menu,sales,waste,orders:[],events,extras,notes,drafts:{},skip:{},wasteChecks:{},importKeys:{},dismissed:{},
+    settings:{buffer:D.cafe.buffer,cover:2,mode:'email',modeSet:true,webhook:'',lat:D.cafe.lat,lon:D.cafe.lon,place:D.cafe.place,state:'AU-NSW',holidayUplift:10,tmKey:'',showAll:false,
       stockCountTs:t0,lastImport:{ts:Date.now(),label:`${D.cafe.name} sales history (6 weeks, from spreadsheet)`,rows:sales.length},lastScan:null,lastScanTs:null,scanNote:'',cafeName:D.cafe.name}};
   return db;
 }
@@ -327,6 +340,7 @@ async function handleFile(f){
 
 /* ---------------- FORECASTING ---------------- */
 function completeDays(){ const t0=startOfDay(Date.now()), s=new Set(); db.sales.forEach(x=>{ if(x.ts<t0&&x.ts>=t0-14*DAY) s.add(isoOf(x.ts)); }); return s.size; }
+function availableHistoryDays(){ const t0=startOfDay(Date.now()), s=new Set(); db.sales.forEach(x=>{ if(x.ts<t0) s.add(isoOf(x.ts)); }); return s.size; }
 function usageNormal(){
   const t0=startOfDay(Date.now()), n=completeDays(), u={}; if(!n) return u;
   db.sales.forEach(s=>{ if(s.ts>=t0||s.ts<t0-14*DAY) return; const m=menuById(s.menuId); if(!m) return; m.recipe.forEach(r=>u[r.ing]=(u[r.ing]||0)+r.qty*s.qty); });
@@ -379,10 +393,11 @@ function factors(tbl){
   return {dowF,wxF,evF,total:dowF*wxF*evF};
 }
 const openIngIds=()=>new Set(db.orders.filter(o=>o.status!=='received').flatMap(o=>o.lines.map(l=>l.ingId)));
+const recentlyReceivedIngIds=()=>new Set(db.orders.filter(o=>o.status==='received'&&o.recvTs&&Date.now()-o.recvTs<12*3600e3).flatMap(o=>o.lines.map(l=>l.ingId)));
 
 /* The agent: forecast each day until the next-but-one delivery, check stock + expiry batches, draft orders per supplier */
 function analyse(){
-  const u=usageNormal(), tbl=dowTable(), F=factors(tbl), busy=openIngIds();
+  const u=usageNormal(), tbl=dowTable(), F=factors(tbl), busy=openIngIds(), receivedRecently=recentlyReceivedIngIds();
   const buf=1+(+db.settings.buffer||0)/100, cover=+db.settings.cover||1, H=45;
   const dfs=[...Array(H)].map((_,k)=>dayFactor(k,tbl));
   const plans=db.ingredients.map(i=>{
@@ -400,7 +415,8 @@ function analyse(){
     const next=eb?{d:daysUntil(eb.expiry),qty:eb.qty}:null;
     const untilDel=sumD(0,lead), nextCyc=sumD(lead,lead+cyc);
     const low=stock<=(+i.reorder||0), out=has&&daysLeft<lead+1, short=has&&(stock-risk)<untilDel+nextCyc;
-    const onOrder=busy.has(i.id), need=!onOrder&&(low||short);
+    const onOrder=busy.has(i.id), justReceived=receivedRecently.has(i.id);
+    const need=!onOrder&&(low||short)&&!(justReceived&&!out);
     let autoQty=0,why='';
     if(need){
       let target=has?untilDel+nextCyc*buf:(+i.par||(+i.reorder||0)*2), capped=false;
@@ -421,7 +437,7 @@ function analyse(){
       why=p.join(' · ');
     }
     const status=next&&next.d<0?'expired':out?'out':need?'order':risk>0.05?'risk':(next&&next.d<=2)?'exp':'ok';
-    return {i,stock,norm,fc,daysLeft,risk,next,low,out,need,onOrder,autoQty,why,status,dp};
+    return {i,stock,norm,fc,daysLeft,risk,next,low,out,need,onOrder,justReceived,autoQty,why,status,dp};
   });
   const g={};
   plans.forEach(p=>{
@@ -486,30 +502,39 @@ async function geocode(){
 const poTotal=l=>sum(l,x=>x.qty*x.cost);
 function poText(o){ return `Hi ${o.supplier},\n\nPlease supply the following:\n`+o.lines.map(l=>`- ${l.name}: ${l.qty} ${l.unit}`).join('\n')+(o.delivery?`\n\nFor delivery ${new Date(o.delivery+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})}.`:'')+`\n\nPurchase order ${o.id}. Thanks!`; }
 const mailto=o=>`mailto:${o.email}?subject=${encodeURIComponent('Order '+o.id)}&body=${encodeURIComponent(poText(o))}`;
+let approving=false;
 async function approve(sup){
-  const A=analyse(), made=[];
-  for(const g of A.groups.filter(x=>!sup||x.supplier===sup)){
-    const lines=g.lines.filter(l=>!l.skip&&l.qty>0).map(l=>({ingId:l.ingId,name:l.name,unit:l.unit,qty:l.qty,cost:l.cost}));
-    g.lines.forEach(l=>{delete db.drafts[l.ingId]; delete db.skip[l.ingId];});
-    if(!lines.length) continue;
-    const o={id:'PO-'+String(Date.now()).slice(-5)+cid().slice(0,2).toUpperCase(),supplier:g.supplier,email:g.email,lines,total:poTotal(lines),ts:Date.now(),status:'approved',delivery:g.delivery||null};
-    db.orders.push(o); made.push(o);
-    if(db.settings.mode==='auto'&&db.settings.webhook){
-      try{ await fetch(db.settings.webhook,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({...o,message:poText(o)})}); o.status='submitted'; }catch(e){}
+  if(approving) return;
+  approving=true;
+  try{
+    const A=analyse(), made=[], alreadyOpen=openIngIds();
+    for(const g of A.groups.filter(x=>!sup||x.supplier===sup)){
+      const lines=g.lines.filter(l=>!l.skip&&l.qty>0&&!alreadyOpen.has(l.ingId)).map(l=>({ingId:l.ingId,name:l.name,unit:l.unit,qty:l.qty,cost:l.cost}));
+      g.lines.forEach(l=>{delete db.drafts[l.ingId]; delete db.skip[l.ingId];});
+      if(!lines.length) continue;
+      const o={id:'PO-'+String(Date.now()).slice(-5)+cid().slice(0,2).toUpperCase(),supplier:g.supplier,email:g.email,lines,total:poTotal(lines),ts:Date.now(),status:'approved',delivery:g.delivery||null};
+      db.orders.push(o); made.push(o);
+      lines.forEach(l=>alreadyOpen.add(l.ingId));
+      if(db.settings.mode==='auto'&&db.settings.webhook){
+        try{ await fetch(db.settings.webhook,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain'},body:JSON.stringify({...o,message:poText(o)})}); o.status='submitted'; }catch(e){}
+      }
     }
+    if(made.length){
+      const auto=made.every(o=>o.status==='submitted');
+      flash=`${made.length} order${made.length>1?'s':''} approved (${money(sum(made,o=>o.total))}). `+(auto?'Sent to your suppliers automatically.':'They are now awaiting delivery. Tap \u2709 Email on each order below to send it to the supplier.');
+      active='orders';
+    }else flash='No new draft items were approved. Existing open orders remain under Awaiting delivery.';
+    save(); render();
+  }finally{
+    approving=false;
   }
-  if(made.length){
-    const auto=made.every(o=>o.status==='submitted');
-    flash=`${made.length} order${made.length>1?'s':''} approved (${money(sum(made,o=>o.total))}). `+(auto?'Sent to your suppliers automatically.':'Tap \u2709 Email on each order below to send it to the supplier.');
-    active='orders';
-  }
-  save(); render();
 }
 function receive(id){
   const o=db.orders.find(x=>x.id===id); if(!o) return;
   o.lines.forEach(l=>{ const i=ingById(l.ingId); if(i) addBatch(i,l.qty,newExpiry(i)); });
   o.status='received'; o.recvTs=Date.now();
-  flash=`${o.id} received. Stock added as a new batch with its own expiry date.`;
+  const remaining=analyse().groups.flatMap(g=>g.lines.filter(l=>!l.skip&&l.qty>0)).length;
+  flash=`${o.id} received. ${o.lines.length} stock item${o.lines.length===1?' was':'s were'} updated and the forecast was refreshed. ${remaining?`${remaining} unrelated draft item${remaining===1?' remains':'s remain'} for review.`:'No new order is required right now.'}`;
   save(); render();
 }
 
@@ -519,7 +544,7 @@ let active='today', flash='', editMenu=null;
 function softRender(){ if(active==='today'||active==='orders') render(); }
 function render(){
   const A=analyse();
-  const nOrder=sum(A.groups,g=>g.lines.filter(l=>!l.skip).length);
+  const nOrder=A.groups.filter(g=>g.lines.some(l=>!l.skip&&l.qty>0)).length;
   $('tabs').innerHTML=TABS.map(([id,l])=>`<button class="${id===active?'active':''}" data-act="tab" data-id="${id}">${l}${id==='orders'&&nOrder?`<span class="count">${nOrder}</span>`:''}</button>`).join('');
   const body=active==='today'?renderToday(A):active==='orders'?renderOrders(A):active==='waste'?renderWaste(A):active==='sales'?renderSales():renderSetup(A);
   $('app').innerHTML=(flash?`<div class="flash">${flash}</div>`:'')+body;
@@ -528,18 +553,47 @@ function render(){
 
 function agentBanner(A){
   const st=db.settings, per=A.plans.filter(p=>p.i.perishable).length;
-  const n=sum(A.groups,g=>g.lines.filter(l=>!l.skip).length), risk=A.plans.filter(p=>p.risk>0.05).length;
+  const n=sum(A.groups,g=>g.lines.filter(l=>!l.skip).length), suppliers=A.groups.filter(g=>g.lines.some(l=>!l.skip&&l.qty>0)).length, risk=A.plans.filter(p=>p.risk>0.05).length;
   const evs=eventsOn(todayISO()).length+eventsOn(addDaysISO(1)).length;
   return `<div class="agent"><div class="pulse"></div><div class="agent-txt"><strong>CafeCast agent</strong> <span class="muted">\u00b7 last run ${st.lastScanTs?timeStr(st.lastScanTs):'just now'}</span>
-    <div class="muted">Read ${completeDays()} days of Square sales, ${weather?'today\u2019s weather':'the weather'} and ${evs?`<strong>${evs} local event${evs>1?'s':''}</strong>`:'local events'} for ${esc(st.place)}. Checked ${per} perishables: ${n?`<strong>${n} item${n>1?'s':''} to order</strong>`:'nothing to order'}${risk?`, ${risk} at risk of expiring unused`:''}.</div></div>
+    <div class="muted">Analysed ${completeDays()} recent trading days from ${availableHistoryDays()} days of POS history, ${weather?'today\u2019s weather':'the weather'} and ${evs?`<strong>${evs} local event${evs>1?'s':''}</strong>`:'local events'} for ${esc(st.place)}. Checked ${per} perishables: ${suppliers?`<strong>${suppliers} supplier order${suppliers>1?'s':''} need approval</strong> (${n} line items)`:'no new draft orders'}${risk?`, ${risk} at risk of expiring unused`:''}.</div></div>
     <button class="btn ghost" data-act="scan">Run again</button></div>`;
+}
+
+function shortWhy(why){
+  const parts=String(why||'').split(' \u00b7 '), first=parts[0]||'Forecast stock is below the required level';
+  const driver=parts.find(x=>x.startsWith('drivers:'));
+  return driver?`${first} \u00b7 ${driver}`:first;
+}
+
+function renderRecommendationPanel(A){
+  const lines=A.groups.flatMap(g=>g.lines.filter(l=>!l.skip&&l.qty>0).map(l=>({...l,supplier:g.supplier,delivery:g.delivery})));
+  const total=sum(A.groups,g=>g.total);
+  const waiting=db.orders.filter(o=>o.status!=='received');
+  const waitingLines=sum(waiting,o=>o.lines.length);
+  const risky=A.plans.filter(p=>p.risk>0.05).sort((a,b)=>b.risk*b.i.cost-a.risk*a.i.cost);
+  const priority=[...lines].sort((a,b)=>b.qty*b.cost-a.qty*a.cost).slice(0,3);
+  if(!lines.length&&!waiting.length&&!risky.length) return `<div class="empty">All good. Stock is healthy and nothing needs your attention today.</div>`;
+  return `
+    <div class="status-grid">
+      <div class="status-box"><span class="label">Needs approval</span><strong>${A.groups.length}</strong><span class="muted">supplier orders · ${lines.length} items</span></div>
+      <div class="status-box"><span class="label">Awaiting delivery</span><strong>${waitingLines}</strong><span class="muted">approved items</span></div>
+      <div class="status-box"><span class="label">Use first</span><strong>${risky.length}</strong><span class="muted">expiry risks</span></div>
+    </div>
+    ${lines.length?`<div class="section-label">Highest-value draft items</div><div class="action-list">
+      ${priority.map(l=>`<div class="action-row"><div><strong>${esc(l.name)}</strong><div class="why">${esc(shortWhy(l.why))}</div></div><div class="qty">${fmt(l.qty,2)} ${esc(l.unit)}<div class="muted">${money(l.qty*l.cost)}</div></div></div>`).join('')}
+    </div>
+    <div class="muted" style="margin-bottom:12px">${lines.length>3?`${lines.length-3} more draft item${lines.length-3===1?'':'s'} are grouped by supplier on the Ordering page. `:''}Draft total: <strong>${money(total)}</strong>.</div>
+    <button class="btn" data-act="tab" data-id="orders">Review ${A.groups.length} supplier order${A.groups.length===1?'':'s'}</button>`:''}
+    ${waiting.length?`<div class="note"><strong>${waiting.length} approved order${waiting.length===1?' is':'s are'} awaiting delivery.</strong> They are excluded from new recommendations until marked Received or cancelled.</div>`:''}
+    ${risky.length?`<details><summary>Use stock approaching expiry (${risky.length})</summary><div class="action-list">${risky.slice(0,4).map(p=>{const dishes=db.menu.filter(m=>m.recipe.some(r=>r.ing===p.i.id)).map(m=>esc(m.name)).slice(0,2);return `<div class="action-row"><div><strong>${esc(p.i.name)}</strong><div class="why">${dishes.length?`Promote ${dishes.join(' or ')}`:'Use before its expiry date'}</div></div><div class="qty">${fmt(p.risk)} ${esc(p.i.unit)}<div class="muted">${money(p.risk*p.i.cost)} at risk</div></div></div>`;}).join('')}</div></details>`:''}`;
 }
 
 function renderToday(A){
   const t0=startOfDay(Date.now()), ts=db.sales.filter(s=>s.ts>=t0);
   const rev=sum(ts,s=>s.rev), qty=sum(ts,s=>s.qty), cost=sum(ts,s=>{const m=menuById(s.menuId);return m?costOfItem(m)*s.qty:0;});
   const bf=baseForecast(), F=A.F, expRev=bf?bf.avgRev*F.total:null, pct=expRev?Math.min(100,rev/expRev*100):0;
-  const li=db.settings.lastImport, manualToday=ts.filter(s=>s.src==='manual').length;
+  const li=db.settings.lastImport, manualToday=ts.filter(s=>s.src==='manual').length, historicalDemo=DS==='littlefern'&&!ts.length;
   const wt=db.waste.filter(w=>w.ts>=t0), wc=sum(wt,w=>w.cost), check=db.wasteChecks[todayISO()];
   const evT=eventsOn(todayISO()), evM=eventsOn(addDaysISO(1)), evW=[2,3,4,5,6,7].flatMap(k=>eventsOn(addDaysISO(k)));
   const dateStr=new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'});
@@ -550,10 +604,11 @@ function renderToday(A){
   <div class="dash-grid">
     <div class="card c5">
       <h2>Today\u2019s performance</h2>
-      <div class="label">Revenue so far</div>
-      <div class="big">${money(rev)}</div>
-      <div class="muted" style="margin:6px 0 14px">${qty} items sold \u00b7 est. margin after ingredients ${money(rev-cost)}</div>
-      ${expRev?`<div class="bar"><i style="width:${pct}%"></i></div><div class="muted" style="margin-top:6px">${Math.round(pct)}% of today\u2019s expected ${money(expRev)}</div>`
+      <div class="label">${historicalDemo?'Live sales':'Revenue so far'}</div>
+      <div class="big">${historicalDemo?'\u2013':money(rev)}</div>
+      <div class="muted" style="margin:6px 0 14px">${historicalDemo?'No live POS feed is connected in this prototype. The forecast uses the spreadsheet history.':`${qty} items sold \u00b7 est. margin after ingredients ${money(rev-cost)}`}</div>
+      ${expRev&&!historicalDemo?`<div class="bar"><i style="width:${pct}%"></i></div><div class="muted" style="margin-top:6px">${Math.round(pct)}% of today\u2019s expected ${money(expRev)}</div>`
+        :historicalDemo?`<div class="muted">Expected revenue from historical demand: ${expRev?money(expRev):'not available'}.</div>`
         :`<div class="muted">Import a few days of Square sales to compare against a forecast.</div>`}
       <div class="src">\u{1F517} <strong>Source:</strong> ${li?`pulled from your POS: ${esc(li.label)}, last synced ${dayTimeStr(li.ts)}`:'no sales imported yet'}${manualToday?` \u00b7 ${manualToday} entered by hand`:''}. Nobody types sales into CafeCast. <a href="#" data-act="tab" data-id="sales">Sync sales</a></div>
     </div>
@@ -574,8 +629,8 @@ function renderToday(A){
         <div><div class="label">Expected revenue</div><div class="big sm">${expRev?money(expRev):'\u2013'}</div></div>
         <div><div class="label">Weather \u00b7 ${esc(db.settings.place)}</div><div class="big sm">${weather?Math.round(weather.max)+'\u00b0':'\u2013'}</div>
           <div class="muted">${weather?`${wxText(weather.code)} \u00b7 ${weather.rain}% rain \u00b7 low ${Math.round(weather.min)}\u00b0`:'Loading\u2026'}</div></div>
-        <div><div class="label">Expected customers</div><div class="big sm">${bf?'~'+Math.round(bf.avgQty*F.total/1.5):'\u2013'}</div>
-          <div class="muted">${bf?'assumes 1.5 items per customer':''}</div></div>
+        <div><div class="label">Estimated customer visits</div><div class="big sm">${bf?'~'+Math.round(bf.avgQty*F.total/1.5):'\u2013'}</div>
+          <div class="muted">${bf?'planning estimate based on 1.5 items per visit':''}</div></div>
         <div><div class="label">Local events today</div>
           ${evT.length?evT.map(evRow).join(''):`<div class="muted">None found</div>`}
           ${evM.length?`<div class="label" style="margin-top:8px">Tomorrow</div>${evM.map(evRow).join('')}`:''}
@@ -590,8 +645,9 @@ function renderToday(A){
     </div>
 
     <div class="card c5">
-      <h2>Recommendation</h2>
-      ${recs(A).map(r=>`<div class="rec">${r.html}${r.act==='order'?`<br><button class="btn" data-act="approve-all">Approve & send order</button> <a href="#" data-act="tab" data-id="orders" style="margin-left:10px;font-size:.88rem">Review first</a>`:''}${r.act==='setup'?` <a href="#" data-act="tab" data-id="setup">Set up recipes</a>`:''}</div>`).join('')}
+      <h2>Actions for the owner</h2>
+      <p class="lead">Only decisions needing attention are shown here. Detailed calculations remain available on the Ordering page.</p>
+      ${renderRecommendationPanel(A)}
     </div>
   </div>`;
 }
@@ -623,7 +679,7 @@ function recs(A){
 
 function pills(p){
   const m={expired:['low','Expired'],out:['low','Running out'],order:['mid','Order due'],risk:['mid','May expire unused'],exp:['mid','Expiring soon'],ok:['ok','OK']}[p.status];
-  return `<span class="pill ${m[0]}">${m[1]}</span>${p.onOrder?'<span class="pill info">On order</span>':''}`;
+  return `<span class="pill ${m[0]}">${m[1]}</span>${p.onOrder?'<span class="pill info">Awaiting delivery</span>':''}${p.justReceived?'<span class="pill ok">Received today</span>':''}`;
 }
 function batchList(p){
   const bs=[...p.i.batches].sort(byExp); if(!bs.length) return '<span class="muted">\u2013</span>';
@@ -632,6 +688,11 @@ function batchList(p){
 
 function renderOrders(A){
   const total=sum(A.groups,g=>g.total);
+  const draftCount=sum(A.groups,g=>g.lines.filter(l=>!l.skip&&l.qty>0).length);
+  const draftSuppliers=A.groups.filter(g=>g.lines.some(l=>!l.skip&&l.qty>0)).length;
+  const awaiting=db.orders.filter(o=>o.status!=='received');
+  const awaitingCount=sum(awaiting,o=>o.lines.length);
+  const receivedToday=db.orders.filter(o=>o.status==='received'&&o.recvTs>=startOfDay(Date.now()));
   const drafts=A.groups.length?A.groups.map(g=>`
     <div class="sup">
       <div class="sup-head"><div><strong>${esc(g.supplier)}</strong> <span class="muted">${esc(g.email||'no email set')}</span>
@@ -641,7 +702,7 @@ function renderOrders(A){
         <tr><th>Include</th><th>Item</th><th>Order</th><th>Cost</th><th>Why CafeCast suggests it</th></tr>
         ${g.lines.map(l=>`<tr class="${l.skip?'skipped':''}"><td><input type="checkbox" data-skip="${l.ingId}" ${l.skip?'':'checked'}></td><td>${esc(l.name)}</td>
           <td style="white-space:nowrap"><input class="qin" type="number" min="0" step="${stepFor(l.unit)}" data-draft="${l.ingId}" value="${l.qty}"> ${esc(l.unit)}${l.edited?` <span class="badge" title="Suggested ${l.auto}">edited</span>`:''}</td>
-          <td>${money(l.qty*l.cost)}</td><td class="muted">${esc(l.why)}</td></tr>`).join('')}
+          <td>${money(l.qty*l.cost)}</td><td><div class="reason-short">${esc(shortWhy(l.why))}</div><details><summary>Show calculation</summary><div class="reason-detail">${esc(l.why)}</div></details></td></tr>`).join('')}
       </table></div>
     </div>`).join('')
     :`<div class="empty">Nothing needs ordering right now. CafeCast will draft an order as soon as a perishable is forecast to run low.</div>`;
@@ -652,7 +713,12 @@ function renderOrders(A){
   return agentBanner(A)+`
   <div class="card">
     <h2>Draft orders</h2>
-    <p class="lead">Drafted by CafeCast from forecast demand, stock on hand and expiry dates. Change any quantity or untick a line, then approve.</p>
+    <p class="lead">Drafts require a decision. Approved items move to Awaiting delivery and are removed from new recommendations.</p>
+    <div class="order-state">
+      <span class="state-chip"><strong>${draftSuppliers}</strong> supplier draft${draftSuppliers===1?'':'s'} · ${draftCount} items</span>
+      <span class="state-chip"><strong>${awaitingCount}</strong> awaiting delivery</span>
+      <span class="state-chip"><strong>${receivedToday.length}</strong> order${receivedToday.length===1?'':'s'} received today</span>
+    </div>
     ${drafts}
     ${A.groups.length?`<div class="actions">${Object.keys(db.drafts).length||Object.keys(db.skip).length?'<button class="btn ghost" data-act="reset-drafts">Reset to suggested</button>':''}
       <button class="btn" data-act="approve-all" ${total>0?'':'disabled'}>Approve all (${money(total)})</button></div>`:''}
@@ -674,7 +740,7 @@ function renderOrders(A){
 
   <div class="card">
     <h2>Order history</h2>
-    <p class="lead">Approved \u2192 sent to supplier \u2192 tap <strong>Received</strong> when it arrives to add it to stock with a fresh expiry date.</p>
+    <p class="lead">Approved \u2192 sent to supplier \u2192 mark Received only when the delivery physically arrives. Receipt adds the delivered quantities to stock and refreshes the forecast.</p>
     <div class="tbl-wrap"><table>
       <tr><th>PO</th><th>Supplier</th><th>Items</th><th>Total</th><th>Status</th><th></th></tr>
       ${orders.map(o=>`<tr><td>${esc(o.id)}<div class="muted">${dayTimeStr(o.ts)}</div></td><td>${esc(o.supplier)}</td>
@@ -778,7 +844,7 @@ function renderSetup(A){
     [!!st.lastImport,'Sync sales from Square','So nobody types in sales.','sales'],
     [need.length===0,'Add recipes for items that use perishables',need.length?`${need.length} selling item${need.length>1?'s':''} still ${need.length>1?'need':'needs'} one. Only perishable ingredients matter.`:'Done. Items without perishables can be marked as such.',null],
     [per.length>0&&per.every(i=>i.shelf&&i.email),'Check perishables: shelf life & supplier email','Used to work out expiry dates and send orders.',null],
-    [!!st.modeSet,'Choose how orders reach suppliers','Email (simplest) or automatic.',null],
+    [!!st.mode,'Choose how orders reach suppliers',st.mode==='auto'?'Automatic through Power Automate':'Email selected',null],
     [!!st.place,'Set your caf\u00e9\u2019s location','For weather and local events.',null]
   ];
   if(!editMenu||!menuById(editMenu)) editMenu=(need[0]||db.menu[0]||{}).id||null;
@@ -912,7 +978,10 @@ document.addEventListener('click',async e=>{
     case 'approve-all': await approve(null); break;
     case 'approve-sup': await approve(b.dataset.sup); break;
     case 'reset-drafts': db.drafts={}; db.skip={}; save(); render(); break;
-    case 'recv': receive(id); break;
+    case 'recv': { const o=db.orders.find(x=>x.id===id); if(!o) break;
+      const early=o.delivery&&daysUntil(o.delivery)>0;
+      if(early&&!confirm(`This delivery is due ${dayLabel(o.delivery)}. Mark it received early?`)) break;
+      receive(id); break; }
     case 'cancel-order': if(confirm('Cancel this order?')){ db.orders=db.orders.filter(o=>o.id!==id); save(); render(); } break;
     case 'waste-fill': { const inp=document.querySelector(`[data-wq="${id}"]`); if(inp) inp.value=b.dataset.qty; break; }
     case 'waste-save': saveWasteCheck(false); break;
