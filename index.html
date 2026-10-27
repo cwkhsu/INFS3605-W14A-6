@@ -32,8 +32,9 @@ main{width:100%;max-width:1480px;margin:0 auto;padding:clamp(18px,2.6vw,38px) 22
 .card h3{font-size:1rem;margin:18px 0 8px}
 .lead{color:var(--muted);font-size:.92rem;margin:0 0 14px;line-height:1.45}
 .row{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:12px;align-items:flex-end}
-input,select{padding:10px 13px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:400 .95rem var(--font);outline:none;max-width:100%}
-input:focus,select:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(0,113,227,.18)}
+input,select,textarea{padding:10px 13px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink);font:400 .95rem var(--font);outline:none;max-width:100%}
+input:focus,select:focus,textarea:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(36,112,90,.16)}
+textarea{width:100%;min-height:92px;resize:vertical;line-height:1.45}
 input[type=checkbox]{width:18px;height:18px;accent-color:var(--accent)}
 label{font-size:.78rem;color:var(--muted);display:block;margin-bottom:5px;font-weight:500}
 .field{flex:1 1 140px}
@@ -136,6 +137,7 @@ details[open] summary{margin-bottom:12px}
 .svg-icon{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;vertical-align:-4px;flex:0 0 auto}
 .page-head{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;margin:0 0 20px}.page-head h2{font-size:clamp(1.7rem,1.2rem + 1.2vw,2.55rem);letter-spacing:-.045em;margin:4px 0 5px}.eyebrow{text-transform:uppercase;letter-spacing:.1em;color:var(--accent);font-size:.71rem;font-weight:750}.page-head p{margin:0;color:var(--muted);font-size:.92rem}
 .daily-hero{position:relative;overflow:hidden;border-radius:26px;background:linear-gradient(125deg,#2c211c 0%,#3b2d26 47%,#276f5b 135%);color:#fff;padding:28px 30px;margin-bottom:16px;box-shadow:0 14px 35px rgba(44,33,28,.13)}.daily-hero:after{content:"";position:absolute;width:290px;height:290px;border-radius:50%;right:-90px;top:-145px;background:rgba(255,255,255,.06)}.daily-hero-grid{display:grid;grid-template-columns:1.5fr repeat(3,minmax(115px,.55fr));gap:16px;align-items:end;position:relative;z-index:1}.hero-label{display:flex;align-items:center;gap:8px;color:rgba(255,255,255,.68);font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;font-weight:700}.hero-title{font-size:clamp(2rem,1.3rem + 2vw,3.35rem);font-weight:750;letter-spacing:-.055em;line-height:1.02;margin:10px 0 8px}.hero-copy{color:rgba(255,255,255,.72);font-size:.88rem;line-height:1.45;max-width:600px}.hero-stat{border-left:1px solid rgba(255,255,255,.17);padding-left:16px}.hero-stat span{display:block;color:rgba(255,255,255,.62);font-size:.73rem;margin-bottom:5px}.hero-stat strong{display:block;font-size:1.35rem;letter-spacing:-.03em}.hero-stat small{display:block;color:rgba(255,255,255,.65);font-size:.72rem;margin-top:4px;line-height:1.35}
+.hero-ai{position:relative;z-index:2;display:grid;grid-template-columns:minmax(220px,.75fr) minmax(360px,1.25fr);gap:18px;align-items:end;border-top:1px solid rgba(255,255,255,.16);margin-top:20px;padding-top:18px}.hero-ai-copy{font-size:.82rem;line-height:1.45;color:rgba(255,255,255,.72)}.hero-ai-copy strong{display:block;color:#fff;font-size:.95rem;margin-bottom:3px}.hero-ai-copy .pill{margin-top:8px;background:rgba(255,255,255,.12);color:#fff}.hero-ai-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:end}.hero-ai-controls label{color:rgba(255,255,255,.68)}.hero-ai-controls input{background:rgba(255,255,255,.94);border-color:transparent}.hero-ai-controls .btn{background:#fff;color:var(--espresso);white-space:nowrap}.hero-ai-controls .btn:hover{background:var(--cream)}.hero-ai-status{grid-column:1/-1;min-height:17px;color:rgba(255,255,255,.67);font-size:.75rem}.hero-ai-status.error{color:#ffd0ca}.hero-ai-result{grid-column:1/-1;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.15);border-radius:14px;padding:12px 14px;font-size:.82rem;line-height:1.45;color:rgba(255,255,255,.78)}.hero-ai-result strong{color:#fff}.hero-ai-result .pill{margin-left:5px;background:rgba(255,255,255,.13);color:#fff}
 .metric-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}.metric-tile{width:100%;font:inherit;color:inherit;text-align:left;background:var(--card);border:1px solid rgba(44,33,28,.05);border-radius:18px;padding:15px 40px 15px 17px;display:flex;align-items:center;gap:12px;box-shadow:0 4px 18px rgba(44,33,28,.035);position:relative}.metric-tile:after{content:'→';position:absolute;right:16px;color:var(--muted);font-size:1rem;transition:transform .18s,color .18s}.metric-icon{width:38px;height:38px;border-radius:12px;background:var(--soft);color:var(--accent);display:grid;place-items:center;flex:0 0 auto}.metric-icon.amber{background:#f8ead2;color:var(--amber)}.metric-icon.red{background:#f8e2df;color:var(--warn)}.metric-tile span{display:block;color:var(--muted);font-size:.72rem}.metric-tile strong{display:block;font-size:1.12rem;margin-top:2px}
 .decision-layout{display:grid;grid-template-columns:minmax(0,1.65fr) minmax(320px,.75fr);gap:16px;margin-bottom:16px}.panel-title{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:4px}.panel-title h2{display:flex;align-items:center;gap:9px}.decision-stack{margin-top:10px}.decision-card{display:grid;grid-template-columns:42px minmax(0,1fr) auto;gap:13px;align-items:start;padding:16px 10px;margin:0 -10px;border-bottom:1px solid var(--line);border-radius:14px}.decision-card:last-child{border-bottom:0}.decision-icon{width:42px;height:42px;border-radius:13px;background:var(--soft);color:var(--accent);display:grid;place-items:center}.decision-icon.amber{background:#f8ead2;color:var(--amber)}.decision-icon.red{background:#f8e2df;color:var(--warn)}.decision-rank{color:var(--muted);font-size:.7rem;font-weight:750;text-transform:uppercase;letter-spacing:.06em}.decision-card h3{font-size:1.03rem;margin:3px 0 4px}.decision-card p{color:var(--muted);font-size:.82rem;line-height:1.42;margin:0;max-width:680px}.decision-impact{margin-top:7px;display:flex;gap:6px;flex-wrap:wrap}.decision-action{text-align:right;min-width:130px}.decision-action strong{display:block;font-size:1rem;margin-bottom:7px}
 .dashboard-link{cursor:pointer;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease,background-color .18s ease}.dashboard-link:hover{transform:translateY(-2px);box-shadow:0 12px 26px rgba(44,33,28,.1);border-color:rgba(36,112,90,.22)}.dashboard-link:hover:after{transform:translateX(3px);color:var(--accent)}.dashboard-link:focus-visible{outline:3px solid rgba(36,112,90,.25);outline-offset:3px}.decision-card.dashboard-link:hover{transform:none;box-shadow:none;background:var(--cream)}.daily-hero.dashboard-link:hover{box-shadow:0 18px 42px rgba(44,33,28,.19)}.daily-hero.dashboard-link:before{content:'Open sales history  →';position:absolute;right:28px;bottom:18px;z-index:2;color:rgba(255,255,255,.72);font-size:.72rem;font-weight:700;letter-spacing:.02em}
@@ -143,12 +145,14 @@ details[open] summary{margin-bottom:12px}
 .driver{padding:10px 0;border-bottom:1px solid var(--line)}.driver:last-of-type{border-bottom:0}.driver-line{display:flex;justify-content:space-between;font-size:.84rem;margin-bottom:6px}.driver-bar{height:6px;background:#eee6dc;border-radius:8px;overflow:hidden}.driver-bar i{display:block;height:100%;border-radius:8px;background:var(--accent)}.driver-bar i.down{background:var(--amber)}
 .confidence-row{display:flex;align-items:center;gap:12px;padding:13px;border-radius:15px;background:var(--cream);margin:12px 0}.confidence-dot{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;color:#fff;background:var(--accent);font-size:.78rem;font-weight:750}.confidence-row strong{display:block;font-size:.9rem}.confidence-row span{display:block;color:var(--muted);font-size:.75rem;margin-top:2px}
 .special-compact{display:grid;grid-template-columns:minmax(0,1.2fr) auto auto;gap:18px;align-items:center;padding:14px 0;border-bottom:1px solid var(--line)}.special-compact:last-child{border-bottom:0}.special-compact h3{margin:0 0 4px}.special-price{text-align:right}.special-price strong{font-size:1.2rem}.special-price span{display:block}.source-strip{display:flex;align-items:center;justify-content:space-between;gap:15px;background:var(--cream);border:1px solid var(--line);border-radius:15px;padding:11px 13px;margin-top:13px}.source-strip span{color:var(--muted);font-size:.76rem;line-height:1.35}
+.ai-card{border:1px solid rgba(36,112,90,.2);background:linear-gradient(135deg,#fffefb 0%,#f2f7f4 100%)}.ai-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;margin-bottom:12px}.ai-head h2{display:flex;align-items:center;gap:9px}.ai-input{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:end}.ai-result{margin-top:14px;padding:15px;border:1px solid rgba(36,112,90,.2);border-radius:15px;background:rgba(255,255,255,.72)}.ai-result h3{margin:3px 0 5px}.ai-result p{margin:0;color:var(--muted);font-size:.86rem;line-height:1.45}.ai-meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:9px}.ai-status{min-height:18px;margin-top:7px;color:var(--muted);font-size:.78rem}.ai-status.error{color:var(--warn)}
 @media(min-width:960px){body{padding-left:238px}header{position:fixed;left:0;top:0;bottom:0;width:238px;padding:28px 18px 20px;text-align:left;border:0;border-right:1px solid var(--line);display:flex;flex-direction:column;background:rgba(250,247,241,.94)}.brand{justify-content:flex-start;margin:0 8px 34px}.brand-mark{width:44px;height:44px}nav{display:flex;flex-direction:column;justify-content:flex-start;gap:6px;overflow:visible;padding:0}nav button{display:flex;align-items:center;gap:11px;width:100%;padding:11px 13px;border-radius:13px;text-align:left;font-size:.88rem}nav button.active{background:var(--espresso);color:#fff;box-shadow:0 6px 16px rgba(44,33,28,.12)}nav .count{margin-left:auto}.ds{margin-top:auto;display:block;padding:13px;background:var(--cream);border:1px solid var(--line);border-radius:16px}.ds label{margin-bottom:6px;font-size:.68rem;text-transform:uppercase;letter-spacing:.07em}main{margin:0 auto}}
 @media(max-width:900px){.c5,.c7{grid-column:span 12}.grid2{grid-template-columns:1fr}}
 @media(max-width:1100px){.daily-hero-grid{grid-template-columns:1.4fr repeat(2,.65fr)}.daily-hero-grid .hero-stat:last-child{display:none}.decision-layout{grid-template-columns:1fr}.metric-strip{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:900px){.plan-kpis{grid-template-columns:repeat(2,1fr)}.flow{grid-template-columns:1fr}.flow-arrow{transform:rotate(90deg);text-align:center}.signal-grid{grid-template-columns:1fr}}
-@media(max-width:700px){nav{justify-content:flex-start}input,select{font-size:16px}}
-@media(max-width:620px){.fgrid{grid-template-columns:1fr}.row{flex-direction:column;align-items:stretch}.field{flex:1 1 100%}.agent{flex-wrap:wrap}.status-grid{grid-template-columns:1fr}.action-row{grid-template-columns:1fr}.action-row .qty{text-align:left}.daily-hero-grid{grid-template-columns:1fr}.daily-hero-grid .hero-stat{display:block!important;border-left:0;border-top:1px solid rgba(255,255,255,.15);padding:10px 0 0}.metric-strip{grid-template-columns:1fr}.decision-card{grid-template-columns:42px 1fr}.decision-action{grid-column:2;text-align:left}.special-compact{grid-template-columns:1fr}.special-price{text-align:left}.page-head{align-items:flex-start;flex-direction:column}}
+@media(max-width:700px){nav{justify-content:flex-start}input,select,textarea{font-size:16px}}
+@media(max-width:800px){.hero-ai{grid-template-columns:1fr}.hero-ai-controls{grid-template-columns:1fr}.hero-ai-controls .btn{width:100%}}
+@media(max-width:620px){.fgrid{grid-template-columns:1fr}.row{flex-direction:column;align-items:stretch}.field{flex:1 1 100%}.agent{flex-wrap:wrap}.status-grid{grid-template-columns:1fr}.action-row{grid-template-columns:1fr}.action-row .qty{text-align:left}.daily-hero-grid{grid-template-columns:1fr}.daily-hero-grid .hero-stat{display:block!important;border-left:0;border-top:1px solid rgba(255,255,255,.15);padding:10px 0 0}.metric-strip{grid-template-columns:1fr}.decision-card{grid-template-columns:42px 1fr}.decision-action{grid-column:2;text-align:left}.special-compact{grid-template-columns:1fr}.special-price{text-align:left}.page-head{align-items:flex-start;flex-direction:column}.ai-input{grid-template-columns:1fr}.ai-input .btn{width:100%}.ai-head{display:block}.ai-head .pill{margin-top:7px}}
 </style>
 </head>
 <body>
@@ -208,7 +212,7 @@ const icon=(name,cls='')=>`<svg class="svg-icon ${cls}" viewBox="0 0 24 24" aria
 
 /* ---------------- DATA ---------------- */
 let db=null;
-function load(){ try{ const d=JSON.parse(localStorage.getItem(keyFor(DS))); if(d&&d.v===3){ d.extras=d.extras||[]; d.notes=d.notes||[]; d.promos=d.promos||[]; return d; } }catch(e){} return seed(); }
+function load(){ try{ const d=JSON.parse(localStorage.getItem(keyFor(DS))); if(d&&d.v===3){ d.extras=d.extras||[]; d.notes=d.notes||[]; d.promos=d.promos||[]; d.settings=d.settings||{}; d.settings.geminiKey=d.settings.geminiKey||''; d.settings.geminiModel=d.settings.geminiModel||'gemini-3.8-flash'; if(/^gemini-2\.5-/.test(d.settings.geminiModel)) d.settings.geminiModel='gemini-3.8-flash'; d.aiBrief=d.aiBrief||null; return d; } }catch(e){} return seed(); }
 function save(){ try{ localStorage.setItem(keyFor(DS),JSON.stringify(db)); }catch(e){} }
 function seed(){ return DS==='littlefern'?seedLittleFern():seedDemo(); }
 
@@ -237,7 +241,7 @@ function seedDemo(){
     ],
     sales:[], waste:[], orders:[], events:[], extras:[], notes:[], promos:[], drafts:{}, skip:{}, wasteChecks:{}, importKeys:{}, dismissed:{},
     settings:{buffer:10,cover:2,mode:'email',modeSet:true,webhook:'',lat:-33.917,lon:151.231,place:'Kensington, NSW',state:'AU-NSW',
-      holidayUplift:10,tmKey:'',showAll:false,stockCountTs:startOfDay(Date.now()),lastImport:null,lastScan:null,lastScanTs:null,scanNote:''}
+      holidayUplift:10,tmKey:'',geminiKey:'',geminiModel:'gemini-3.8-flash',showAll:false,stockCountTs:startOfDay(Date.now()),lastImport:null,lastScan:null,lastScanTs:null,scanNote:''},aiBrief:null
   };
   // a few past waste entries so the weekly waste insight has something to show
   const pw=(i,q,reason,d)=>db.waste.push({id:cid(),ingId:i.id,name:i.name,unit:i.unit,qty:q,reason,cost:r2(i.cost*q),ts:Date.now()-d*DAY,auto:false});
@@ -266,8 +270,8 @@ function seedLittleFern(){
   const extras=D.extras.map(([k,ms,q,text])=>({id:cid(),date:iso(k),menuIds:ms.map(x=>mids[x]).filter(Boolean),qty:q,text}));
   const notes=D.notes.map(([k,type,text,by])=>({id:cid(),date:iso(k),type,text,by}));
   db={v:3,dataset:'littlefern',ingredients,menu,sales,waste,orders:[],events,extras,notes,promos:[],drafts:{},skip:{},wasteChecks:{},importKeys:{},dismissed:{},
-    settings:{buffer:D.cafe.buffer,cover:2,mode:'email',modeSet:true,webhook:'',lat:D.cafe.lat,lon:D.cafe.lon,place:D.cafe.place,state:'AU-NSW',holidayUplift:10,tmKey:'',showAll:false,
-      stockCountTs:t0,lastImport:{ts:Date.now(),label:`${D.cafe.name} sales history (6 weeks, from spreadsheet)`,rows:sales.length},lastScan:null,lastScanTs:null,scanNote:'',cafeName:D.cafe.name}};
+    settings:{buffer:D.cafe.buffer,cover:2,mode:'email',modeSet:true,webhook:'',lat:D.cafe.lat,lon:D.cafe.lon,place:D.cafe.place,state:'AU-NSW',holidayUplift:10,tmKey:'',geminiKey:'',geminiModel:'gemini-3.8-flash',showAll:false,
+      stockCountTs:t0,lastImport:{ts:Date.now(),label:`${D.cafe.name} sales history (6 weeks, from spreadsheet)`,rows:sales.length},lastScan:null,lastScanTs:null,scanNote:'',cafeName:D.cafe.name},aiBrief:null};
   return db;
 }
 
@@ -528,6 +532,68 @@ function ownerBriefing(A){
   return out;
 }
 
+/* ---------------- GEMINI OWNER-CONTEXT AGENT ---------------- */
+let aiBusy=false;
+function aiSnapshot(){
+  const A=analyse(), R=dataReadiness(), bf=baseForecast(), tbl=dowTable(), t0=startOfDay(Date.now());
+  const risks=A.plans.filter(p=>p.risk>0.05).sort((a,b)=>b.risk*b.i.cost-a.risk*a.i.cost).slice(0,5);
+  const todaySales=db.sales.filter(s=>s.ts>=t0);
+  return {
+    cafe:db.settings.cafeName||DATASETS[DS].replace(' (original)',''),
+    location:db.settings.place,
+    date:todayISO(),
+    historical_days:R.days,
+    historical_daily_average:bf?{revenue:+bf.avgRev.toFixed(2),items:+bf.avgQty.toFixed(1)}:null,
+    today_pos_so_far:{revenue:+sum(todaySales,s=>s.rev).toFixed(2),items:sum(todaySales,s=>s.qty)},
+    weekday_pattern_percent:Math.round(((tbl[wdOf(0)]??1)-1)*100),
+    weather:weather?{condition:wxText(weather.code),rain_probability:weather.rain,max_c:weather.max,min_c:weather.min}:null,
+    existing_events:eventsOn(todayISO()).concat(eventsOn(addDaysISO(1))).filter(e=>!e.ai).map(e=>({date:e.date,name:e.name,demand_change_percent:e.uplift})),
+    supplier_drafts:A.groups.length,
+    expiry_risks:risks.map(p=>({item:p.i.name,quantity:p.risk,unit:p.i.unit,days_to_expiry:p.next?p.next.d:null}))
+  };
+}
+function cleanJsonText(s){ return String(s||'').replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim(); }
+async function runGeminiContext(){
+  if(aiBusy) return;
+  const key=(db.settings.geminiKey||'').trim(), input=(($('ai-context')||{}).value||'').trim();
+  const status=$('ai-status'), button=$('ai-run');
+  if(!key){
+    if(status){ status.className='hero-ai-status error'; status.textContent='Add your free Gemini API key in Setup first.'; }
+    return;
+  }
+  aiBusy=true;
+  if(button){ button.disabled=true; button.textContent='Forecasting…'; }
+  if(status){ status.className='hero-ai-status'; status.textContent='Gemini is combining POS history, weather, events and your optional note…'; }
+  try{
+    const model=db.settings.geminiModel||'gemini-3.8-flash';
+    const prompt=`You are the CafeCast AI Demand Forecasting Agent for an independent café. Forecast TODAY'S total customer demand relative to a normal trading day by combining the supplied POS sales history, weekday pattern, weather, nearby events and optional owner note. The percentage you return must be the FINAL total change from normal, not an additional adjustment. Do not calculate stock orders or invent facts. Return JSON only with these fields: title (short string), demand_change_percent (integer from -60 to 100), summary (one sentence naming the most important drivers), next_step (one concrete preparation action for the owner), confidence ("Low", "Medium", or "High"). If evidence is weak, stay close to the weekday pattern and use Low confidence.\n\nCAFÉ DATA:\n${JSON.stringify(aiSnapshot())}\n\nOPTIONAL OWNER NOTE:\n${input||'None provided'}`;
+    const response=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{temperature:0.2,responseMimeType:'application/json'}})
+    });
+    const data=await response.json();
+    if(!response.ok) throw new Error((data.error&&data.error.message)||`Gemini request failed (${response.status})`);
+    const raw=data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text;
+    if(!raw) throw new Error('Gemini returned no usable response. Please try again.');
+    const result=JSON.parse(cleanJsonText(raw));
+    const uplift=Math.max(-60,Math.min(100,Math.round(Number(result.demand_change_percent)||0)));
+    const tbl=dowTable(), weekday=tbl[wdOf(0)]??1, wx=isWet()?0.9:1;
+    const nonAiEvents=sum(eventsOn(todayISO()).filter(e=>!e.ai),e=>+e.uplift||0);
+    const target=Math.max(.4,1+uplift/100);
+    const calibrated=Math.round(((target/(weekday*wx)-1)*100)-nonAiEvents);
+    const brief={title:String(result.title||'AI demand forecast'),appliesTo:'today',uplift,signal:calibrated,summary:String(result.summary||'Gemini combined the available demand signals.'),nextStep:String(result.next_step||'Review the refreshed plan.'),confidence:['Low','Medium','High'].includes(result.confidence)?result.confidence:'Medium',input,ts:Date.now(),model};
+    db.events=db.events.filter(e=>!e.ai).concat({id:cid(),date:todayISO(),name:brief.title,uplift:calibrated,auto:false,cal:true,ai:true,src:`Gemini · ${model}`});
+    db.aiBrief=brief;
+    db.settings.lastScanTs=Date.now();
+    save();
+    flash='Gemini generated today’s demand forecast and refreshed the operational plan.';
+    render();
+  }catch(err){
+    if(status){ status.className='hero-ai-status error'; status.textContent=err&&err.message?err.message:'Gemini could not generate the forecast.'; }
+    if(button){ button.disabled=false; button.textContent='Generate AI forecast'; }
+  }finally{ aiBusy=false; }
+}
+
 /* ---------------- WEATHER + LOCAL EVENTS (fetched online) ---------------- */
 let weather=null;
 function isWet(){ return !!weather&&(weather.rain>=60||(weather.code>=51&&weather.code<=67)||(weather.code>=80&&weather.code<=82)); }
@@ -681,19 +747,28 @@ function renderToday(A){
   const lines=A.groups.flatMap(g=>g.lines.filter(l=>!l.skip&&l.qty>0).map(l=>({...l,supplier:g.supplier,delivery:g.delivery})));
   const draftTotal=sum(A.groups,g=>g.total), topOrder=[...lines].sort((a,b)=>b.qty*b.cost-a.qty*a.cost)[0];
   const risks=A.plans.filter(p=>p.risk>0.05).sort((a,b)=>b.risk*b.i.cost-a.risk*a.i.cost), topRisk=risks[0], topIdea=ideas[0];
-  const activePromos=(db.promos||[]).filter(p=>p.active), visits=bf?Math.round(bf.avgQty*F.total/1.5):null;
+  const activePromos=(db.promos||[]).filter(p=>p.active), visits=bf?Math.round(bf.avgQty*F.total/1.5):null, ai=db.aiBrief;
   const pc=x=>(x>=1?'+':'\u2212')+Math.abs(Math.round((x-1)*100))+'%';
   const cafe=db.settings.cafeName||DATASETS[DS].replace(' (original)','');
   const prepReason=[F.dowF!==1?`${new Date().toLocaleDateString(undefined,{weekday:'long'})} pattern ${pc(F.dowF)}`:'normal weekday pattern',F.wxF<1?'rain \u221210%':'weather neutral',F.evF!==1?`events ${pc(F.evF)}`:'no event adjustment'].join(' · ');
   return `
   <div class="page-head"><div><span class="eyebrow">${dateStr}</span><h2>${esc(cafe)} daily plan</h2><p>Today’s demand, stock and ordering decisions—explained.</p></div><button class="btn ghost" data-act="scan">${icon('plan')} Refresh plan</button></div>
 
-  <section class="daily-hero dashboard-link" data-act="tab" data-id="sales" role="button" tabindex="0" aria-label="Open sales history">
+  <section class="daily-hero">
     <div class="daily-hero-grid">
-      <div><div class="hero-label">${icon('trend')} Demand forecast</div><div class="hero-title">${demandText}</div><div class="hero-copy">CafeCast combined ${R.days} days of sales history with today’s weather, weekday pattern and owner context.</div></div>
+      <div><div class="hero-label">${icon('trend')} AI demand forecast</div><div class="hero-title">${demandText}</div><div class="hero-copy">CafeCast combines ${R.days} days of POS sales with today’s weekday pattern, weather, events and optional owner knowledge.</div></div>
       <div class="hero-stat"><span>Expected revenue</span><strong>${expRev?money(expRev):'–'}</strong><small>${historicalDemo?'Historical estimate':'Compared with live sales'}</small></div>
       <div class="hero-stat"><span>Expected visits</span><strong>${visits?'~'+visits:'–'}</strong><small>Planning estimate</small></div>
       <div class="hero-stat"><span>Forecast confidence</span><strong>${R.label} · ${R.score}</strong><small>${R.live?'Live POS included':'Capped without live POS'}</small></div>
+    </div>
+    <div class="hero-ai">
+      <div class="hero-ai-copy"><strong>${icon('plan')} Generate with Gemini</strong>POS history, weather and connected event signals are analysed automatically.<br><span class="pill">Powered by Gemini</span></div>
+      <div class="hero-ai-controls">
+        <div><label for="ai-context">Optional owner note</label><input id="ai-context" value="${ai?esc(ai.input):''}" placeholder="e.g. Roadworks have closed nearby parking"></div>
+        <button class="btn" id="ai-run" data-act="ai-context">Generate AI forecast</button>
+        <div id="ai-status" class="hero-ai-status">${db.settings.geminiKey?'Ready to forecast using all connected data.':'Add a free Gemini API key in Setup before the demo.'}</div>
+        ${ai?`<div class="hero-ai-result"><strong>${esc(ai.title)}</strong><span class="pill">${ai.uplift>=0?'+':''}${ai.uplift}% vs normal</span><br>${esc(ai.summary)} <strong>Next:</strong> ${esc(ai.nextStep)}</div>`:''}
+      </div>
     </div>
   </section>
 
@@ -735,7 +810,6 @@ function renderToday(A){
       <div class="driver"><div class="driver-line"><span>Events & owner context</span><strong>${pc(F.evF)}</strong></div><div class="driver-bar"><i class="${F.evF<1?'down':''}" style="width:${Math.min(100,Math.abs(F.evF-1)*220+24)}%"></i></div></div>
       <div class="confidence-row"><div class="confidence-dot">${R.score}</div><div><strong>${R.label} forecast confidence</strong><span>${R.coverage}% recipe coverage · ${R.stock}% stock readiness</span></div></div>
       ${eventSignals.length?`<div class="note">${eventSignals.map(e=>`${esc(e.name)} <strong>${+e.uplift>=0?'+':''}${e.uplift}%</strong>`).join('<br>')}</div>`:''}
-      <details><summary>${icon('plan')} Add owner context</summary><div class="row"><div class="field"><label>What is changing?</label><input id="ctx-name" placeholder="e.g. University open day"></div><div class="field" style="max-width:105px"><label>Demand %</label><input id="ctx-up" type="number" value="15"></div><div class="field"><label>When</label><select id="ctx-date"><option value="${todayISO()}">Today</option><option value="${addDaysISO(1)}">Tomorrow</option></select></div><button class="btn secondary sm" data-act="ctx-add">Add signal</button></div></details>
     </aside>
   </div>
 
@@ -818,7 +892,7 @@ function renderPlanner(A){
   <div class="card">
     <h2>Where the intelligence sits</h2>
     <div class="flow"><div class="flow-step"><span class="flow-icon">①</span><b>Observe</b><span class="muted">POS sales, recipes, stock batches, expiry, weather and events</span></div><div class="flow-arrow">→</div><div class="flow-step"><span class="flow-icon">②</span><b>Reason</b><span class="muted">Forecast demand, simulate stock depletion and rank waste or shortage risk</span></div><div class="flow-arrow">→</div><div class="flow-step"><span class="flow-icon">③</span><b>Recommend</b><span class="muted">Draft supplier orders, menu specials and guarded prices for approval</span></div></div>
-    <div class="limit"><strong>Prototype boundary:</strong> this proof of concept uses an explainable rules-based forecasting agent. POS upload simulates a future Square API sync; supplier emails and menu-price changes require approval and are not automatically sent unless an integration is configured.</div>
+    <div class="limit"><strong>Prototype boundary:</strong> Gemini produces the demand forecast from the connected signals, while CafeCast uses explainable formulas for stock, expiry and order calculations. POS upload simulates a future API sync; supplier emails and menu-price changes still require owner approval.</div>
   </div>`;
 }
 
@@ -1148,6 +1222,15 @@ function renderSetup(A){
     </div>
   </div>
 
+  <div class="card ai-card">
+    <div class="ai-head"><div><h2>${icon('plan')} CafeCast AI demand forecasting</h2><p class="lead">Gemini combines POS history, weekday patterns, weather, events and optional owner knowledge to forecast demand. CafeCast then uses explainable formulas for stock, expiry and supplier-order calculations.</p></div><span class="pill ${st.geminiKey?'ok':'mid'}">${st.geminiKey?'Connected':'Setup needed'}</span></div>
+    <div class="row">
+      <div class="field"><label>Gemini API key</label><input data-set="geminiKey" type="password" autocomplete="off" value="${esc(st.geminiKey||'')}" placeholder="Paste your Google AI Studio key"><div class="help">For this PoC the key is stored only in this browser. Move it to a protected backend before production.</div></div>
+      <div class="field" style="max-width:230px"><label>Model</label><select data-set="geminiModel"><option value="gemini-3.8-flash"${st.geminiModel==='gemini-3.8-flash'?' selected':''}>Gemini 3.8 Flash</option><option value="gemini-3.5-flash-lite"${st.geminiModel==='gemini-3.5-flash-lite'?' selected':''}>Gemini 3.5 Flash-Lite</option></select><div class="help">Flash is the recommended demo model.</div></div>
+    </div>
+    <a class="btn ghost" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Get a free API key ↗</a>
+  </div>
+
   <div class="card">
     <h2>Data</h2>
     <p class="lead">You\u2019re using <strong>${DATASETS[DS]}</strong>. Each dataset is saved separately in this browser, so changes here never affect the other one. Switch datasets at the top of the page. Resetting only reloads this dataset\u2019s original data.</p>
@@ -1169,6 +1252,7 @@ document.addEventListener('click',async e=>{
     case 'jump': active='today'; render(); requestAnimationFrame(()=>{ const target=$(id); if(target) target.scrollIntoView({behavior:'smooth',block:'start'}); }); break;
     case 'jump-page': active=b.dataset.page||'today'; render(); requestAnimationFrame(()=>{ const target=$(id); if(target){ target.scrollIntoView({behavior:'smooth',block:'start'}); target.classList.add('anchor-flash'); setTimeout(()=>target.classList.remove('anchor-flash'),1200); } }); break;
     case 'scan': runAgent(true); break;
+    case 'ai-context': await runGeminiContext(); break;
     case 'approve-all': await approve(null); break;
     case 'approve-sup': await approve(b.dataset.sup); break;
     case 'reset-drafts': db.drafts={}; db.skip={}; save(); render(); break;
