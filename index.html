@@ -216,15 +216,244 @@ details[open] summary{margin-bottom:12px}
 @media(max-width:800px){.impact-grid{grid-template-columns:1fr}}
 @media(max-width:620px){.decision-action .btn{display:inline-block;width:auto;margin-right:6px}.hbar{grid-template-columns:1fr auto}.hbar div{grid-column:1/-1;order:3}.daily-hero{padding:22px 20px}}
 @media(max-width:620px){.daily-hero-grid{grid-template-columns:1fr 1fr;gap:12px}.daily-hero-grid>div:first-child{grid-column:1/-1}.daily-hero-grid .hero-stat:last-child{display:none!important}.daily-hero-grid .hero-stat small{font-size:.68rem}.ds label{display:none}.hero-title{font-size:2rem}}
+
+/* ---- v5: hero note, live sources, outlook, pipeline, phone preview, mobile readability ---- */
+.hero-sources{position:relative;z-index:2;display:flex;flex-wrap:wrap;gap:6px;margin-top:16px}
+.src{display:inline-flex;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.08);color:rgba(255,255,255,.86);border-radius:980px;padding:4px 10px;font:500 .72rem var(--font);cursor:pointer}
+.src i{width:7px;height:7px;border-radius:50%;background:#9aa}.src.live i{background:#5fd39b;box-shadow:0 0 0 3px rgba(95,211,155,.2)}.src.warn i{background:#f2c14e}.src.off i{background:#e07a6f}.src.sample i{background:#c9b8a6}
+.hero-link{background:none;border:0;color:#fff;text-decoration:underline;font:inherit;cursor:pointer;padding:0;margin-left:6px}
+.outlook-h{margin:16px 0 8px;font-size:.95rem}.outlook-h .muted{font-weight:500;font-size:.8rem}
+.outlook{display:grid;grid-template-columns:repeat(7,minmax(120px,1fr));gap:8px;overflow-x:auto;padding-bottom:4px;scrollbar-width:thin}
+.od{border:1px solid var(--line);border-radius:14px;padding:10px 11px;background:var(--card);display:flex;flex-direction:column;gap:4px;font-size:.78rem;min-width:0}
+.od.today{border-color:var(--accent);box-shadow:0 0 0 3px rgba(36,112,90,.1)}
+.od-d{font-weight:700;font-size:.85rem}.od-d small{display:block;font-weight:500;color:var(--muted);font-size:.7rem}
+.od b{font-size:1.15rem;letter-spacing:-.02em}.od b.dn{color:var(--amber)}.od b.up{color:var(--accent)}
+.od-w{color:var(--muted);line-height:1.35}.od-w em{color:var(--amber);font-style:normal;font-weight:650}.od-e{color:var(--ink);line-height:1.35;border-top:1px dashed var(--line);padding-top:4px}
+.pipe{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;margin-top:10px}
+.pipe-step{position:relative;border:1px solid var(--line);border-radius:14px;padding:12px 12px 12px;background:var(--card);display:flex;flex-direction:column;gap:4px}
+.pipe-step strong{font-size:.9rem}.pipe-step small{color:var(--muted);font-size:.74rem;line-height:1.4}
+.pipe-n{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:.72rem;font-weight:700;background:var(--soft);color:var(--accent)}
+.pipe-who{align-self:flex-start;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;border-radius:980px;padding:2px 8px}
+.pipe-step.auto .pipe-who{background:rgba(36,112,90,.12);color:var(--accent)}.pipe-step.you .pipe-who{background:rgba(201,138,54,.15);color:#8a5a14}.pipe-step.none{border-style:dashed;opacity:.75}.pipe-step.none .pipe-who{background:#eee6dc;color:var(--muted)}
+@media(max-width:1100px){.pipe{grid-template-columns:repeat(3,1fr)}}
+/* phone preview */
+.phone-btn{display:none}
+@media(min-width:960px){.phone-btn{display:flex;align-items:center;gap:8px;width:100%;margin:auto 0 10px;border:1px solid var(--line);background:var(--card);border-radius:14px;padding:10px 12px;font:600 .85rem var(--font);color:var(--ink);cursor:pointer}.phone-btn:hover{border-color:var(--accent);color:var(--accent)}}
+#phone-ov{position:fixed;inset:0;z-index:60;background:rgba(32,26,22,.82);display:none;flex-direction:column;align-items:center;padding:14px 16px}
+#phone-ov.open{display:flex}
+.phone-bar{width:min(414px,100%);display:flex;justify-content:space-between;align-items:center;color:#fff;margin-bottom:10px}.phone-bar span{display:block;font-size:.74rem;color:rgba(255,255,255,.65)}
+.phone-stage{width:414px;display:flex;justify-content:center}
+.phone-dev{width:414px;height:868px;flex:0 0 auto;transform-origin:top center;background:#111;border-radius:46px;padding:12px;box-shadow:0 30px 60px rgba(0,0,0,.45)}
+.phone-dev iframe{width:390px;height:844px;border:0;border-radius:36px;background:var(--bg);display:block}
+.in-frame .phone-btn,.in-frame .ds{display:none!important}.in-frame header{padding-top:16px}
+/* mobile readability */
+@media(max-width:620px){
+  .lead{font-size:.95rem;line-height:1.5}.decision-card p,.reason-short{font-size:.92rem;line-height:1.45}
+  .card h2,.panel-title h2{font-size:1.15rem}
+  .btn{min-height:44px}.btn.sm{min-height:40px}
+  .pipe{grid-template-columns:1fr 1fr}
+  .outlook{grid-template-columns:repeat(7,128px)}
+  .hero-sources{margin-top:12px}.src{font-size:.7rem}
+  .sup-head{flex-direction:column;align-items:stretch;gap:10px}.sup-act{display:flex;justify-content:space-between;align-items:center;gap:10px}
+  .sup table,.sup tbody,.sup td{display:block;width:100%}
+  .sup tr{display:grid;grid-template-columns:30px minmax(0,1fr) auto;gap:6px 10px;padding:14px 0;border-bottom:1px solid var(--line)}
+  .sup tr:first-child{display:none}
+  .sup td{padding:0!important;border:0!important}
+  .sup td:nth-child(1){grid-column:1;grid-row:1}.sup td:nth-child(2){grid-column:2;grid-row:1;font-weight:650;font-size:1rem}
+  .sup td:nth-child(4){grid-column:3;grid-row:1;text-align:right;font-weight:650}
+  .sup td:nth-child(3){grid-column:2/4}.sup td:nth-child(5){grid-column:1/4}
+  .sup .qin{width:96px;font-size:16px;min-height:40px}
+  table.lt,table.lt tbody{display:block;width:100%}
+  table.lt tr{display:block;padding:12px 0;border-bottom:1px solid var(--line)}
+  table.lt tr:first-child{display:none}
+  table.lt td{display:flex;justify-content:space-between;align-items:flex-start;gap:14px;padding:3px 0!important;border:0!important;text-align:right;white-space:normal!important}
+  table.lt td::before{content:attr(data-label);flex:0 0 38%;text-align:left;color:var(--muted);font-size:.78rem;font-weight:500}
+  table.lt td:first-child{font-weight:650;font-size:1rem;text-align:left;justify-content:flex-start}table.lt td:first-child::before{display:none}
+  table.lt td[colspan]{display:block;text-align:center}table.lt td[colspan]::before{display:none}
+  table.lt td:empty{display:none}
+}
+
+.sup-lines>summary{cursor:pointer;font-weight:600;color:var(--accent);padding:10px 0 4px;font-size:.9rem}
+@media(min-width:621px){.sup-lines>summary{display:none}}
+@media(max-width:620px){
+  .sup .reason-short{display:none}
+  .sup td:nth-child(5) details{margin-top:2px}
+  table.lt tr{display:grid;grid-template-columns:1fr 1fr;gap:8px 14px;padding:14px 0}
+  table.lt td{display:block;text-align:left}
+  table.lt td::before{display:block;margin-bottom:1px}
+  table.lt td:first-child{grid-column:1/-1}
+  table.lt td.nil{display:none}
+}
+
+@media(max-width:620px){
+  .daily-hero{display:flex;flex-direction:column}
+  .daily-hero-grid{order:1}.hero-ai{order:2;margin-top:16px;padding-top:14px}.hero-sources{order:3}
+  .hero-ai-copy{display:none}
+  .hero-sources{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;margin-right:-20px;padding-right:20px}.hero-sources::-webkit-scrollbar{display:none}
+  .src{flex:0 0 auto}
+}
+
+.pipe-card>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}.pipe-card>summary::-webkit-details-marker{display:none}
+.pipe-title{display:flex;align-items:center;gap:9px;font-size:1.2rem;font-weight:700;letter-spacing:-.02em}
+.pipe-card>summary:after{content:'\25BE';color:var(--muted);margin-left:auto}.pipe-card[open]>summary:after{content:'\25B4'}
+.hero-ai-controls input{width:100%}
+@media(max-width:620px){.pipe{grid-template-columns:1fr}.pipe-step{display:grid;grid-template-columns:24px 1fr auto;gap:2px 10px;padding:10px 12px}.pipe-step small{grid-column:2/4}.pipe-title{font-size:1.1rem}}
+
+/* ---- v6: orders cards, settings pages, recipes, wizard, sources, views, alerts ---- */
+.subtabs{display:flex;gap:4px;background:var(--soft);padding:4px;border-radius:14px;margin-bottom:14px;width:max-content;max-width:100%;overflow-x:auto}
+.subtabs button{border:0;background:none;border-radius:10px;padding:9px 16px;font:600 .88rem var(--font);color:var(--muted);cursor:pointer;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.subtabs button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 4px rgba(44,33,28,.1)}
+.subtabs .count{display:inline-block;min-width:18px;padding:0 5px;border-radius:9px;background:var(--warn);color:#fff;font-size:.7rem;line-height:18px;text-align:center}
+.approve-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap;padding:4px 0 14px;border-bottom:1px solid var(--line);margin-bottom:12px}
+.approve-bar span{display:block;font-size:.8rem;margin-top:2px}.ab-act{display:flex;align-items:center;gap:12px}.ab-act strong{font-size:1.2rem}
+.sup-card{padding:0;overflow:hidden;transition:border-color .15s}
+.sup-card>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 16px}
+.sup-card>summary::-webkit-details-marker{display:none}
+.sup-card>summary:hover{background:var(--cream)}
+.sup-card.soon{border-color:rgba(201,138,54,.55)}
+.sc-main{display:flex;flex-direction:column;gap:3px;min-width:0}.sc-name{font-size:1rem}.sc-meta{color:var(--muted);font-size:.8rem}
+.sc-cut{display:flex;align-items:center;gap:5px;font-size:.78rem;color:var(--muted)}.sc-cut .svg-icon{width:14px;height:14px}.sc-cut.soon{color:#a0661a;font-weight:650}.sc-cut.passed{color:var(--muted)}
+.sc-main .if-skip{margin-top:2px}.sc-flags{display:flex;gap:4px;flex-wrap:wrap;margin-top:2px}
+.sc-act{display:flex;align-items:center;gap:10px}.sc-act strong{font-size:1.05rem}
+.sc-toggle{display:flex;align-items:center;gap:4px;color:var(--accent);font-size:.8rem;font-weight:600}.sc-toggle .chev{transform:rotate(90deg);transition:transform .15s;width:16px;height:16px}
+.sup-card[open] .sc-toggle .chev{transform:rotate(-90deg)}.sup-card[open] .sc-tt{display:none}
+.sc-body{padding:0 16px 14px;border-top:1px solid var(--line)}.sc-mail{font-size:.78rem;padding:10px 0 2px}
+.done-row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}.done-row:last-child{border-bottom:0}
+.done-row span{display:block;font-size:.8rem}.done-act{display:flex;gap:6px;align-items:center}
+.back{display:inline-flex;align-items:center;gap:4px;border:0;background:none;color:var(--accent);font:600 .9rem var(--font);padding:4px 0;margin:0 0 10px;cursor:pointer}.back .flip{transform:rotate(180deg);width:18px;height:18px}
+.set-list{padding:6px 8px}
+.set-row{display:grid;grid-template-columns:40px minmax(0,1fr) 20px;gap:12px;align-items:center;width:100%;text-align:left;border:0;background:none;padding:12px 8px;border-bottom:1px solid var(--line);font:inherit;color:inherit;cursor:pointer;border-radius:12px}
+.set-row:last-child{border-bottom:0}.set-row:hover{background:var(--cream)}
+.set-ic{width:38px;height:38px;border-radius:12px;background:var(--soft);color:var(--accent);display:grid;place-items:center;flex:0 0 auto}.set-ic .svg-icon{width:19px;height:19px}
+.set-t strong{display:block;font-size:.95rem}.set-t small{display:block;color:var(--muted);font-size:.8rem;margin-top:2px;overflow:hidden;text-overflow:ellipsis}.set-t small.warn{color:#a0661a;font-weight:600}
+.svg-icon.chev{width:18px;height:18px;color:var(--muted)}
+.checklist{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;border:1px solid rgba(36,112,90,.2);background:linear-gradient(135deg,#fffefb,#f2f7f4)}
+.cl-top{display:flex;justify-content:space-between;font-size:.9rem}.cl-top span{color:var(--muted)}
+.cl-bar{height:8px;border-radius:6px;background:#e7e0d6;margin:10px 0;overflow:hidden}.cl-bar i{display:block;height:100%;background:var(--accent);border-radius:6px}
+.cl-next{display:flex;align-items:center;gap:4px;color:var(--accent);font-weight:600;font-size:.88rem}
+.wiz-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.wiz-grid .wide{grid-column:1/-1}.wiz-grid input,.wiz-grid select{width:100%}
+.inline{display:flex;gap:8px;align-items:center}.inline input{flex:1;min-width:0}.inline.wrap{flex-wrap:wrap}.inline.wrap input{min-width:140px}
+.help.ok{color:var(--accent);font-weight:600}
+.menu-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0}.menu-tools input{flex:1;min-width:180px}
+.seg{display:inline-flex;background:var(--soft);border-radius:12px;padding:3px;gap:2px}.seg button{border:0;background:none;border-radius:9px;padding:7px 12px;font:600 .8rem var(--font);color:var(--muted);cursor:pointer;white-space:nowrap}.seg button.on{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(44,33,28,.12)}
+.seg.dark,.dark .seg{background:rgba(255,255,255,.12)}.dark .seg button{color:rgba(255,255,255,.75)}.dark .seg button.on{background:#fff;color:var(--ink)}
+.menu-list,.item-list{border-top:1px solid var(--line)}
+.menu-row{display:grid;grid-template-columns:minmax(0,1fr) auto 18px;gap:12px;align-items:center;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--line);padding:12px 4px;font:inherit;color:inherit;cursor:pointer}
+.menu-row:hover{background:var(--cream)}
+.mr-name strong{display:block;font-size:.95rem}.mr-name small{display:block;color:var(--muted);font-size:.78rem;margin-top:2px}
+.mr-right{display:flex;flex-direction:column;align-items:flex-end;gap:4px}.mr-right .pill{margin:0}
+.md-head{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap}.md-head h2{margin:2px 0}.md-price{width:130px}.md-price input{width:100%}
+.md-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:16px 0}.md-stats div{background:var(--cream);border-radius:12px;padding:10px 12px}.md-stats small{display:block;color:var(--muted);font-size:.72rem}.md-stats strong{font-size:1rem}
+.ing-list{border-top:1px solid var(--line);margin-bottom:12px}
+.ing-row{display:grid;grid-template-columns:minmax(0,1fr) auto 36px;gap:10px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.ing-n strong{display:block}.ing-n small{color:var(--muted);font-size:.74rem}
+.ing-q{display:flex;align-items:center;gap:6px}.ing-q input{width:86px;text-align:right}.ing-q small{color:var(--muted);min-width:34px}
+.add-ing{display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto;gap:10px;align-items:end;margin:10px 0}.add-ing select,.add-ing input{width:100%}
+.check-line{display:flex;gap:8px;align-items:center;font-size:.88rem;color:var(--ink);margin:8px 0}
+.md-foot{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.md-foot .btn.secondary{display:inline-flex;align-items:center;gap:4px}
+.add-box{margin-top:14px}.add-box>summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0}
+.search{width:100%;margin:6px 0 12px}
+.item-row>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto 18px;gap:12px;align-items:center;padding:12px 4px;border-bottom:1px solid var(--line)}
+.item-row>summary::-webkit-details-marker{display:none}.item-row>summary:hover{background:var(--cream)}
+.item-row[open]>summary .chev{transform:rotate(90deg)}
+.ir-name strong{display:block}.ir-name small{display:block;color:var(--muted);font-size:.78rem}
+.ir-val{display:flex;flex-direction:column;align-items:flex-end;gap:4px}.ir-val .pill{margin:0}
+.ir-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:12px;padding:14px 4px 16px;border-bottom:1px solid var(--line);background:var(--cream);border-radius:0 0 12px 12px}
+.ir-grid input,.ir-grid select{width:100%}.ir-del{display:flex;align-items:flex-end;justify-content:flex-end}
+.se-card{border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;background:var(--card)}
+.se-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:10px}.se-grid .se-name,.se-grid .se-mail{grid-column:span 1}.se-grid input{width:100%}
+.se-lbl{display:block;margin:12px 0 6px}
+.day-chips{display:flex;gap:6px;flex-wrap:wrap}.dchip{border:1px solid var(--line);background:var(--bg);border-radius:10px;padding:7px 10px;font:600 .8rem var(--font);color:var(--muted);cursor:pointer;min-width:46px}
+.dchip.on{background:var(--accent);border-color:var(--accent);color:#fff}
+.se-items{margin-top:10px;display:flex;gap:4px;flex-wrap:wrap}.se-items .pill{margin:0}
+.reassign>summary{cursor:pointer;font-weight:600;color:var(--accent);padding:6px 0}
+.ra-row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:6px 0;border-bottom:1px solid var(--line)}.ra-row select{max-width:60%}
+.toggle-row{display:grid;grid-template-columns:40px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);cursor:pointer;font-size:.9rem;color:var(--ink);margin:0}
+.switch{appearance:none;-webkit-appearance:none;width:44px;height:26px;border-radius:13px;background:#d8d0c5;position:relative;cursor:pointer;transition:background .15s;flex:0 0 auto;margin:0}
+.switch:after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.2);transition:left .15s}
+.switch:checked{background:var(--accent)}.switch:checked:after{left:21px}
+.src-list{border-top:1px solid var(--line)}
+.src-row{display:grid;grid-template-columns:40px minmax(0,1fr);gap:12px;padding:14px 0;border-bottom:1px solid var(--line)}
+.src-main strong{display:block}.src-main>small{display:block;color:var(--muted);font-size:.78rem}
+.src-state{display:flex;align-items:flex-start;gap:7px;margin-top:6px;font-size:.84rem;line-height:1.4}
+.src-state i{width:9px;height:9px;border-radius:50%;margin-top:5px;flex:0 0 auto;background:#9aa}
+.src-state.live i{background:#2f9e6b}.src-state.warn i{background:#e0a43a}.src-state.off i{background:#d0584c}.src-state.sample i{background:#bba996}.src-state.off{color:#a3443a}
+.src-extra{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:10px;margin-top:10px}.src-extra input,.src-extra select{width:100%}
+.demo-list{margin:6px 0 0;padding-left:20px;line-height:1.6;font-size:.9rem}.demo-list li{margin-bottom:6px}
+.view-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.view-opt{display:flex;flex-direction:column;gap:6px;text-align:left;border:1.5px solid var(--line);background:var(--card);border-radius:16px;padding:16px;font:inherit;color:inherit;cursor:pointer}
+.view-opt small{color:var(--muted);font-size:.8rem;line-height:1.4}.view-opt.on{border-color:var(--accent);box-shadow:0 0 0 3px rgba(36,112,90,.12)}
+.vo-ic{width:40px;height:40px;border-radius:12px;background:var(--soft);color:var(--accent);display:grid;place-items:center}
+.view-ctl{display:none}
+@media(min-width:960px){.view-ctl{display:block;margin:auto 0 12px}.vc-l{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--muted);font-weight:700;margin:0 0 6px 4px}.view-ctl .seg{display:flex;width:100%}.view-ctl .seg button{flex:1;padding:8px 4px}}
+.phone-bar .view-ctl-slot{display:block}
+.phone-stage{width:auto}.phone-dev.tablet{border-radius:34px}.phone-dev.tablet iframe{border-radius:22px}
+.in-frame .view-ctl{display:none!important}
+.wiz-title{margin:4px 0 12px}
+.wiz-steps{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 16px}
+.ws{display:flex;align-items:center;gap:6px;border:1px solid var(--line);background:var(--bg);border-radius:980px;padding:5px 12px 5px 5px;font:600 .78rem var(--font);color:var(--muted);cursor:pointer}
+.ws span{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;background:var(--soft);color:var(--accent);font-size:.72rem}
+.ws.on{border-color:var(--accent);color:var(--ink)}.ws.on span{background:var(--accent);color:#fff}.ws.done span{background:var(--accent);color:#fff}
+.wiz-cat{margin:14px 0}.wiz-cat h3{font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted);margin:0 0 8px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip-check{position:relative;margin:0;cursor:pointer}.chip-check input{position:absolute;opacity:0;pointer-events:none}
+.chip-check span{display:inline-block;border:1.5px solid var(--line);border-radius:980px;padding:8px 14px;font-size:.86rem;font-weight:500;color:var(--ink);background:var(--card)}
+.chip-check input:checked+span{background:var(--accent);border-color:var(--accent);color:#fff}
+.chip-check input:checked+span:before{content:'\2713  '}
+.chip-check input:focus-visible+span{outline:3px solid rgba(36,112,90,.3)}
+.wiz-list{border-top:1px solid var(--line)}
+.wl-row{display:grid;grid-template-columns:minmax(0,1.3fr) repeat(3,minmax(0,1fr));gap:12px;align-items:end;padding:12px 0;border-bottom:1px solid var(--line)}
+.wl-row>strong{align-self:center}.wl-f label{font-size:.72rem}.wl-f input{width:100%}.wl-f .inline input{width:90px;flex:0 0 auto}.wl-f small{color:var(--muted)}
+.wiz-foot{display:flex;justify-content:space-between;gap:10px;margin-top:20px;padding-top:16px;border-top:1px solid var(--line)}
+.note-card{background:var(--cream)}.learn-steps{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:10px}.learn-steps div{background:var(--card);border-radius:12px;padding:10px 12px;font-size:.82rem;line-height:1.45}.learn-steps b{display:block;color:var(--accent);margin-bottom:2px}
+#toasts{position:fixed;right:20px;bottom:96px;z-index:40;display:flex;flex-direction:column;gap:10px;width:min(380px,calc(100vw - 32px));pointer-events:none}
+.toast{pointer-events:auto;display:grid;grid-template-columns:36px 1fr 28px;gap:10px;align-items:start;background:var(--espresso);color:#fff;border-radius:18px;padding:14px;box-shadow:0 14px 34px rgba(44,33,28,.3);animation:toastIn .25s ease}
+@keyframes toastIn{from{transform:translateY(10px);opacity:0}to{transform:none;opacity:1}}
+.toast .t-ic{width:36px;height:36px;border-radius:11px;background:rgba(255,255,255,.12);display:grid;place-items:center}
+.toast.cutoff .t-ic{background:#c98a36}.toast.expiry .t-ic{background:#c95045}.toast.autopilot .t-ic{background:var(--accent)}
+.toast strong{display:block;font-size:.92rem}.toast p{margin:3px 0 8px;font-size:.82rem;line-height:1.4;color:rgba(255,255,255,.78)}
+.t-act{display:flex;gap:6px;flex-wrap:wrap}.toast .btn{background:#fff;color:var(--ink);border-color:#fff}.toast .btn.ghost{background:transparent;color:#fff;border-color:rgba(255,255,255,.4)}
+.toast .del{color:rgba(255,255,255,.7)}
+@media(max-width:959px){#toasts{bottom:calc(150px + env(safe-area-inset-bottom,0px));right:16px}}
+@media(max-width:900px){.se-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.se-grid .se-name,.se-grid .se-mail{grid-column:1/-1}.learn-steps{grid-template-columns:1fr}.view-opts{grid-template-columns:1fr}}
+@media(max-width:620px){
+  .subtabs{width:100%}.subtabs button{flex:1;justify-content:center;padding:9px 8px}
+  .sup-card>summary{grid-template-columns:1fr;padding:14px}
+  .sc-act{justify-content:space-between;border-top:1px dashed var(--line);padding-top:10px}.sc-act .btn{flex:1}
+  .sc-body{padding:0 14px 12px}
+  .approve-bar{flex-direction:column;align-items:stretch}.ab-act{justify-content:space-between}
+  .wiz-grid{grid-template-columns:1fr}
+  .wl-row{grid-template-columns:1fr 1fr}.wl-row>strong{grid-column:1/-1}
+  .add-ing{grid-template-columns:1fr 1fr}.add-ing .field:first-child{grid-column:1/-1}.add-ing .btn{align-self:end}
+  .md-stats{grid-template-columns:1fr 1fr 1fr}.md-stats div{padding:8px}
+  .ing-q input{width:72px}
+  .menu-tools .seg{width:100%}.menu-tools .seg button{flex:1}
+  .ir-grid{grid-template-columns:1fr 1fr}
+  .md-foot{flex-direction:column-reverse}.md-foot .btn{width:100%;justify-content:center}
+  .ra-row{flex-direction:column;align-items:stretch}.ra-row select{max-width:none}
+  .dchip{flex:1;min-width:0;padding:8px 0}
+}
+
+.add-ing.two{grid-template-columns:minmax(0,1fr) auto}
+.ws em{font-style:normal}
+@media(max-width:620px){
+  .add-ing.two{grid-template-columns:1fr auto}.add-ing.two .field:first-child{grid-column:auto}
+  .agent .agent-txt{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+  .wiz-steps{flex-wrap:nowrap}.ws:not(.on) em{display:none}.ws:not(.on){padding:5px}
+}
 </style>
 </head>
 <body>
 <header>
   <div class="brand"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-3"/><path d="M7 3v2M11 3v2"/></svg></div><div class="brand-copy"><h1>CafeCast</h1><div class="sub">Decisions, not dashboards.</div></div></div>
   <nav id="tabs"></nav>
-  <div class="ds"><label for="ds-pick">Prototype dataset</label><select id="ds-pick"><option value="demo">Demo café (original)</option><option value="littlefern">Little Fern Café</option></select></div>
+  <div class="view-ctl"><span class="vc-l">View</span><div class="view-ctl-slot"></div></div>
+  <div class="ds"><label for="ds-pick">Prototype dataset</label><select id="ds-pick"><option value="demo">Demo café (original)</option><option value="littlefern">Little Fern Café</option><option value="mine">My café (new setup)</option></select></div>
 </header>
 <main id="app"></main>
+<div id="toasts" aria-live="polite"></div>
+<div id="phone-ov" aria-hidden="true"><div class="phone-bar"><div><strong>Device preview</strong><span id="phone-label">same data as this window</span></div><div class="view-ctl-slot dark"></div></div><div class="phone-stage"><div class="phone-dev"><iframe id="phone-frame" title="CafeCast on a phone"></iframe></div></div></div>
 <button id="mic-fab" data-act="voice-open" aria-label="Talk to CafeCast"><svg class="svg-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></button>
 <div id="voice" role="dialog" aria-label="CafeCast voice assistant"><div class="v-card">
   <div class="v-head"><strong>Ask CafeCast</strong><button class="del" data-act="voice-close" aria-label="Close">✕</button></div>
@@ -252,7 +481,7 @@ details[open] summary{margin-bottom:12px}
    Single-file prototype. Data lives in this browser (localStorage).
    ========================================================= */
 const KEY_BASE='cafecast_v3';
-const DATASETS={demo:'Demo caf\u00e9 (original)',littlefern:'Little Fern Caf\u00e9 (spreadsheet data)'};
+const DATASETS={demo:'Demo caf\u00e9 (original)',littlefern:'Little Fern Caf\u00e9 (spreadsheet data)',mine:'My caf\u00e9 (new setup)'};
 let DS=(()=>{ try{ const d=localStorage.getItem('cafecast_dataset'); return DATASETS[d]?d:'littlefern'; }catch(e){ return 'littlefern'; } })();
 const keyFor=d=>d==='demo'?KEY_BASE:KEY_BASE+'_'+d;
 const DAY=864e5;
@@ -263,13 +492,35 @@ const r2=n=>Math.round(n*100)/100;
 const fmt=(n,d=1)=>{const p=10**d;return String(Math.round(n*p)/p);};
 const money=n=>'$'+(n||0).toFixed(2);
 const sum=(a,f)=>a.reduce((s,x)=>s+f(x),0);
-const isoOf=t=>{const x=new Date(t);return x.getFullYear()+'-'+String(x.getMonth()+1).padStart(2,'0')+'-'+String(x.getDate()).padStart(2,'0');};
+/* ---------------- CAFE-LOCAL CALENDAR ----------------
+   "Today", weekdays and cut-offs are worked out in the cafe's own time zone (default Australia/Sydney),
+   never the viewer's computer clock, and days are counted on the calendar so daylight saving can't shift them. */
+let cafeTZ='Australia/Sydney';
+const TZ=()=>cafeTZ;
+const _tzf={}, _isoC=new Map();
+function tzParts(t){
+  const z=TZ(); let f=_tzf[z];
+  if(!f){ try{ f=new Intl.DateTimeFormat('en-CA',{timeZone:z,year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hourCycle:'h23'}); }catch(e){ cafeTZ='Australia/Sydney'; return tzParts(t); } _tzf[z]=f; }
+  const o={}; f.formatToParts(new Date(t)).forEach(x=>o[x.type]=x.value);
+  return {y:+o.year,m:+o.month,d:+o.day,h:(+o.hour)%24,mi:+o.minute,s:+o.second};
+}
+const pad2=n=>String(n).padStart(2,'0');
+const isoOf=t=>{ const k=TZ()+'|'+Math.floor(t/9e5); let v=_isoC.get(k); if(!v){ const x=tzParts(t); v=x.y+'-'+pad2(x.m)+'-'+pad2(x.d); if(_isoC.size>5000) _isoC.clear(); _isoC.set(k,v); } return v; };
+const isoUTC=iso=>{ const [y,m,d]=iso.split('-').map(Number); return Date.UTC(y,m-1,d); };
+const isoAdd=(iso,n)=>new Date(isoUTC(iso)+n*DAY).toISOString().slice(0,10);
+const isoDiff=(a,b)=>Math.round((isoUTC(a)-isoUTC(b))/DAY);
+const dowISO=iso=>new Date(isoUTC(iso)).getUTCDay();
+const tzOffset=t=>{ const x=tzParts(t); return Date.UTC(x.y,x.m-1,x.d,x.h,x.mi,x.s)-Math.floor(t/1000)*1000; };
+const midnightOf=iso=>{ const g=isoUTC(iso); let t=g-tzOffset(g); t=g-tzOffset(t); return t; };
 const todayISO=()=>isoOf(Date.now());
-const addDaysISO=n=>isoOf(Date.now()+n*DAY);
-const startOfDay=t=>{const d=new Date(t);d.setHours(0,0,0,0);return d.getTime();};
-const timeStr=t=>new Date(t).toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});
-const dayTimeStr=t=>new Date(t).toLocaleDateString([], {weekday:'short',day:'numeric',month:'short'})+' '+timeStr(t);
-function daysUntil(iso){ if(!iso) return null; const [y,m,d]=iso.split('-').map(Number); return Math.round((new Date(y,m-1,d)-startOfDay(Date.now()))/DAY); }
+const addDaysISO=n=>isoAdd(todayISO(),n);
+const startOfDay=t=>midnightOf(isoOf(t));
+const nowMins=()=>{ const x=tzParts(Date.now()); return x.h*60+x.mi; };
+const fmtISO=(iso,o)=>new Date(isoUTC(iso)+12*3600e3).toLocaleDateString(undefined,{...o,timeZone:'UTC'});
+const todayStr=o=>fmtISO(todayISO(),o);
+const timeStr=t=>new Date(t).toLocaleTimeString([], {hour:'numeric',minute:'2-digit',timeZone:TZ()});
+const dayTimeStr=t=>new Date(t).toLocaleDateString([], {weekday:'short',day:'numeric',month:'short',timeZone:TZ()})+' '+timeStr(t);
+function daysUntil(iso){ if(!iso) return null; return isoDiff(iso,todayISO()); }
 function expLabel(d){ return d===null?'no expiry':d<0?'expired':d===0?'today':d===1?'tomorrow':`in ${d} days`; }
 const WHOLE=['ea','each','loaf','loaves','dozen','pack','box','bag','tray','punnet'];
 const stepFor=u=>WHOLE.includes(String(u).toLowerCase())?1:0.5;
@@ -289,15 +540,34 @@ const ICONS={
   mic:'<rect x="9" y="3" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/>',
   dollar:'<path d="M12 2v20M17 6H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>',
   bolt:'<path d="M13 2 4 14h7l-1 8 9-12h-7Z"/>',
+  store:'<path d="M3 9l1.5-5h15L21 9"/><path d="M4 9v11h16V9M3 9h18M9 20v-6h6v6"/>',
+  book:'<path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2Z"/><path d="M4 19V5M9 7h6"/>',
+  truck:'<path d="M3 6h11v10H3z"/><path d="M14 9h4l3 3v4h-7"/><circle cx="7" cy="18" r="2"/><circle cx="17" cy="18" r="2"/>',
+  plug:'<path d="M9 2v6M15 2v6"/><path d="M6 8h12v3a6 6 0 0 1-12 0Z"/><path d="M12 17v5"/>',
+  phone:'<rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/>',
+  bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 8 3 8H3s3-1 3-8"/><path d="M10 20a2 2 0 0 0 4 0"/>',
+  chev:'<path d="m9 6 6 6-6 6"/>',
   database:'<ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v6c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 11v6c0 1.7 3.6 3 8 3s8-1.3 8-3v-6"/>'
 };
 const icon=(name,cls='')=>`<svg class="svg-icon ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[name]||ICONS.plan}</svg>`;
 
 /* ---------------- DATA ---------------- */
 let db=null;
-function load(){ try{ const d=JSON.parse(localStorage.getItem(keyFor(DS))); if(d&&d.v===3){ d.extras=d.extras||[]; d.notes=d.notes||[]; d.promos=d.promos||[]; d.settings=d.settings||{}; d.settings.geminiKey=d.settings.geminiKey||''; d.settings.geminiModel=d.settings.geminiModel||'gemini-3.8-flash'; if(/^gemini-2\.5-/.test(d.settings.geminiModel)) d.settings.geminiModel='gemini-3.8-flash'; d.aiBrief=d.aiBrief||null; return d; } }catch(e){} return seed(); }
-function save(){ try{ localStorage.setItem(keyFor(DS),JSON.stringify(db)); }catch(e){} }
-function seed(){ return DS==='littlefern'?seedLittleFern():seedDemo(); }
+function load0(){ try{ const d=JSON.parse(localStorage.getItem(keyFor(DS))); if(d&&d.v===3){ d.extras=d.extras||[]; d.notes=d.notes||[]; d.promos=d.promos||[]; d.settings=d.settings||{}; d.settings.geminiKey=d.settings.geminiKey||''; d.settings.geminiModel=d.settings.geminiModel||'gemini-3.8-flash'; if(/^gemini-2\.5-/.test(d.settings.geminiModel)) d.settings.geminiModel='gemini-3.8-flash'; d.aiBrief=d.aiBrief||null; return d; } }catch(e){} return seed(); }
+const KEEP=['geminiKey','geminiModel','tmKey','webhook','mode','modeSet','autopilot','autoLimit','close','assume','owner','liveOnly','detail','lat','lon','place','state','tz','buffer','cover','holidayUplift','showAll'];
+let refreshNote=false, phoneOpen=false;
+function load(){
+  const d=load0();
+  if(d.settings&&d.settings.tz) cafeTZ=d.settings.tz;
+  if(DS==='mine'||d.dataset==='mine'||d.seededISO===todayISO()) return d;
+  /* Sample data is generated relative to the day it was created. On a new day it is rebuilt for today (settings, keys and the
+     impact log are kept), so sales history, expiry dates and bookings line up with the real calendar again. */
+  const keep=d.settings||{}, log=d.impactLog||[], wx=d.wx||null;
+  seed(); KEEP.forEach(k=>{ if(keep[k]!==undefined) db.settings[k]=keep[k]; }); db.impactLog=log; db.wx=wx;
+  refreshNote=true; save(); return db;
+}
+function save(){ if(phoneOpen) return; try{ localStorage.setItem(keyFor(DS),JSON.stringify(db)); }catch(e){} }
+function seed(){ return DS==='littlefern'?seedLittleFern():DS==='mine'?seedBlank():seedDemo(); }
 
 function seedDemo(){
   const ing=(name,unit,cost,supplier,email,reorder,par,lead,shelf,perishable,batches)=>({id:cid(),name,unit,cost,supplier,email,reorder,par,lead,shelf,perishable,
@@ -311,7 +581,7 @@ function seedDemo(){
   const cups =ing('Takeaway cups','ea',0.12,'Roast House','orders@roasthouse.example',200,1000,3,null,false,[[600,null]]);
   const R=(i,q)=>({ing:i.id,qty:q});
   const M=(name,price,recipe)=>({id:cid(),name,price,recipe,src:'setup',noPerishables:false});
-  db={v:3,
+  db={v:3,seededISO:todayISO(),
     ingredients:[milk,oat,eggs,bread,avo,beans,cups],
     menu:[
       M('Flat White',5,[R(milk,.2),R(beans,.02)]),
@@ -336,7 +606,10 @@ function seedDemo(){
 /* Little Fern Café: loaded from the embedded spreadsheet data, with the workbook's "today" moved to the real today */
 function seedLittleFern(){
   const D=JSON.parse(document.getElementById('lf-data').textContent);
-  const t0=startOfDay(Date.now()), at=(k,h)=>t0+k*DAY+(h||12)*3600e3, iso=k=>addDaysISO(k);
+  const t0=startOfDay(Date.now()), at=(k,h)=>midnightOf(addDaysISO(k))+(h||12)*3600e3, iso=k=>addDaysISO(k);
+  /* The workbook's "today" is a Wednesday. Rotate its 6-week history so each weekday's trading pattern lands on the
+     same real weekday (Saturdays stay busy on Saturdays), and move sample bookings to the same weekday they were planned for. */
+  const sh=(dowISO(todayISO())-3+7)%7, past=(k,n)=>-1-((-1-k+sh)%n), fut=k=>{ let x=k-sh; while(x<0) x+=7; return x; };
   const ids={}, mids={};
   const ingredients=D.ing.map(([id,name,unit,shelf,cost,sid,pack,par,min,per])=>{ const s=D.sup[sid]||{};
     const o={id:cid(),name,unit,cost,supplier:s.name||'',email:s.email||'',reorder:min,par,lead:s.lead||1,days:s.days||null,cutoff:s.cutoff||'',minOrder:s.min||0,shelf,pack,perishable:!!per,batches:[]};
@@ -346,13 +619,13 @@ function seedLittleFern(){
   const menu=D.menu.map(([id,name,price])=>{ const m={id:cid(),name,price,recipe:[],src:'setup',noPerishables:false}; mids[id]=m.id; return m; });
   D.rec.forEach(([mid,iid,q])=>{ const m=menu.find(x=>x.id===mids[mid]); if(m&&ids[iid]) m.recipe.push({ing:ids[iid],qty:q}); });
   menu.forEach(m=>{ if(!m.recipe.length) m.noPerishables=true; });
-  const sales=D.sales.map(([k,mid,q,rev])=>({id:cid(),menuId:mids[mid],qty:q,ts:at(k),rev,src:'square'}));
-  const waste=D.waste.map(([k,iid,q,reason,cost])=>{ const i=byId(iid); return {id:cid(),ingId:ids[iid],name:i?i.name:iid,unit:i?i.unit:'',qty:q,reason,cost,ts:at(k,15),auto:false}; });
-  const events=D.ev.map(([k,name,up,type,dist,att])=>({id:cid(),date:iso(k),name,uplift:up,auto:false,cal:true,
-    src:type==='Owner input'?'Owner input':`Café calendar · ${type}${dist?` · ${dist} km away`:''}${att?` · ~${att} people`:''}`}));
-  const extras=D.extras.map(([k,ms,q,text])=>({id:cid(),date:iso(k),menuIds:ms.map(x=>mids[x]).filter(Boolean),qty:q,text}));
+  const sales=D.sales.map(([k,mid,q,rev])=>({id:cid(),menuId:mids[mid],qty:q,ts:at(past(k,42)),rev,src:'square'}));
+  const waste=D.waste.map(([k,iid,q,reason,cost])=>{ const i=byId(iid); return {id:cid(),ingId:ids[iid],name:i?i.name:iid,unit:i?i.unit:'',qty:q,reason,cost,ts:at(past(k,14),15),auto:false}; });
+  const events=D.ev.map(([k,name,up,type,dist,att])=>({id:cid(),date:iso(fut(k)),name,uplift:up,auto:false,cal:true,sample:true,
+    src:type==='Owner input'?'Sample owner input':`Sample café calendar · ${type}${dist?` · ${dist} km away`:''}${att?` · ~${att} people`:''}`}));
+  const extras=D.extras.map(([k,ms,q,text])=>({id:cid(),date:iso(fut(k)),menuIds:ms.map(x=>mids[x]).filter(Boolean),qty:q,text}));
   const notes=D.notes.map(([k,type,text,by])=>({id:cid(),date:iso(k),type,text,by}));
-  db={v:3,dataset:'littlefern',ingredients,menu,sales,waste,orders:[],events,extras,notes,promos:[],drafts:{},skip:{},wasteChecks:{},importKeys:{},dismissed:{},
+  db={v:3,seededISO:todayISO(),dataset:'littlefern',ingredients,menu,sales,waste,orders:[],events,extras,notes,promos:[],drafts:{},skip:{},wasteChecks:{},importKeys:{},dismissed:{},
     settings:{buffer:D.cafe.buffer,cover:2,mode:'email',modeSet:true,webhook:'',lat:D.cafe.lat,lon:D.cafe.lon,place:D.cafe.place,state:'AU-NSW',holidayUplift:10,tmKey:'',geminiKey:'',geminiModel:'gemini-3.8-flash',showAll:false,
       stockCountTs:t0,lastImport:{ts:Date.now(),label:`${D.cafe.name} sales history (6 weeks, from spreadsheet)`,rows:sales.length},lastScan:null,lastScanTs:null,scanNote:'',cafeName:D.cafe.name},aiBrief:null};
   return db;
@@ -415,7 +688,7 @@ function importSquare(text,label){
   rows.slice(hi+1).forEach(r=>{
     const name=(r[iI]||'').trim(), qty=num(r[iQ]); if(!name||!qty) return;
     const dp=iD>=0?parseDate(r[iD]):null, tp=iT>=0?parseTime(r[iT]):[12,0];
-    const ts=dp?new Date(dp[0],dp[1]-1,dp[2],tp[0],tp[1]).getTime():Date.now();
+    const ts=dp?midnightOf(dp[0]+'-'+pad2(dp[1])+'-'+pad2(dp[2]))+(tp[0]*60+tp[1])*60e3:Date.now();
     const key=(iX>=0&&r[iX])?r[iX]+'|'+name:[r[iD],r[iT],name,r[iQ],r[iG]].join('|');
     if(db.importKeys[key]){dup++;return;} db.importKeys[key]=1;
     const gross=iG>=0?num(r[iG]):NaN;
@@ -433,11 +706,10 @@ function sampleCSV(){
   const base={'Flat White':[45,'Coffee',5],'Latte':[35,'Coffee',5],'Cappuccino':[20,'Coffee',5],'Oat Latte':[18,'Coffee',5.8],
     'Avo Toast':[14,'Food',16],'Eggs on Toast':[10,'Food',14],'Smashed Avo & Poached Eggs':[9,'Food',19.5],'Banana Bread':[12,'Food',6]};
   const rows=[['Date','Time','Category','Item','Qty','Price Point Name','Gross Sales','Transaction ID']];
-  const now=new Date(), frac=Math.min(1,Math.max(0,(now.getHours()+now.getMinutes()/60-7)/8));
+  const frac=Math.min(1,Math.max(0,(nowMins()/60-7)/8));
   for(let d=14;d>=0;d--){
-    const day=new Date(Date.now()-d*DAY), dow=day.getDay();
+    const date=addDaysISO(-d), dow=dowISO(date);
     const f=(dow===0||dow===6)?1.25:dow===1?0.9:1, part=d===0?frac:1; if(part<=0) continue;
-    const date=isoOf(day);
     for(const [item,[q,cat,price]] of Object.entries(base)){
       const qty=Math.round(q*f*part*(0.85+Math.random()*0.3)); if(qty<=0) continue;
       rows.push([date,d===0?'07:30:00':'12:00:00',cat,item,qty,'Regular','$'+(qty*price).toFixed(2),'DEMO-'+date+'-'+item.replace(/\W+/g,'')]);
@@ -466,13 +738,18 @@ async function handleFile(f){
 function completeDays(){ const t0=startOfDay(Date.now()), s=new Set(); db.sales.forEach(x=>{ if(x.ts<t0&&x.ts>=t0-14*DAY) s.add(isoOf(x.ts)); }); return s.size; }
 function availableHistoryDays(){ const t0=startOfDay(Date.now()), s=new Set(); db.sales.forEach(x=>{ if(x.ts<t0) s.add(isoOf(x.ts)); }); return s.size; }
 function usageNormal(){
-  const t0=startOfDay(Date.now()), n=completeDays(), u={}; if(!n) return u;
-  db.sales.forEach(s=>{ if(s.ts>=t0||s.ts<t0-14*DAY) return; const m=menuById(s.menuId); if(!m) return; m.recipe.forEach(r=>u[r.ing]=(u[r.ing]||0)+r.qty*s.qty); });
-  for(const k in u) u[k]/=n; return u;
+  const t0=startOfDay(Date.now()), n=completeDays(), u={}; usageSrc={};
+  if(n){ db.sales.forEach(s=>{ if(s.ts>=t0||s.ts<t0-14*DAY) return; const m=menuById(s.menuId); if(!m) return; m.recipe.forEach(r=>u[r.ing]=(u[r.ing]||0)+r.qty*s.qty); });
+    for(const k in u){ u[k]/=n; usageSrc[k]='sales'; } }
+  /* Owner's "usual use per day" stands in until there are ~3 weeks of sales, then fades out */
+  const w=Math.min(1,(n||0)/21);
+  db.ingredients.forEach(i=>{ const e=+i.est||0; if(!(e>0)) return; const sv=u[i.id]||0;
+    if(sv>0&&w>0){ u[i.id]=w*sv+(1-w)*e; usageSrc[i.id]=w>=1?'sales':'blend'; } else { u[i.id]=e; usageSrc[i.id]='est'; } });
+  return u;
 }
 function salesHistory(){
   const t0=startOfDay(Date.now()), m={};
-  db.sales.forEach(s=>{ if(s.ts>=t0||s.ts<t0-28*DAY) return; const k=isoOf(s.ts); m[k]=m[k]||{rev:0,qty:0,dow:new Date(s.ts).getDay()}; m[k].rev+=s.rev; m[k].qty+=s.qty; });
+  db.sales.forEach(s=>{ if(s.ts>=t0||s.ts<t0-28*DAY) return; const k=isoOf(s.ts); m[k]=m[k]||{rev:0,qty:0,dow:dowISO(k)}; m[k].rev+=s.rev; m[k].qty+=s.qty; });
   return Object.values(m);
 }
 function baseForecast(){
@@ -486,14 +763,14 @@ function dowTable(){
   for(let w=0;w<7;w++){ const x=past.filter(v=>v.dow===w); if(x.length) t[w]=Math.min(1.6,Math.max(0.5,(sum(x,v=>v.rev)/x.length)/avg)); }
   return t;
 }
-const eventsOn=d=>db.events.filter(e=>e.date===d);
-const wdOf=k=>new Date(startOfDay(Date.now())+k*DAY+12*3600e3).getDay();
-const dayName=iso=>new Date(iso+'T12:00:00').toLocaleDateString(undefined,{weekday:'short'});
-const dayLabel=iso=>{ const d=daysUntil(iso); return d===0?'today':d===1?'tomorrow':new Date(iso+'T12:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'}); };
+const eventsOn=d=>db.events.filter(e=>e.date===d&&!(e.sample&&db.settings.liveOnly!==false));
+const wdOf=k=>dowISO(addDaysISO(k));
+const dayName=iso=>fmtISO(iso,{weekday:'short'});
+const dayLabel=iso=>{ const d=daysUntil(iso); return d===0?'today':d===1?'tomorrow':fmtISO(iso,{weekday:'short',day:'numeric',month:'short'}); };
 /* Demand multiplier for day k from today: weekday pattern x weather (today) x events */
 function dayFactor(k,tbl){
   let f=tbl[wdOf(k)]??1;
-  if(k===0&&isWet()) f*=0.9;
+  if(wetDay(wxOn(addDaysISO(k)))) f*=0.9;
   return f*Math.max(0.3,1+sum(eventsOn(addDaysISO(k)),e=>+e.uplift||0)/100);
 }
 /* Extra demand from owner inputs such as catering orders */
@@ -504,7 +781,7 @@ function extraUse(ingId,k){
 /* When would an order placed now arrive, and how long until the delivery after that? */
 function deliveryPlan(i,cover){
   let lead=Math.max(0,+i.lead||1);
-  if(i.cutoff){ const [h,m]=String(i.cutoff).split(':').map(Number), n=new Date(); if(n.getHours()*60+n.getMinutes()>h*60+(m||0)) lead+=1; }
+  if(i.cutoff){ const [h,m]=String(i.cutoff).split(':').map(Number); if(nowMins()>h*60+(m||0)) lead+=1; }
   if(!i.days||!i.days.length) return {lead,cycle:cover,date:addDaysISO(lead)};
   let k=lead; while(!i.days.includes(wdOf(k))&&k<lead+14) k++;
   let k2=k+1; while(!i.days.includes(wdOf(k2))&&k2<k+14) k2++;
@@ -558,6 +835,7 @@ function analyse(){
       if(risk>0.05) p.push(`${fmt(risk)} ${i.unit} on hand will expire before it’s used`);
       if(capped) p.push(`capped to ${i.shelf}-day shelf life`);
       if(+i.pack>1||(+i.pack>0&&+i.pack<1)) p.push(`packs of ${i.pack}`);
+      if(usageSrc[i.id]==='est') p.push('based on your usual-use estimate (learning)'); else if(usageSrc[i.id]==='blend') p.push('blending your estimate with sales so far');
       why=p.join(' · ');
     }
     const status=next&&next.d<0?'expired':out?'out':need?'order':risk>0.05?'risk':(next&&next.d<=2)?'exp':'ok';
@@ -585,8 +863,9 @@ function dataReadiness(){
   const live=db.sales.some(s=>s.ts>=t0&&s.src!=='manual');
   let score=Math.max(15,Math.min(98,Math.round(Math.min(35,days/28*35)+coverage*.35+stock*.2+external)));
   if(!live) score=Math.min(79,score);
+  const L=learningState(); if(L.on) score=Math.min(score,40);
   const label=score>=80?'High':score>=60?'Medium':'Low';
-  return {days,coverage,stock,score,label,sold,live};
+  return {days,coverage,stock,score,label,sold,live,learning:L.on};
 }
 function menuSpecials(A){
   const activePromos=new Map((db.promos||[]).filter(p=>p.active).map(p=>[p.menuId,p]));
@@ -641,12 +920,11 @@ async function runGeminiContext(){
   const key=(db.settings.geminiKey||'').trim(), input=(($('ai-context')||{}).value||'').trim();
   const status=$('ai-status'), button=$('ai-run');
   if(!key){
-    if(status){ status.className='ai-status error'; status.textContent='Add your free Gemini API key in Setup first.'; }
-    return;
+    return quickContext(input);
   }
   aiBusy=true;
   if(button){ button.disabled=true; button.textContent='Forecasting…'; }
-  if(status){ status.className='ai-status'; status.textContent='Gemini is combining POS history, weather, events and your optional note…'; }
+  if(status){ status.className='hero-ai-status'; status.textContent='Gemini is combining POS history, weather, events and your optional note…'; }
   try{
     const model=db.settings.geminiModel||'gemini-3.8-flash';
     const prompt=`You are the CafeCast AI Demand Forecasting Agent for an independent café. Forecast TODAY'S total customer demand relative to a normal trading day by combining the supplied POS sales history, weekday pattern, weather, nearby events and optional owner note. The percentage you return must be the FINAL total change from normal, not an additional adjustment. Do not calculate stock orders or invent facts. Return JSON only with these fields: title (short string), demand_change_percent (integer from -60 to 100), summary (one sentence naming the most important drivers), next_step (one concrete preparation action for the owner), confidence ("Low", "Medium", or "High"). If evidence is weak, stay close to the weekday pattern and use Low confidence.\n\nCAFÉ DATA:\n${JSON.stringify(aiSnapshot())}\n\nOPTIONAL OWNER NOTE:\n${input||'None provided'}`;
@@ -664,7 +942,7 @@ async function runGeminiContext(){
     const nonAiEvents=sum(eventsOn(todayISO()).filter(e=>!e.ai),e=>+e.uplift||0);
     const target=Math.max(.4,1+uplift/100);
     const calibrated=Math.round(((target/(weekday*wx)-1)*100)-nonAiEvents);
-    const brief={title:String(result.title||'AI demand forecast'),appliesTo:'today',uplift,signal:calibrated,summary:String(result.summary||'Gemini combined the available demand signals.'),nextStep:String(result.next_step||'Review the refreshed plan.'),confidence:['Low','Medium','High'].includes(result.confidence)?result.confidence:'Medium',input,ts:Date.now(),model};
+    const brief={date:todayISO(),title:String(result.title||'AI demand forecast'),appliesTo:'today',uplift,signal:calibrated,summary:String(result.summary||'Gemini combined the available demand signals.'),nextStep:String(result.next_step||'Review the refreshed plan.'),confidence:['Low','Medium','High'].includes(result.confidence)?result.confidence:'Medium',input,ts:Date.now(),model};
     db.events=db.events.filter(e=>!e.ai).concat({id:cid(),date:todayISO(),name:brief.title,uplift:calibrated,auto:false,cal:true,ai:true,src:`Gemini · ${model}`});
     db.aiBrief=brief;
     db.settings.lastScanTs=Date.now();
@@ -672,53 +950,86 @@ async function runGeminiContext(){
     flash='Gemini generated today’s demand forecast and refreshed the operational plan.';
     render();
   }catch(err){
-    if(status){ status.className='ai-status error'; status.textContent=err&&err.message?err.message:'Gemini could not generate the forecast.'; }
+    if(status){ status.className='hero-ai-status error'; status.textContent=err&&err.message?err.message:'Gemini could not generate the forecast.'; }
     if(button){ button.disabled=false; button.textContent='Generate AI forecast'; }
   }finally{ aiBusy=false; }
 }
 
+function noteUplift(text){
+  const t=String(text).toLowerCase(), m=/([+-]?\d+)\s*(%|percent)/.exec(t);
+  let u=m?parseInt(m[1]):(/clos|roadwork|construction|parking|rain|storm|quiet|slow|fewer|less|short.?staff|outage|power|strike/.test(t)?-15:/busy|busier|event|festival|market|game|concert|holiday|tour|group|crowd|launch|promo|more/.test(t)?15:0);
+  if(/quiet|slow|fewer|less|down|clos|roadwork/.test(t)&&u>0) u=-u;
+  return Math.max(-60,Math.min(100,u));
+}
+function quickContext(input){
+  const status=$('ai-status');
+  if(!input){ if(status){ status.className='hero-ai-status error'; status.textContent='Type what’s different today, e.g. “roadworks out front” or “school group of 40 at 11am, +20%”.'; } return; }
+  const u=noteUplift(input);
+  db.events=db.events.filter(e=>!e.ai).concat({id:cid(),date:todayISO(),name:input.slice(0,80),uplift:u,auto:false,cal:true,ai:true,src:'Owner note · quick estimate'});
+  const tot=Math.round((factors().total-1)*100);
+  db.aiBrief={date:todayISO(),input,quick:true,uplift:tot,
+    title:u===0?'Noted, no change detected':`Your note: ${u>0?'+':''}${u}%`,
+    summary:u===0?'CafeCast couldn’t tell whether this makes today busier or quieter. Add a number, e.g. “−20%”.':`Quick estimate without AI: words like “roadworks” or “quiet” mean −15%, “event” or “busy” mean +15%, or type an exact %. Combined with weekday, live weather and events, today is now ${tot>=0?'+':''}${tot}% vs normal.`,
+    nextStep:'Every order quantity has been recalculated.'};
+  save(); flash='Your note was added to today’s forecast and every order was recalculated.'; render();
+}
+
 /* ---------------- WEATHER + LOCAL EVENTS (fetched online) ---------------- */
-let weather=null;
-function isWet(){ return !!weather&&(weather.rain>=60||(weather.code>=51&&weather.code<=67)||(weather.code>=80&&weather.code<=82)); }
+/* Weather comes from Open-Meteo for the next 16 days, asked for in the cafe's time zone and stored BY DATE,
+   so today's adjustment always uses today's forecast and each later day uses its own. */
+let weather=null, wxDays={}, wxStatus='loading';
+const wetDay=w=>!!w&&(w.rain>=60||(w.code>=51&&w.code<=67)||(w.code>=80&&w.code<=82)||w.code>=95);
+function isWet(){ return wetDay(weather); }
+const wxOn=iso=>wxDays[iso]||null;
+function syncWeather(){ weather=wxDays[todayISO()]||null; }
+function useWxCache(){ const c=db.wx, s=db.settings; wxDays=(c&&c.days&&c.lat===s.lat&&c.lon===s.lon)?c.days:{}; syncWeather(); wxStatus=weather?'cached':'loading'; }
 function wxText(c){ return c===0?'Clear':c<=3?'Partly cloudy':c<=48?'Fog':c<=67?'Rain':c<=77?'Snow':c<=82?'Showers':'Thunderstorms'; }
 function loadWeather(){
-  const s=db.settings;
-  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${s.lat}&longitude=${s.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=auto&forecast_days=1`)
-    .then(r=>r.json()).then(d=>{ const x=d.daily; weather={code:x.weathercode[0],max:x.temperature_2m_max[0],min:x.temperature_2m_min[0],rain:x.precipitation_probability_max[0]}; softRender(); })
-    .catch(()=>{});
+  const s=db.settings; useWxCache();
+  const url=`https://api.open-meteo.com/v1/forecast?latitude=${s.lat}&longitude=${s.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_probability_max&timezone=${encodeURIComponent(TZ())}&forecast_days=16`;
+  return fetch(url).then(r=>{ if(!r.ok) throw new Error(r.status); return r.json(); }).then(d=>{
+    const x=d.daily||{}, codes=x.weathercode||x.weather_code||[], m={};
+    (x.time||[]).forEach((t,j)=>m[t]={date:t,code:codes[j],max:x.temperature_2m_max[j],min:x.temperature_2m_min[j],rain:x.precipitation_probability_max[j]??0});
+    wxDays=m; db.wx={ts:Date.now(),days:m,lat:s.lat,lon:s.lon}; syncWeather(); wxStatus=weather?'live':'nodate'; save(); softRender();
+  }).catch(()=>{ wxStatus=weather?'cached':'offline'; softRender(); });
 }
+/* Public holidays (Nager.Date, no key) and Ticketmaster events (free key) for today + the next 7 days */
 async function scanEvents(force){
-  const s=db.settings, t=todayISO(), tm=addDaysISO(1);
+  const s=db.settings, t=todayISO(), end=addDaysISO(7);
   if(!force&&s.lastScan===t) return;
-  const found=[], notes=[];
+  const inRange=d=>d>=t&&d<=end, found=[], notes=[], ok={};
   try{
-    const y=new Date().getFullYear();
-    const hs=await (await fetch(`https://date.nager.at/api/v3/PublicHolidays/${y}/AU`)).json();
-    hs.filter(h=>(h.date===t||h.date===tm)&&(h.global||!h.counties||h.counties.includes(s.state)))
-      .forEach(h=>found.push({date:h.date,name:h.localName||h.name,uplift:+s.holidayUplift||0,src:'Public holiday'}));
-    notes.push('public holidays');
-  }catch(e){}
+    for(const y of [...new Set([t.slice(0,4),end.slice(0,4)])]){
+      const r=await fetch(`https://date.nager.at/api/v3/PublicHolidays/${y}/AU`); if(!r.ok) throw 0;
+      (await r.json()).filter(h=>inRange(h.date)&&(h.global||!h.counties||h.counties.includes(s.state)))
+        .forEach(h=>found.push({date:h.date,name:h.localName||h.name,uplift:+s.holidayUplift||0,src:'Public holiday · Nager.Date',kind:'hol'}));
+    }
+    notes.push('public holidays'); ok.hol=true;
+  }catch(e){ ok.hol=false; }
   if(s.tmKey){
     try{
-      const url=`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${encodeURIComponent(s.tmKey)}&latlong=${s.lat},${s.lon}&radius=3&unit=km&startDateTime=${t}T00:00:00Z&endDateTime=${addDaysISO(2)}T00:00:00Z&size=50&sort=date,asc`;
-      const d=await (await fetch(url)).json(), by={};
-      ((d._embedded&&d._embedded.events)||[]).forEach(e=>{ const dt=e.dates&&e.dates.start&&e.dates.start.localDate; if(dt===t||dt===tm){ (by[dt]=by[dt]||[]).push(e.name); } });
-      Object.entries(by).forEach(([dt,names])=>found.push({date:dt,name:names.length===1?names[0]:`${names.length} events within 3 km (e.g. ${names[0]})`,uplift:Math.min(25,5*names.length),src:'Ticketmaster'}));
-      notes.push('Ticketmaster events');
-    }catch(e){}
+      const iso=x=>new Date(x).toISOString().slice(0,19)+'Z';
+      const url=`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${encodeURIComponent(s.tmKey)}&latlong=${s.lat},${s.lon}&radius=3&unit=km&startDateTime=${iso(midnightOf(t))}&endDateTime=${iso(midnightOf(isoAdd(end,1)))}&size=100&sort=date,asc`;
+      const r=await fetch(url); if(!r.ok) throw 0; const d=await r.json(), by={};
+      ((d._embedded&&d._embedded.events)||[]).forEach(e=>{ const dt=e.dates&&e.dates.start&&e.dates.start.localDate; if(dt&&inRange(dt)) (by[dt]=by[dt]||[]).push(e.name); });
+      Object.entries(by).forEach(([dt,names])=>found.push({date:dt,name:names.length===1?names[0]:`${names.length} events within 3 km (e.g. ${names[0]})`,uplift:Math.min(25,5*names.length),src:'Ticketmaster',kind:'tm'}));
+      notes.push('Ticketmaster events'); ok.tm=true;
+    }catch(e){ ok.tm=false; }
   }
-  db.events=db.events.filter(e=>!e.auto&&e.date>=t).concat(found.filter(f=>!db.dismissed[f.date+'|'+f.name]).map(f=>({...f,id:cid(),auto:true})));
-  s.lastScan=t; s.scanNote=notes.length?`Checked ${notes.join(' and ')} online`:'Couldn\u2019t reach the events services';
+  const failed=e=>(e.kind==='hol'&&ok.hol===false)||(e.kind==='tm'&&ok.tm===false);
+  db.events=db.events.filter(e=>e.date>=t&&(!e.auto||failed(e))).concat(found.filter(f=>!db.dismissed[f.date+'|'+f.name]).map(f=>({...f,id:cid(),auto:true})));
+  s.lastScan=t; s.scanOk=ok; s.scanNote=notes.length?`Checked ${notes.join(' and ')} online for the next 7 days`:'Couldn’t reach the events services';
   save(); softRender();
 }
-function runAgent(force){ ensure(); const n=autoExpire(); if(n) flash=`${n} expired batch${n>1?'es were':' was'} removed from stock and logged as waste.`; db.settings.lastScanTs=Date.now(); save(); loadWeather(); scanEvents(force); render(); autopilot(); }
+function runAgent(force){ ensure(); if(refreshNote){ flash=`Sample data rebuilt for ${todayStr({weekday:'long',day:'numeric',month:'short'})} so sales history, expiry dates and weekdays line up with today. Your settings were kept.`; refreshNote=false; } const n=autoExpire(); if(n) flash=`${n} expired batch${n>1?'es were':' was'} removed from stock and logged as waste.`; db.settings.lastScanTs=Date.now(); save(); loadWeather(); scanEvents(force); render(); autopilot(); }
 async function geocode(){
   const q=($('geo-q').value||'').trim(); if(!q) return;
   try{
     const d=await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q.split(',')[0])}&count=1&language=en&format=json&countryCode=AU`)).json();
     const r=d.results&&d.results[0]; if(!r){ flash='Couldn\u2019t find that suburb.'; return render(); }
     const ST={'New South Wales':'AU-NSW','Victoria':'AU-VIC','Queensland':'AU-QLD','Western Australia':'AU-WA','South Australia':'AU-SA','Tasmania':'AU-TAS','Australian Capital Territory':'AU-ACT','Northern Territory':'AU-NT'};
-    Object.assign(db.settings,{lat:r.latitude,lon:r.longitude,place:r.name+(r.admin1?', '+r.admin1:''),state:ST[r.admin1]||db.settings.state,lastScan:null});
+    if(r.timezone) cafeTZ=r.timezone; db.wx=null;
+    Object.assign(db.settings,{tz:r.timezone||db.settings.tz,lat:r.latitude,lon:r.longitude,place:r.name+(r.admin1?', '+r.admin1:''),state:ST[r.admin1]||db.settings.state,lastScan:null});
     flash=`Location set to ${esc(db.settings.place)}. Weather and local events will use it.`;
     save(); loadWeather(); scanEvents(true); render();
   }catch(e){ flash='Location lookup failed. Check your connection.'; render(); }
@@ -726,7 +1037,7 @@ async function geocode(){
 
 /* ---------------- ORDERS ---------------- */
 const poTotal=l=>sum(l,x=>x.qty*x.cost);
-function poText(o){ return `Hi ${o.supplier},\n\nPlease supply the following:\n`+o.lines.map(l=>`- ${l.name}: ${l.qty} ${l.unit}`).join('\n')+(o.delivery?`\n\nFor delivery ${new Date(o.delivery+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'})}.`:'')+`\n\nPurchase order ${o.id}. Thanks!`; }
+function poText(o){ return `Hi ${o.supplier},\n\nPlease supply the following:\n`+o.lines.map(l=>`- ${l.name}: ${l.qty} ${l.unit}`).join('\n')+(o.delivery?`\n\nFor delivery ${fmtISO(o.delivery,{weekday:'long',day:'numeric',month:'long'})}.`:'')+`\n\nPurchase order ${o.id}. Thanks!`; }
 const mailto=o=>`mailto:${o.email}?subject=${encodeURIComponent('Order '+o.id)}&body=${encodeURIComponent(poText(o))}`;
 let approving=false;
 async function approve(sup,auto){
@@ -776,20 +1087,21 @@ function ensure(){
   if(s.autopilot==null) s.autopilot='off'; if(s.autoLimit==null) s.autoLimit=150;
   if(s.close==null) s.close='15:00'; if(s.detail==null) s.detail=false; s.assume=s.assume||{};
   if(s.owner==null) s.owner=DS==='littlefern'?'Sam':'';
+  if(s.liveOnly==null) s.liveOnly=true; if(!s.tz) s.tz='Australia/Sydney'; cafeTZ=s.tz;
 }
-const greeting=()=>{ const h=new Date().getHours(); return h<12?'morning':h<17?'afternoon':'evening'; };
+const greeting=()=>{ const h=tzParts(Date.now()).h; return h<12?'morning':h<17?'afternoon':'evening'; };
 const pc=x=>(x>=1?'+':'−')+Math.abs(Math.round((x-1)*100))+'%';
 function logImpact(type,text,value,mins){ db.impactLog=(db.impactLog||[]).concat({ts:Date.now(),type,text,value:r2(value||0),mins:r2(mins||0)}).slice(-300); }
 
 /* ---------------- EXPLAINABILITY ---------------- */
 function dowDetail(w){ const past=salesHistory(); if(!past.length) return null; const avg=sum(past,v=>v.rev)/past.length, x=past.filter(v=>v.dow===w); return x.length?{n:x.length,avgW:sum(x,v=>v.rev)/x.length,avg}:null; }
 function explain(A){
-  const F=A.F, wn=new Date().toLocaleDateString(undefined,{weekday:'long'}), d=dowDetail(wdOf(0)), evs=eventsOn(todayISO());
+  const F=A.F, wn=todayStr({weekday:'long'}), d=dowDetail(wdOf(0)), evs=eventsOn(todayISO());
   return [
     {label:`${wn} pattern`,f:F.dowF,short:F.dowF!==1?`${wn}s usually run ${pc(F.dowF)}`:'',
      how:d?`Your last ${d.n} ${wn}s averaged ${money(d.avgW)} in sales, compared with ${money(d.avg)} on an average day over the past 4 weeks. So ${wn} demand is scaled by ${pc(F.dowF)}.`:'Not enough sales history yet, so today is treated as an average day.'},
     {label:weather?`${wxText(weather.code)} · ${weather.rain}% rain`:'Weather',f:F.wxF,short:F.wxF<1?'rain −10%':'',
-     how:weather?(F.wxF<1?`Rain chance is ${weather.rain}%. Rule: at 60% or more (or a rain forecast), plan for 10% fewer customers.`:`Rain chance is ${weather.rain}% with a top of ${Math.round(weather.max)}°C. That is under the 60% rain threshold, so there is no weather adjustment.`):'The weather forecast hasn’t loaded (offline), so there is no weather adjustment.'},
+     how:weather?(`Live Open-Meteo forecast for ${todayStr({weekday:'long',day:'numeric',month:'short'})}, ${esc(db.settings.place||'')} (cafe time). `+(F.wxF<1?`Rain chance is ${weather.rain}%. Rule: at 60% or more (or a rain forecast), plan for 10% fewer customers.`:`Rain chance is ${weather.rain}% with a top of ${Math.round(weather.max)}°C. That is under the 60% rain threshold, so there is no weather adjustment.`)):'Today’s weather forecast hasn’t loaded (offline), so there is no weather adjustment.'},
     {label:'Events & your notes',f:F.evF,short:evs.length?evs.map(e=>`${esc(e.name)} ${+e.uplift>=0?'+':''}${e.uplift}%`).join(', '):'',
      how:evs.length?evs.map(e=>`${esc(e.name)} (${esc(e.src||'owner input')}): ${+e.uplift>=0?'+':''}${e.uplift}%`).join('; ')+'. Event effects are added together.':'No events or owner notes for today.'}
   ];
@@ -859,7 +1171,7 @@ function computeImpact(A){
 
 /* ---------------- DAILY RHYTHM (when the owner touches the app) ---------------- */
 function rhythm(A,I){
-  const toM=s=>{const [h,m]=String(s).split(':').map(Number);return h*60+(m||0);}, n=new Date(), nm=n.getHours()*60+n.getMinutes();
+  const toM=s=>{const [h,m]=String(s).split(':').map(Number);return h*60+(m||0);}, nm=nowMins();
   const items=[{t:'06:30',title:'Morning brief',sub:'Listen hands-free while you set up · ~2 min',act:'voice-brief'}];
   A.groups.filter(g=>g.cutoff&&g.total>0).forEach(g=>items.push({t:g.cutoff,title:`${g.supplier} cut-off`,sub:`${(n=>n+' item'+(n===1?'':'s'))(g.lines.filter(l=>!l.skip).length)} · ${money(g.total)} · arrives ${dayLabel(g.delivery)}`,act:'tab',id:'orders'}));
   items.push({t:db.settings.close||'15:00',title:'Closing waste check',sub:`${I.checkItems} flagged item${I.checkItems===1?'':'s'} · ~${Math.max(1,Math.round(I.checkItems*I.a.secPerCheck/60))} min`,act:'tab',id:'waste'});
@@ -874,7 +1186,7 @@ async function autopilot(){
   const ok=A.groups.filter(g=>g.total>0&&g.total<=lim&&g.email&&!g.lines.some(l=>l.edited)&&(!g.min||g.total>=g.min));
   if(!ok.length) return;
   let made=[]; for(const g of ok) made=made.concat(await approve(g.supplier,true)||[]);
-  if(made.length){ flash=`${icon('bolt')} <strong>Autopilot</strong> approved ${made.length} routine order${made.length>1?'s':''} under ${money(lim)} (${money(sum(made,o=>o.total))}). ${s.mode==='auto'&&s.webhook?'Sent to suppliers.':'Tap ✉ Email under Orders to send.'} You can cancel any of them.`; render(); }
+  if(made.length){ flash=`${icon('bolt')} <strong>Autopilot</strong> approved ${made.length} routine order${made.length>1?'s':''} under ${money(lim)} (${money(sum(made,o=>o.total))}). ${s.mode==='auto'&&s.webhook?'Sent to suppliers.':'Tap \u2709 Email under Orders to send.'} You can cancel any of them.`; render(); pushAlert({key:'auto|'+todayISO()+'|'+made.length,type:'autopilot',title:`Autopilot approved ${made.length} order${made.length>1?'s':''}`,text:`${money(sum(made,o=>o.total))} in total, all under your ${money(lim)} limit. Cancel any of them under Orders.`,actions:[['View','otab',{id:'history'}]]}); }
 }
 
 /* ---------------- VOICE ASSISTANT ---------------- */
@@ -968,11 +1280,42 @@ function togglePromo(menuId,price,reason,saving){
   save(); render();
 }
 
+function sourceChips(){
+  const s=db.settings, ok=s.scanOk||{}, scanned=s.lastScan===todayISO();
+  const wx=wxStatus==='live'?['live','Weather · Open-Meteo live']:wxStatus==='cached'?['warn',`Weather · saved ${db.wx?timeStr(db.wx.ts):''}`]:wxStatus==='loading'?['warn','Weather · loading']:['off','Weather · offline'];
+  const hol=!scanned?['warn','Holidays · checking']:ok.hol===false?['off','Holidays · offline']:['live','Holidays · Nager.Date live'];
+  const tm=s.tmKey?(ok.tm===false?['off','Events · Ticketmaster error']:['live','Events · Ticketmaster live']):['warn','Events · optional key'];
+  const pos=DS==='mine'?(s.lastImport?['live','Sales \u00b7 Square import']:['warn','Sales \u00b7 using your estimates']):['sample',`Sales \u00b7 ${DS==='littlefern'?'spreadsheet':'demo'} POS history`];
+  const out=[wx,hol,tm,pos]; if(s.liveOnly===false) out.push(['sample','Sample café calendar on']);
+  return out.map(([k,t])=>`<button class="src ${k}" data-act="setup-go" data-page="sources" title="Open Data sources"><i></i>${esc(t)}</button>`).join('');
+}
+function outlook(){ const tbl=dowTable(); return [...Array(7)].map((_,k)=>{ const d=addDaysISO(k); return {k,d,w:wxOn(d),ev:eventsOn(d),f:dayFactor(k,tbl)}; }); }
+function pipeline(){
+  const s=db.settings, auto=s.autopilot==='routine', hook=s.mode==='auto'&&s.webhook;
+  const steps=[
+    ['Sense','Agent','auto','Reads POS sales, stock and expiry batches, live weather, holidays and events. Runs when the app opens, on Refresh, every few hours and again at midnight.'],
+    ['Forecast & draft','Agent','auto','Forecasts each day until the delivery after next and drafts one order per supplier.'],
+    ['Approve',auto?'Autopilot + you':'You',auto?'auto':'you',auto?`Routine orders under ${money(+s.autoLimit||0)} are approved automatically. The rest wait for you.`:'Nothing is ordered until you approve: tap, or say “approve orders”.'],
+    ['Send PO',hook?'Agent':'You',hook?'auto':'you',hook?'Sent automatically through your Power Automate webhook.':'Opens a ready-written email to the supplier (tap ✉ Email).'],
+    ['Receive','You','you','Mark the delivery received. Stock and expiry dates update.'],
+    ['Match invoice','Not built','none','Roadmap: read the supplier invoice and flag price or quantity differences against the PO.']];
+  const nAuto=steps.filter(x=>x[2]==='auto').length;
+  return `<details class="card pipe-card"><summary><span class="pipe-title">${icon('bolt')} How ordering works</span><span class="muted">Agent runs ${nAuto} of 6 steps \u00b7 you approve</span></summary>
+    <div class="pipe">${steps.map(([t,w,k,d],j)=>`<div class="pipe-step ${k}"><span class="pipe-n">${j+1}</span><strong>${t}</strong><span class="pipe-who">${w}</span><small>${d}</small></div>`).join('')}</div>
+    <div class="actions" style="margin-top:10px"><button class="btn ghost sm" data-act="setup-go" data-page="agent">Change who does what</button></div></details>`;
+}
+const isPhone=()=>{ try{ return window.matchMedia('(max-width:620px)').matches; }catch(e){ return false; } };
+function labelTables(){
+  document.querySelectorAll('#app table').forEach(t=>{ if(t.closest('.sup')) return;
+    const hs=[...t.querySelectorAll('tr:first-child th')].map(h=>h.textContent.trim()); if(!hs.length) return;
+    t.classList.add('lt'); t.querySelectorAll('tr').forEach(r=>[...r.children].forEach((c,j)=>{ if(c.tagName!=='TD') return; if(hs[j]) c.setAttribute('data-label',hs[j]); if(/^[\u2013\-]?$/.test(c.textContent.trim())&&!c.querySelector('input,button,a')) c.classList.add('nil'); })); });
+}
+
 /* ---------------- TODAY (trimmed) ---------------- */
 function renderToday(A){
-  const R=dataReadiness(), bf=baseForecast(), F=A.F, I=computeImpact(A), ideas=menuSpecials(A), ai=db.aiBrief, detail=!!db.settings.detail, s=db.settings;
-  const expRev=bf?bf.avgRev*F.total:null, factor=Math.round((F.total-1)*100), wn=new Date().toLocaleDateString(undefined,{weekday:'long'});
-  const cafe=s.cafeName||DATASETS[DS].replace(' (original)',''), dateStr=new Date().toLocaleDateString(undefined,{weekday:'long',day:'numeric',month:'long'});
+  const R=dataReadiness(), bf=baseForecast(), F=A.F, I=computeImpact(A), ideas=menuSpecials(A), ai=db.aiBrief&&db.aiBrief.date===todayISO()?db.aiBrief:null, detail=!!db.settings.detail, s=db.settings;
+  const expRev=bf?bf.avgRev*F.total:null, factor=Math.round((F.total-1)*100), wn=todayStr({weekday:'long'});
+  const cafe=s.cafeName||DATASETS[DS].replace(' (original)',''), dateStr=todayStr({weekday:'long',day:'numeric',month:'long'});
   const nGroups=A.groups.filter(g=>g.total>0).length, draftTotal=sum(A.groups,g=>g.total), lines=A.groups.flatMap(g=>g.lines.filter(l=>!l.skip&&l.qty>0));
   const ords=I.ignore.filter(x=>x.kind==='order').sort((x,y)=>y.rev-x.rev), topO=ords.find(x=>x.rev>0), maxDays=Math.max(0,...ords.map(x=>x.days));
   const topIdea=ideas[0], topRisk=A.plans.filter(p=>p.risk>0.05).sort((x,y)=>y.risk*y.i.cost-x.risk*x.i.cost)[0];
@@ -980,15 +1323,25 @@ function renderToday(A){
   const nDec=(nGroups?1:0)+(topIdea&&!topIdea.active?1:0);
   const demandText=factor===0?'A normal day':`${Math.abs(factor)}% ${factor>0?'busier':'quieter'} than normal`;
   return `
-  <div class="page-head"><div><span class="eyebrow">${dateStr}</span><h2>Good ${greeting()}${s.owner?', '+esc(s.owner):''}</h2><p>${esc(cafe)} · ${nDec?`${nDec} decision${nDec>1?'s':''} need you today, about ${fmt(I.ccMin,0)} minutes`:'Nothing needs you right now'}.</p></div>
+  <div class="page-head"><div><span class="eyebrow">${dateStr}</span><h2>Good ${greeting()}${s.owner?', '+esc(s.owner):''}</h2><p>${esc(cafe)} · ${nDec?`${nDec} decision${nDec>1?'s need':' needs'} you today, about ${fmt(I.ccMin,0)} minutes`:'Nothing needs you right now'}.</p></div>
     <div class="head-actions"><button class="btn secondary" data-act="voice-brief">${icon('mic')} Hear brief</button><button class="btn ghost" data-act="scan">Refresh</button></div></div>
 
   <section class="daily-hero">
     <div class="daily-hero-grid">
       <div><div class="hero-label">${icon('trend')} Today’s demand</div><div class="hero-title">${demandText}</div><div class="hero-copy">${why.map(x=>x.short).filter(Boolean).join(' · ')||'No unusual signals today.'}</div></div>
-      <div class="hero-stat"><span>Expected sales</span><strong>${expRev?money(expRev):'–'}</strong><small>${R.label} confidence</small></div>
+      <div class="hero-stat"><span>Expected sales</span><strong>${expRev?money(expRev):'–'}</strong><small>${R.learning?'Learning from your estimates':R.label+' confidence'}</small></div>
       <div class="hero-stat"><span>At stake today</span><strong>${money(stake)}</strong><small>Profit and stock protected if you act</small></div>
       <div class="hero-stat"><span>Your time</span><strong>~${fmt(I.ccMin,0)} min</strong><small>vs ~${I.manualMin} min by hand</small></div>
+    </div>
+    <div class="hero-sources">${sourceChips()}</div>
+    <div class="hero-ai">
+      <div class="hero-ai-copy"><strong>${icon('plan')} Know something CafeCast can’t see?</strong>Type it here and the forecast and every order update straight away. ${s.geminiKey?'Gemini combines your note with POS history, live weather, holidays and events.':'Without a Gemini key, CafeCast uses a quick keyword estimate. Add a key in Setup for the AI forecast.'}${s.geminiKey?'<br><span class="pill">Powered by Gemini</span>':''}</div>
+      <div class="hero-ai-controls">
+        <div><label for="ai-context">What’s different today?</label><input id="ai-context" value="${ai?esc(ai.input||''):''}" placeholder="e.g. Roadworks have closed nearby parking"></div>
+        <button class="btn" id="ai-run" data-act="ai-context">${s.geminiKey?'Generate AI forecast':'Update forecast'}</button>
+        <div id="ai-status" class="hero-ai-status">${s.geminiKey?'Ready. Gemini will use all connected data.':'Tip: include a % for an exact change, e.g. “school group of 40, +20%”.'}</div>
+        ${ai?`<div class="hero-ai-result"><strong>${esc(ai.title)}</strong><span class="pill">${ai.uplift>=0?'+':''}${ai.uplift}% vs normal</span><br>${esc(ai.summary)} <strong>Next:</strong> ${esc(ai.nextStep)} <button class="hero-link" data-act="ai-clear">Remove note</button></div>`:''}
+      </div>
     </div>
   </section>
 
@@ -1001,7 +1354,7 @@ function renderToday(A){
           <div><span class="decision-rank">Stock</span><h3>${nGroups?`Approve ${nGroups} supplier order${nGroups>1?'s':''}`:'No order needed today'}</h3>
             <p>${topO?`${esc(topO.title.replace(/^Order /,''))} keeps ${topO.dishes.slice(0,2).map(esc).join(' and ')} on the menu.`:lines.length?`${lines.length} items fall below what you’ll need before the next delivery.`:'Usable stock covers the next supplier cycle.'}</p>
             ${I.revNow>0?`<div class="if-skip">${icon('alert')}<span>If you skip: ~${money(I.revNow)} lost sales (${money(I.gpNow)} profit) while items are sold out</span></div>`:lines.length?`<div class="if-skip soft">${icon('alert')}<span>If you skip: stock dips below your safety buffer</span></div>`:''}</div>
-          <div class="decision-action">${nGroups?`<strong>${money(draftTotal)}</strong><button class="btn sm" data-act="approve-all">Approve all</button><button class="btn ghost sm" data-act="tab" data-id="orders">Review</button>`:'<span class="pill ok">No action</span>'}</div>
+          <div class="decision-action">${nGroups?`<strong>${money(draftTotal)}</strong><button class="btn sm" data-act="approve-all">Approve all</button><button class="btn ghost sm" data-act="otab" data-id="drafts">Review</button>`:'<span class="pill ok">No action</span>'}</div>
         </div>
         <div class="decision-card">
           <div class="decision-icon amber">${icon('tag')}</div>
@@ -1029,15 +1382,12 @@ function renderToday(A){
   <section class="card anchor-target" id="forecast-drivers">
     <div class="panel-title"><h2>${icon('trend')} How today’s forecast was worked out</h2><button class="btn ghost sm" data-act="toggle-detail">${detail?'Hide':'Show'} the maths</button></div>
     ${bf?`<div class="explain-eq"><span>${money(bf.avgRev)}<small>normal day</small></span><b>×</b><span>${fmt(F.dowF,2)}<small>${wn}</small></span><b>×</b><span>${fmt(F.wxF,2)}<small>weather</small></span><b>×</b><span>${fmt(F.evF,2)}<small>events</small></span><b>=</b><span class="eq-total">${money(expRev)}<small>${factor>=0?'+':''}${factor}%</small></span></div>`:''}
+    <h3 class="outlook-h">Next 7 days <span class="muted">· live weather and events feed every order quantity</span></h3>
+    <div class="outlook">${outlook().map(o=>`<div class="od ${o.k===0?'today':''}"><span class="od-d">${o.k===0?'Today':o.k===1?'Tomorrow':fmtISO(o.d,{weekday:'short'})}<small>${fmtISO(o.d,{day:'numeric',month:'short'})}</small></span><b class="${o.f<0.995?'dn':o.f>1.005?'up':''}">${pc(o.f)}</b><span class="od-w">${o.w?`${wxText(o.w.code)} · ${Math.round(o.w.max)}° · ${o.w.rain}% rain${wetDay(o.w)?' <em>−10%</em>':''}`:'Weather not loaded'}</span>${o.ev.length?`<span class="od-e">${o.ev.map(e=>`${esc(e.name)} ${+e.uplift>=0?'+':''}${e.uplift}%`).join('<br>')}</span>`:''}</div>`).join('')}</div>
     ${I.bt?`<div class="trust">${icon('check')}<span><strong>Track record:</strong> over the last ${I.bt.n} days this method was off by <strong>${fmt(I.bt.cc,0)}%</strong> on average. Assuming every day is the same (ordering by habit) was off by ${fmt(I.bt.flat,0)}%.</span></div>`:''}
     ${detail?`
       ${why.map(x=>`<div class="driver"><div class="driver-line"><span>${x.label}</span><strong>${pc(x.f)}</strong></div><div class="driver-bar"><i class="${x.f<1?'down':''}" style="width:${Math.min(100,Math.abs(x.f-1)*220+8)}%"></i></div><div class="reason-detail" style="margin-top:6px">${x.how}</div></div>`).join('')}
       <div class="note">The combined ${factor>=0?'+':''}${factor}% is applied to each ingredient’s normal daily use (from recipes × sales). Order quantity = use until the delivery after next × (1 + ${s.buffer}% safety buffer) − usable stock, capped at shelf life and rounded to supplier packs. Confidence ${R.score}/100: ${R.days} days of sales, ${R.coverage}% recipe coverage, ${R.stock}% stock data${R.live?'':', capped without live POS'}.</div>`:''}
-    <details class="ai-box"${ai?' open':''}><summary>Tell CafeCast something it can’t see (AI forecast)</summary>
-      <div class="ai-input" style="margin-top:10px"><div><label for="ai-context">Owner note</label><input id="ai-context" value="${ai?esc(ai.input):''}" placeholder="e.g. Roadworks have closed nearby parking"></div><button class="btn" id="ai-run" data-act="ai-context">Generate AI forecast</button></div>
-      <div id="ai-status" class="ai-status">${s.geminiKey?'Gemini will combine your note with sales, weather and events.':'Add a free Gemini API key in Setup to use this. You can also say it by voice: “note: roadworks out front, expect it quieter”.'}</div>
-      ${ai?`<div class="ai-result"><h3>${esc(ai.title)} <span class="pill info">${ai.uplift>=0?'+':''}${ai.uplift}%</span></h3><p>${esc(ai.summary)} <strong>Next:</strong> ${esc(ai.nextStep)}</p></div>`:''}
-    </details>
   </section>`;
 }
 
@@ -1119,18 +1469,426 @@ function renderImpact(A){
   </div>`;
 }
 
+/* =====================================================================
+   v6 MODULES: setup pages, menu editor, suppliers, new-cafe wizard,
+   connection tests, view modes and time-critical alerts
+   ===================================================================== */
+let setupPage=null, menuOpen=null, menuFilter='all', ordersTab='drafts', supOpen={};
+const encN=n=>esc(encodeURIComponent(n||''));
+
+/* ---------- suppliers are derived from stock items (one place to edit them) ---------- */
+function supplierList(){
+  const m=new Map();
+  db.ingredients.forEach(i=>{ const n=i.supplier||''; if(!n) return;
+    if(!m.has(n)) m.set(n,{name:n,email:i.email||'',days:i.days||null,cutoff:i.cutoff||'',min:+i.minOrder||0,lead:+i.lead||1,items:[]});
+    m.get(n).items.push(i); });
+  return [...m.values()];
+}
+function supplierEditor(){
+  const sups=supplierList(), D=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  return `<div class="sup-edit">${sups.map(s=>`<div class="se-card">
+      <div class="se-grid">
+        <div class="field se-name"><label>Supplier name</label><input data-supf="${encN(s.name)}|name" value="${esc(s.name)}"></div>
+        <div class="field se-mail"><label>Order email</label><input type="email" data-supf="${encN(s.name)}|email" value="${esc(s.email)}" placeholder="orders@supplier.com.au"></div>
+        <div class="field"><label>Order cut-off</label><input type="time" data-supf="${encN(s.name)}|cutoff" value="${esc(s.cutoff)}"></div>
+        <div class="field"><label>Days to deliver</label><input type="number" min="0" data-supf="${encN(s.name)}|lead" value="${s.lead}"></div>
+        <div class="field"><label>Minimum order $</label><input type="number" min="0" data-supf="${encN(s.name)}|min" value="${s.min||''}"></div>
+      </div>
+      <label class="se-lbl">Delivers on</label>
+      <div class="day-chips">${D.map((d,j)=>`<button class="dchip ${!s.days||s.days.includes(j)?'on':''}" data-act="sup-day" data-sup="${encN(s.name)}" data-d="${j}" aria-pressed="${!s.days||s.days.includes(j)}">${d}</button>`).join('')}</div>
+      <div class="se-items">${s.items.map(i=>`<span class="pill">${esc(i.name)}</span>`).join(' ')}</div>
+    </div>`).join('')||'<div class="empty">No suppliers yet. Give each stock item a supplier.</div>'}</div>
+    <details class="reassign"><summary>Move items between suppliers</summary>
+      <div class="ra-list">${db.ingredients.map(i=>`<div class="ra-row"><span>${esc(i.name)}</span><select data-ingf="${i.id}:supplier">${i.supplier?'':'<option value="" selected>(none)</option>'}${sups.map(s=>`<option value="${esc(s.name)}"${s.name===i.supplier?' selected':''}>${esc(s.name)}</option>`).join('')}<option value="__new">+ New supplier…</option></select></div>`).join('')}</div>
+    </details>`;
+}
+
+/* ---------- learning mode: owner estimates stand in until sales history exists ---------- */
+let usageSrc={};
+function learningState(){ const est=db.ingredients.filter(i=>+i.est>0).length, days=completeDays(); return {on:est>0&&days<14,days,est}; }
+
+/* ---------- connection tests ---------- */
+let connRes=null, connBusy=false;
+async function probe(url,ms=7000){
+  const c=new AbortController(), t=setTimeout(()=>c.abort(),ms), s0=performance.now();
+  try{ const r=await fetch(url,{signal:c.signal}); return {ok:r.ok,status:r.status,ms:Math.round(performance.now()-s0)}; }
+  catch(e){ return {ok:false,status:0,err:e&&e.name==='AbortError'?'timeout':'blocked',ms:Math.round(performance.now()-s0)}; }
+  finally{ clearTimeout(t); }
+}
+function connWhy(r){
+  if(!r) return '';
+  if(r.ok) return `Connected · replied in ${r.ms} ms`;
+  if(navigator.onLine===false) return 'This device is offline. Connect to Wi-Fi or a hotspot.';
+  if(r.err==='timeout') return 'No reply within 7 seconds. The network is slow or filtering this service.';
+  if(r.status===401||r.status===403) return 'Key rejected. Check it was copied in full, with no spaces.';
+  if(r.status===400) return 'Request rejected. Usually an invalid key.';
+  if(r.status===429) return 'Too many requests. Wait a minute and test again.';
+  if(r.status) return `The service returned an error (${r.status}). Try again shortly.`;
+  return IN_FRAME?'Blocked. This page is inside a preview frame. Open the GitHub Pages link directly in Chrome.':'Blocked before it reached the service. Usually a file preview window or a network filter (uni or work Wi-Fi). Open the GitHub Pages link in Chrome, or try a phone hotspot.';
+}
+async function testConnections(){
+  if(connBusy) return; connBusy=true; connRes={busy:true}; render();
+  const s=db.settings;
+  const [wx,hol,tm,gem]=await Promise.all([
+    probe(`https://api.open-meteo.com/v1/forecast?latitude=${s.lat}&longitude=${s.lon}&daily=weathercode&forecast_days=1&timezone=${encodeURIComponent(TZ())}`),
+    probe(`https://date.nager.at/api/v3/PublicHolidays/${todayISO().slice(0,4)}/AU`),
+    s.tmKey?probe(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${encodeURIComponent(s.tmKey)}&size=1&countryCode=AU`):Promise.resolve(null),
+    s.geminiKey?probe(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(s.geminiKey)}`):Promise.resolve(null)]);
+  connRes={ts:Date.now(),wx,hol,tm,gem}; connBusy=false;
+  if(wx.ok) loadWeather();
+  if(hol.ok||(tm&&tm.ok)){ s.lastScan=null; scanEvents(true); }
+  render();
+}
+
+/* ---------- view modes: Desktop (auto) / Phone / Tablet ---------- */
+const VIEWS={phone:{w:390,h:844,label:'Phone · 390 × 844'},tablet:{w:820,h:1180,label:'Tablet · 820 × 1180'}};
+let viewMode=(()=>{ try{ const v=localStorage.getItem('cafecast_view'); return VIEWS[v]?v:'auto'; }catch(e){ return 'auto'; } })();
+const viewName=v=>v==='auto'?'Desktop':v==='phone'?'Phone':'Tablet';
+function viewSeg(){ return `<div class="seg">${['auto','phone','tablet'].map(v=>`<button class="${viewMode===v?'on':''}" data-act="view-set" data-v="${v}">${viewName(v)}</button>`).join('')}</div>`; }
+function drawViewCtl(){ document.querySelectorAll('.view-ctl-slot').forEach(el=>el.innerHTML=viewSeg()); const l=$('phone-label'); if(l&&VIEWS[viewMode]) l.textContent=VIEWS[viewMode].label+' · same data as this window'; }
+function setView(v){
+  viewMode=VIEWS[v]?v:'auto'; try{ localStorage.setItem('cafecast_view',viewMode); }catch(e){}
+  if(viewMode==='auto'){ if(phoneOpen) closePhone(); } else openPhone();
+  drawViewCtl(); if(!phoneOpen&&active==='setup') render();
+}
+
+/* ---------- time-critical alerts (max 3 a day) ---------- */
+const ALERT_DEF={cutoff:['Supplier cut-off in 30 minutes, order not approved','clock'],expiry:['Stock expires today','alert'],autopilot:['Autopilot placed an order','bolt'],delivery:['Delivery overdue, not marked received','package']};
+let toasts=[];
+function alertsCfg(){ const s=db.settings; s.alerts=Object.assign({cutoff:true,expiry:true,autopilot:true,delivery:true},s.alerts||{}); return s.alerts; }
+function alertLog(){ const s=db.settings, t=todayISO(); if(!s.alertLog||s.alertLog.date!==t) s.alertLog={date:t,keys:[]}; return s.alertLog; }
+function pushAlert(a,force){
+  const cfg=alertsCfg(), L=alertLog();
+  if(!force){ if(!cfg[a.type]||L.keys.includes(a.key)||L.keys.length>=3) return; L.keys.push(a.key); logImpact('alert',`Alert: ${a.title}`,0,0); save(); }
+  toasts=toasts.filter(t=>t.key!==a.key).concat(a).slice(-3); drawToasts();
+}
+function candidateAlerts(A,preview){
+  const out=[], nm=nowMins();
+  A.groups.filter(g=>g.total>0&&g.cutoff).forEach(g=>{ const [h,m]=g.cutoff.split(':').map(Number), left=h*60+(m||0)-nm;
+    if(left>0&&(preview||left<=30)) out.push({key:'cut|'+g.supplier,type:'cutoff',title:`${g.supplier}: cut-off ${left<=60?`in ${left} min`:`at ${g.cutoff}`}`,
+      text:`The ${money(g.total)} order isn’t approved yet. After ${g.cutoff} it moves to the next delivery day.`,actions:[['Approve','approve-sup',{sup:g.supplier}],['Review','otab',{id:'drafts'}]]}); });
+  const exp=db.ingredients.filter(i=>i.perishable).map(i=>({i,q:sum(i.batches.filter(b=>b.expiry&&daysUntil(b.expiry)===0),b=>b.qty)})).filter(x=>x.q>0.01);
+  if(exp.length) out.push({key:'exp',type:'expiry',title:`${exp.length} item${exp.length>1?'s':''} expire today`,text:exp.slice(0,3).map(x=>`${fmt(x.q)} ${x.i.unit} ${x.i.name}`).join(', ')+(exp.length>3?' and more':'')+'. Use them first or run a special.',actions:[['See specials','tab',{id:'waste'}]]});
+  db.orders.filter(o=>o.status!=='received'&&o.delivery&&(daysUntil(o.delivery)<0||(daysUntil(o.delivery)===0&&nm>=12*60))).forEach(o=>out.push({key:'del|'+o.id,type:'delivery',title:`${o.supplier} delivery not received`,text:`It was due ${dayLabel(o.delivery)}. Mark it received so stock is right, or chase the supplier.`,actions:[['Mark received','recv',{id:o.id}],['Orders','otab',{id:'history'}]]}));
+  return out;
+}
+function checkAlerts(){ if(!db||(DS==='mine'&&!db.settings.setupDone)) return; candidateAlerts(analyse(),false).forEach(a=>pushAlert(a)); }
+function previewAlerts(){
+  const c=candidateAlerts(analyse(),true);
+  if(!c.length) c.push({key:'demo',type:'autopilot',title:'Autopilot approved 2 routine orders',text:'$186.40 in total. Cancel any of them under Orders.',actions:[['View','otab',{id:'history'}]]});
+  c.slice(0,3).forEach(a=>pushAlert(a,true));
+}
+function drawToasts(){
+  const el=$('toasts'); if(!el) return;
+  el.innerHTML=toasts.map(t=>`<div class="toast ${t.type}" role="status"><div class="t-ic">${icon((ALERT_DEF[t.type]||[])[1]||'alert')}</div><div class="t-body"><strong>${esc(t.title)}</strong><p>${esc(t.text)}</p>
+    <div class="t-act">${(t.actions||[]).map(([l,a,d],j)=>`<button class="btn sm ${j?'ghost':''}" data-act="${a}" ${Object.entries(d||{}).map(([k,v])=>`data-${k}="${esc(v)}"`).join(' ')} data-toast="${esc(t.key)}">${esc(l)}</button>`).join('')}</div></div>
+    <button class="del" data-act="toast-x" data-toast="${esc(t.key)}" aria-label="Dismiss">✕</button></div>`).join('');
+}
+function decisionCount(A){ const sp=menuSpecials(A)[0]; return (A.groups.some(g=>g.total>0)?1:0)+(sp&&!sp.active?1:0); }
+
+/* ---------- NEW CAFE WIZARD ---------- */
+const WIZ_CATS=[['Dairy','Dairy supplier',{lead:1,days:[1,3,5],cutoff:'14:00',min:80}],['Bakery','Bakery',{lead:1,days:null,cutoff:'16:00',min:40}],
+  ['Produce','Fruit & veg supplier',{lead:1,days:[2,4,6],cutoff:'15:00',min:60}],['Meat & deli','Butcher & deli',{lead:2,days:[2,5],cutoff:'12:00',min:100}],
+  ['Coffee','Coffee roaster',{lead:3,days:[1],cutoff:'10:00',min:150}],['Other','Other supplier',{lead:1,days:null,cutoff:'',min:0}]];
+/* [category, name, unit, shelf life days, pack size, cost/unit, typical daily use for a small cafe] */
+const WIZ_ITEMS=[
+  ['Dairy','Full cream milk','L',9,2,1.65,30],['Dairy','Skim milk','L',9,2,1.7,4],['Dairy','Oat milk','L',30,1,3.2,6],['Dairy','Almond milk','L',30,1,3.4,3],
+  ['Dairy','Thickened cream','L',12,1,6.8,0.5],['Dairy','Butter','kg',45,0.5,14.5,0.5],['Dairy','Free-range eggs','each',28,30,0.55,60],['Dairy','Greek yoghurt','kg',18,1,7.2,1],
+  ['Dairy','Feta','kg',21,0.5,18,0.4],['Dairy','Halloumi','kg',30,0.5,24,0.3],
+  ['Bakery','Sourdough loaf','loaf',3,1,6.5,6],['Bakery','Butter croissant','each',2,6,1.9,20],['Bakery','Banana bread loaf','loaf',5,1,9,1],['Bakery','Muffins','each',3,6,1.6,10],
+  ['Produce','Avocado','each',5,12,1.8,15],['Produce','Tomatoes','kg',6,1,6.5,1],['Produce','Baby spinach','kg',5,0.5,14,0.3],['Produce','Mixed berries','kg',4,0.5,16,0.6],
+  ['Produce','Bananas','kg',6,1,3.8,1],['Produce','Mushrooms','kg',5,0.5,12,0.8],['Produce','Rocket','kg',4,0.25,16,0.2],['Produce','Lemons','each',14,10,0.6,5],
+  ['Meat & deli','Bacon','kg',10,1,16.5,0.8],['Meat & deli','Smoked salmon','kg',10,0.5,42,0.3],['Meat & deli','Chicken breast','kg',4,1,13,1],
+  ['Coffee','Espresso beans','kg',30,1,38,3]];
+function wizAdd(cat,name,unit,shelf,pack,cost,est){
+  const c=WIZ_CATS.find(x=>x[0]===cat)||WIZ_CATS[5], ex=supplierList().find(s=>s.name===c[1]);
+  const sp=ex?{lead:ex.lead,days:ex.days,cutoff:ex.cutoff,min:ex.min,email:ex.email}:{...c[2],email:''};
+  db.ingredients.push({id:cid(),name,unit,cost,supplier:c[1],email:sp.email,reorder:est,par:r2(est*3),lead:sp.lead,days:sp.days,cutoff:sp.cutoff,minOrder:sp.min,
+    shelf,pack,perishable:true,est,batches:[],tpl:cat});
+}
+function renderWizard(){
+  const st=db.settings, w=Math.min(5,Math.max(1,+st.wiz||1)), I=db.ingredients;
+  const names=['Your café','Perishables','Suppliers','Usual use','Stock count'];
+  const titles=['Tell us about your café','Which perishables do you buy?','Who supplies them?','How much do you use on a normal day?','What’s in stock right now?'];
+  let body='';
+  if(w===1) body=`<p class="lead">Your suburb switches on live weather and public holidays from day one. Nothing else is needed yet.</p>
+    <div class="wiz-grid">
+      <div class="field"><label>Café name</label><input data-set="cafeName" value="${esc(st.cafeName||'')}" placeholder="e.g. Corner Leaf Café"></div>
+      <div class="field"><label>Your first name</label><input data-set="owner" value="${esc(st.owner||'')}" placeholder="Used in the morning brief"></div>
+      <div class="field wide"><label>Suburb</label><div class="inline"><input id="geo-q" value="${esc(st.place||'')}" placeholder="e.g. Kensington NSW"><button class="btn secondary" data-act="geo">Look up</button></div>
+        ${st.place?`<div class="help ok">✓ ${esc(st.place)} · ${esc(st.tz||TZ())}</div>`:'<div class="help">Type a suburb and tap Look up.</div>'}</div>
+      <div class="field"><label>Closing time</label><input type="time" data-set="close" value="${esc(st.close||'15:00')}"><div class="help">For the closing waste-check reminder.</div></div>
+    </div>`;
+  if(w===2){
+    const has=n=>I.some(i=>i.name===n);
+    body=`<p class="lead">Pick the 10–15 items you most often <strong>waste or run out of</strong>. Typical amounts are filled in for a small café, and you’ll adjust them in the next steps. <strong>${I.length} chosen.</strong></p>
+      ${WIZ_CATS.slice(0,5).map(([cat])=>`<div class="wiz-cat"><h3>${cat}</h3><div class="chips">${WIZ_ITEMS.filter(t=>t[0]===cat).map(t=>`<label class="chip-check"><input type="checkbox" data-wiz-item="${esc(t[1])}" ${has(t[1])?'checked':''}><span>${esc(t[1])}</span></label>`).join('')}</div></div>`).join('')}
+      ${I.filter(i=>!WIZ_ITEMS.some(t=>t[1]===i.name)).length?`<div class="wiz-cat"><h3>Your own</h3><div class="chips">${I.filter(i=>!WIZ_ITEMS.some(t=>t[1]===i.name)).map(i=>`<label class="chip-check"><input type="checkbox" checked data-wiz-own="${i.id}"><span>${esc(i.name)}</span></label>`).join('')}</div></div>`:''}
+      <div class="wiz-cat"><h3>Add your own</h3><div class="inline wrap"><input id="wz-name" placeholder="Item name, e.g. Coconut milk"><select id="wz-unit"><option>L</option><option>kg</option><option>each</option><option>loaf</option><option>pack</option></select><input id="wz-shelf" type="number" min="1" placeholder="Shelf life (days)"><button class="btn secondary" data-act="wiz-custom">Add</button></div></div>`;
+  }
+  if(w===3) body=`<p class="lead">We grouped your items by the usual type of supplier. Rename them, and add the order email, delivery days and cut-off time. Emails can wait until you’re ready to send orders.</p>${supplierEditor()}`;
+  if(w===4) body=`<p class="lead">A rough guess is fine. CafeCast starts from these numbers, adjusts them for live weather and public holidays, and replaces them with your real usage as sales and waste data build up.</p>
+    <div class="wiz-list">${I.map(i=>`<div class="wl-row"><strong>${esc(i.name)}</strong><div class="wl-f"><label>Normal day</label><span class="inline"><input type="number" min="0" step="any" data-ingf="${i.id}:est" value="${i.est??''}"> <small>${esc(i.unit)}/day</small></span></div><div class="wl-f"><label>Pack size</label><input type="number" min="0" step="any" data-ingf="${i.id}:pack" value="${i.pack??''}"></div><div class="wl-f"><label>Cost per ${esc(i.unit)}</label><input type="number" min="0" step="0.01" data-ingf="${i.id}:cost" value="${i.cost??''}"></div></div>`).join('')||'<div class="empty">Go back and choose some perishables first.</div>'}</div>`;
+  if(w===5) body=`<p class="lead">One quick count, the same as a normal stock take. Expiry dates are set from each item’s shelf life, and you can fix them later on the Orders › Stock tab.</p>
+    <div class="wiz-list">${I.map(i=>`<div class="wl-row"><strong>${esc(i.name)}</strong><div class="wl-f"><label>In stock now</label><span class="inline"><input type="number" min="0" step="any" data-ingf="${i.id}:stock" value="${r2(stockOf(i))}"> <small>${esc(i.unit)}</small></span></div><div class="wl-f"><label>Shelf life (days)</label><input type="number" min="1" data-ingf="${i.id}:shelf" value="${i.shelf??''}"></div></div>`).join('')}</div>`;
+  return `<div class="card wiz">
+    <span class="eyebrow">Set up a new café · about 25 minutes</span>
+    <h2 class="wiz-title">${titles[w-1]}</h2>
+    <div class="wiz-steps">${names.map((n,j)=>`<button class="ws ${j+1===w?'on':j+1<w?'done':''}" data-act="wiz-go" data-d="${j+1}" aria-label="Step ${j+1}: ${n}"><span>${j+1<w?'\u2713':j+1}</span><em>${n}</em></button>`).join('')}</div>
+    ${body}
+    <div class="wiz-foot">${w>1?'<button class="btn ghost" data-act="wiz" data-d="-1">‹ Back</button>':'<span></span>'}${w<5?'<button class="btn" data-act="wiz" data-d="1">Next ›</button>':'<button class="btn" data-act="wiz-finish">Finish setup</button>'}</div>
+  </div>
+  <div class="card note-card"><strong>How a new café gets smarter</strong>
+    <div class="learn-steps"><div><b>Week 1</b><span>Your estimates × live weather, holidays and events. Confidence shows “Learning”.</span></div>
+    <div><b>Weeks 2–4</b><span>Daily waste checks and Square sales (CSV upload on the Sales page) start replacing the estimates.</span></div>
+    <div><b>Week 3+</b><span>Weekday patterns appear. Recipes are optional and sharpen item-level use.</span></div></div></div>`;
+}
+function wizNext(d){
+  const st=db.settings, w=+st.wiz||1;
+  if(d>0&&w===2&&!db.ingredients.length){ flash='Choose at least one perishable to continue.'; return render(); }
+  st.wiz=Math.min(5,Math.max(1,w+d)); save(); render(); window.scrollTo(0,0);
+}
+function wizFinish(){
+  const st=db.settings;
+  db.ingredients.forEach(i=>{ const e=+i.est||0; if(e>0){ i.reorder=r2(e); i.par=r2(e*3); } });
+  st.setupDone=true; st.wiz=null; st.lastScan=null; active='today';
+  flash=`${esc(st.cafeName||'Your café')} is set up with ${db.ingredients.length} perishables. This week CafeCast uses your estimates plus live weather and holidays, and it sharpens as sales and waste data come in.`;
+  save(); runAgent(true); window.scrollTo(0,0);
+}
+function seedBlank(){
+  db={v:3,dataset:'mine',ingredients:[],menu:[],sales:[],waste:[],orders:[],events:[],extras:[],notes:[],promos:[],drafts:{},skip:{},wasteChecks:{},importKeys:{},dismissed:{},
+    settings:{buffer:15,cover:2,mode:'email',modeSet:false,webhook:'',lat:-33.8688,lon:151.2093,place:'',state:'AU-NSW',tz:'Australia/Sydney',holidayUplift:10,tmKey:'',geminiKey:'',
+      geminiModel:'gemini-3.8-flash',showAll:false,stockCountTs:startOfDay(Date.now()),lastImport:null,lastScan:null,lastScanTs:null,scanNote:'',cafeName:'',owner:'',setupDone:false,wiz:1},aiBrief:null};
+  return db;
+}
+
+/* ---------- SETUP: menu of short pages ---------- */
+function setupChecklist(){
+  const st=db.settings, t0=startOfDay(Date.now());
+  const sold=id=>sum(db.sales.filter(s=>s.menuId===id&&s.ts>=t0-14*DAY),s=>s.qty);
+  const need=db.menu.filter(m=>needsRecipe(m)&&sold(m.id)>0), per=db.ingredients.filter(i=>i.perishable);
+  return [[!!st.place,'Set the café’s location','profile'],[per.length>0&&per.every(i=>i.shelf),'Add perishables with shelf life','stock'],
+    [per.length>0&&per.every(i=>i.email),'Add supplier order emails','suppliers'],[!!st.lastImport||learningState().est>0,'Connect sales, or enter usual use','sources'],
+    [need.length===0,need.length?`Add recipes for ${need.length} selling item${need.length>1?'s':''}`:'Recipes for selling items','menu']];
+}
+function srcSummary(){
+  const s=db.settings, ok=s.scanOk||{}; let live=0, warn=[];
+  if(wxStatus==='live'||wxStatus==='cached') live++; else warn.push('weather');
+  if(ok.hol!==false) live++; else warn.push('holidays');
+  if(s.tmKey&&ok.tm!==false) live++; else if(s.tmKey) warn.push('events');
+  return {text:`${live} live${warn.length?` \u00b7 ${warn.join(', ')} ${warn.length>1?'need':'needs'} attention`:''}${s.tmKey?'':' \u00b7 events off (optional key)'}`,warn:warn.length>0};
+}
+function setupMenu(A){
+  const st=db.settings, need=db.menu.filter(needsRecipe).length, sups=supplierList(), src=srcSummary(), cl=setupChecklist(), done=cl.filter(x=>x[0]).length, nxt=cl.find(x=>!x[0]);
+  const cfg=alertsCfg(), aOn=Object.values(cfg).filter(Boolean).length;
+  const rows=[
+    ['profile','store','Café profile',st.place?`${esc(st.cafeName||'')}${st.cafeName?' · ':''}${esc(st.place)}`:'Location not set',!st.place],
+    ['menu','book','Menu & recipes',need?`⚠ ${need} item${need>1?'s':''} need${need>1?'':'s'} a recipe`:`${db.menu.length} items · all set`,need>0],
+    ['stock','package','Stock items',`${db.ingredients.length} items · ${db.ingredients.filter(i=>i.perishable).length} perishable`,false],
+    ['suppliers','truck','Suppliers & sending orders',`${sups.length} supplier${sups.length===1?'':'s'} · ${st.mode==='auto'&&st.webhook?'sent automatically':'sent by email'}${sups.some(s=>!s.email)?' · ⚠ email missing':''}`,sups.some(s=>!s.email)],
+    ['agent','bolt','Agent, autopilot & alerts',`${st.autopilot==='routine'?`Autopilot under ${money(+st.autoLimit||0)}`:'Asks before every order'} · ${aOn} of 4 alerts on`,false],
+    ['sources','plug','Data sources',src.text,src.warn],
+    ['voice','mic','Voice','Push-to-talk · Chrome, Edge, Safari',false],
+    ['view','phone','View',`${viewName(viewMode)} view`,false],
+    ['demo','database','Demo tools',esc(DATASETS[DS]),false]];
+  return `<div class="page-head"><div><span class="eyebrow">Setup</span><h2>Settings</h2><p>Each area opens its own page. Rows marked ⚠ need attention.</p></div></div>
+    ${done<cl.length?`<button class="card checklist" data-act="setup-go" data-page="${nxt[2]}"><div class="cl-top"><strong>Setup checklist</strong><span>${done} of ${cl.length} done</span></div><div class="cl-bar"><i style="width:${done/cl.length*100}%"></i></div><div class="cl-next">Next: ${nxt[1]} ${icon('chev')}</div></button>`:''}
+    <div class="card set-list">${rows.map(([id,ic,t,stt,warn])=>`<button class="set-row" data-act="setup-go" data-page="${id}"><span class="set-ic">${icon(ic)}</span><span class="set-t"><strong>${t}</strong><small class="${warn?'warn':''}">${stt}</small></span>${icon('chev','chev')}</button>`).join('')}</div>`;
+}
+const backBtn=(label,act,page)=>`<button class="back" data-act="${act||'setup-go'}" data-page="${page||''}" data-id="">${icon('chev','flip')} ${label||'Setup'}</button>`;
+function renderSetup(A){
+  if(setupPage==='wizard') return backBtn()+renderWizard();
+  const P={profile:pgProfile,menu:pgMenu,stock:pgStock,suppliers:pgSuppliers,agent:pgAgent,sources:pgSources,voice:pgVoice,view:pgView,demo:pgDemo}[setupPage];
+  if(!P){ setupPage=null; return setupMenu(A); }
+  return (setupPage==='menu'&&menuOpen&&menuById(menuOpen)?'':backBtn())+P(A);
+}
+function pgProfile(){
+  const st=db.settings;
+  return `<div class="card"><h2>${icon('store')} Café profile</h2>
+    <div class="wiz-grid">
+      <div class="field"><label>Café name</label><input data-set="cafeName" value="${esc(st.cafeName||'')}"></div>
+      <div class="field"><label>Owner first name</label><input data-set="owner" value="${esc(st.owner||'')}"><div class="help">Used in the greeting and morning brief.</div></div>
+      <div class="field wide"><label>Suburb</label><div class="inline"><input id="geo-q" value="${esc(st.place||'')}"><button class="btn secondary" data-act="geo">Look up</button></div><div class="help">Sets the location for live weather and events, the state for public holidays, and the time zone.</div></div>
+      <div class="field"><label>Time zone</label><input data-set="tz" value="${esc(st.tz||'Australia/Sydney')}"><div class="help">“Today”, weekdays and cut-offs use this, whatever clock the viewing device has.</div></div>
+      <div class="field"><label>Closing time</label><input type="time" data-set="close" value="${esc(st.close||'15:00')}"><div class="help">For the closing waste-check reminder.</div></div>
+    </div></div>`;
+}
+function pgMenu(){
+  const t0=startOfDay(Date.now()), sold=id=>sum(db.sales.filter(s=>s.menuId===id&&s.ts>=t0-14*DAY),s=>s.qty);
+  const order=[...db.menu].sort((a,b)=>(needsRecipe(b)-needsRecipe(a))||(sold(b.id)-sold(a.id))||a.name.localeCompare(b.name));
+  const m=menuOpen&&menuById(menuOpen);
+  if(m){
+    editMenu=m.id;
+    const c=costOfItem(m), pct=m.price>0&&m.recipe.length?Math.round((m.price-c)/m.price*100):null;
+    const ingOpts=[...db.ingredients].sort((a,b)=>(b.perishable-a.perishable)||a.name.localeCompare(b.name)).map(i=>`<option value="${i.id}">${esc(i.name)} (${esc(i.unit)})${i.perishable?'':' · non-perishable'}</option>`).join('');
+    const nextNeed=order.find(x=>x.id!==m.id&&needsRecipe(x)), copyFrom=db.menu.filter(x=>x.id!==m.id&&x.recipe.length);
+    return `${backBtn('All menu items','menu-open','')}
+    <div class="card md">
+      <div class="md-head"><div><span class="eyebrow">Recipe</span><h2>${esc(m.name)}</h2><span class="muted">${sold(m.id)} sold in the last 14 days</span></div>
+        <div class="field md-price"><label>Price</label><input data-menuf="${m.id}:price" type="number" step="0.1" value="${m.price}"></div></div>
+      <div class="md-stats"><div><small>Ingredient cost</small><strong>${m.recipe.length?money(c):'–'}</strong></div><div><small>Margin</small><strong>${pct!=null?pct+'%':'–'}</strong></div><div><small>Status</small><strong>${needsRecipe(m)?'Needs recipe':m.recipe.length?'Recipe set':'No perishables'}</strong></div></div>
+      <h3>Ingredients used per item sold</h3>
+      <div class="ing-list">${m.recipe.map((r,ix)=>{ const i=ingById(r.ing); return `<div class="ing-row"><span class="ing-n"><strong>${i?esc(i.name):'(deleted item)'}</strong>${i&&!i.perishable?'<small>non-perishable</small>':''}</span><span class="ing-q"><input type="number" step="any" min="0" data-recq="${ix}" value="${r.qty}"><small>${i?esc(i.unit):''}</small></span><button class="del" data-act="rec-del" data-idx="${ix}" aria-label="Remove ${i?esc(i.name):'ingredient'}">✕</button></div>`; }).join('')||'<div class="empty">No ingredients yet. Add the perishables this item uses.</div>'}</div>
+      <div class="add-ing"><div class="field"><label>Add an ingredient</label><select id="rec-ing">${ingOpts}</select></div><div class="field"><label>Amount per item</label><input id="rec-qty" type="number" step="any" min="0" placeholder="e.g. 0.2"></div><button class="btn" data-act="rec-add">Add</button></div>
+      ${copyFrom.length?`<div class="add-ing two"><div class="field"><label>Or copy the recipe from</label><select id="rec-copy">${copyFrom.map(x=>`<option value="${x.id}">${esc(x.name)}</option>`).join('')}</select></div><button class="btn ghost" data-act="rec-copy">Copy</button></div>`:''}
+      <label class="check-line"><input type="checkbox" id="rec-noper" ${m.noPerishables?'checked':''}> This item has no perishable ingredients (e.g. bought-in pastries)</label>
+      <div class="md-foot"><button class="btn danger sm" data-act="del-menu" data-id="${m.id}">Delete item</button>${nextNeed?`<button class="btn secondary" data-act="menu-open" data-id="${nextNeed.id}">Next needing a recipe: ${esc(nextNeed.name)} ${icon('chev')}</button>`:''}</div>
+    </div>`;
+  }
+  const need=order.filter(needsRecipe).length;
+  return `<div class="card"><div class="panel-title"><h2>${icon('book')} Menu & recipes</h2><span class="muted">${db.menu.length} items</span></div>
+    <p class="lead">Recipes turn each sale into ingredient use. Only items with <strong>perishables</strong> need one. ${need?`<strong>${need} still need${need>1?'':'s'} a recipe</strong>, shown first.`:'Every selling item is covered.'}</p>
+    <div class="menu-tools"><input id="menu-search" type="search" placeholder="Search ${db.menu.length} items…">
+      <div class="seg" id="menu-seg">${[['all','All'],['need','Needs recipe'],['done','Has recipe']].map(([v,l])=>`<button class="${menuFilter===v?'on':''}" data-act="menu-filter" data-v="${v}">${l}</button>`).join('')}</div></div>
+    <div class="menu-list">${order.map(x=>{ const c=costOfItem(x), pct=x.price>0&&x.recipe.length?Math.round((x.price-c)/x.price*100):null, nr=needsRecipe(x), n=sold(x.id);
+      return `<button class="menu-row" data-act="menu-open" data-id="${x.id}" data-menu-row="${esc(x.name.toLowerCase())}" data-need="${nr?1:0}" data-has="${x.recipe.length?1:0}">
+        <span class="mr-name"><strong>${esc(x.name)}</strong><small>${x.recipe.length?`${x.recipe.length} ingredient${x.recipe.length>1?'s':''}${pct!=null?` · ${pct}% margin`:''}`:x.noPerishables?'No perishables':'No recipe yet'}${n?` · ${n} sold`:''}</small></span>
+        <span class="mr-right"><strong>${money(x.price)}</strong>${nr?'<span class="pill mid">Needs recipe</span>':x.recipe.length?'<span class="pill ok">Recipe set</span>':'<span class="pill">No perishables</span>'}</span>${icon('chev','chev')}</button>`; }).join('')||'<div class="empty">No menu items yet. Import sales on the Sales page or add one below.</div>'}</div>
+    <details class="add-box"><summary>+ Add a menu item</summary><div class="add-ing"><div class="field"><label>Name</label><input id="nm-name" placeholder="e.g. Smashed avo"></div><div class="field"><label>Price ($)</label><input id="nm-price" type="number" step="0.1"></div><button class="btn" data-act="menu-add">Add and edit recipe</button></div></details>
+  </div>`;
+}
+function pgStock(A){
+  const pl=new Map(A.plans.map(p=>[p.i.id,p])), sups=supplierList();
+  const items=[...db.ingredients].sort((a,b)=>(b.perishable-a.perishable)||a.name.localeCompare(b.name));
+  const f=(i,k,label,type,extra,help)=>`<div class="field"><label>${label}</label><input ${type?`type="${type}"`:''} step="any" data-ingf="${i.id}:${k}" value="${esc(k==='stock'?r2(stockOf(i)):i[k]??'')}" ${extra||''}>${help?`<div class="help">${help}</div>`:''}</div>`;
+  return `<div class="card"><div class="panel-title"><h2>${icon('package')} Stock items</h2><span class="muted">${items.length} items</span></div>
+    <p class="lead">Tap an item to edit it. Changing <em>Stock now</em> works as a quick stock count, and shelf life sets the expiry of each new delivery.</p>
+    <input id="stock-search" type="search" class="search" placeholder="Search stock items…">
+    <div class="item-list">${items.map(i=>{ const p=pl.get(i.id); return `<details class="item-row" data-stock-row="${esc(i.name.toLowerCase())}"><summary>
+        <span class="ir-name"><strong>${esc(i.name)}</strong><small>${esc(i.supplier||'No supplier')} · ${i.perishable?`${i.shelf||'?'}-day shelf life`:'non-perishable'}</small></span>
+        <span class="ir-val"><strong>${fmt(stockOf(i))} ${esc(i.unit)}</strong>${p?pills(p):''}</span>${icon('chev','chev')}</summary>
+      <div class="ir-grid">
+        ${f(i,'name','Name')}${f(i,'unit','Unit')}${f(i,'stock','Stock now','number')}
+        ${f(i,'est','Usual use per day','number','',usageSrc[i.id]==='sales'?'Now learnt from sales':'Used until sales history builds up')}
+        ${f(i,'shelf','Shelf life (days)','number')}${f(i,'reorder','Reorder at','number')}${f(i,'pack','Pack size','number')}${f(i,'cost','Cost per unit ($)','number')}
+        <div class="field"><label>Supplier</label><select data-ingf="${i.id}:supplier">${i.supplier?'':'<option value="" selected>(none)</option>'}${sups.map(s=>`<option value="${esc(s.name)}"${s.name===i.supplier?' selected':''}>${esc(s.name)}</option>`).join('')}<option value="__new">+ New supplier…</option></select></div>
+        <label class="check-line"><input type="checkbox" data-ingf="${i.id}:perishable" ${i.perishable?'checked':''}> Perishable</label>
+        <div class="ir-del"><button class="btn danger sm" data-act="del-ing" data-id="${i.id}">Remove item</button></div>
+      </div></details>`; }).join('')||'<div class="empty">No stock items yet.</div>'}</div>
+    <details class="add-box"><summary>+ Add a stock item</summary>
+      <div class="ir-grid">
+        <div class="field"><label>Name</label><input id="ni-name" placeholder="e.g. Almond milk"></div>
+        <div class="field"><label>Unit</label><input id="ni-unit" placeholder="L / kg / each"></div>
+        <div class="field"><label>Stock now</label><input id="ni-stock" type="number" step="any"></div>
+        <div class="field"><label>Usual use per day</label><input id="ni-est" type="number" step="any"></div>
+        <div class="field"><label>Shelf life (days)</label><input id="ni-shelf" type="number"></div>
+        <div class="field"><label>Reorder at</label><input id="ni-reorder" type="number" step="any"></div>
+        <div class="field"><label>Days to deliver</label><input id="ni-lead" type="number" value="1"></div>
+        <div class="field"><label>Cost per unit ($)</label><input id="ni-cost" type="number" step="0.01"></div>
+        <div class="field"><label>Supplier</label><input id="ni-supplier" list="sup-names"><datalist id="sup-names">${sups.map(s=>`<option value="${esc(s.name)}">`).join('')}</datalist></div>
+        <div class="field"><label>Supplier email</label><input id="ni-email" type="email"></div>
+        <label class="check-line"><input type="checkbox" id="ni-per" checked> Perishable</label>
+      </div>
+      <button class="btn" data-act="add-ing" style="margin-top:10px">Add item</button>
+    </details></div>`;
+}
+function pgSuppliers(){
+  const st=db.settings;
+  return `<div class="card"><h2>${icon('truck')} Suppliers</h2><p class="lead">One card per supplier. Changes apply to every item they supply and feed straight into order timing.</p>${supplierEditor()}</div>
+  <div class="card"><h2>Sending orders</h2>
+    <p class="lead">When you approve an order, how should it reach the supplier?</p>
+    <div class="field"><select data-set="mode" style="width:100%">
+      <option value="email"${st.mode!=='auto'?' selected':''}>Email: I tap Send in my email app (simplest)</option>
+      <option value="auto"${st.mode==='auto'?' selected':''}>Automatic: send through a Power Automate flow (advanced)</option></select></div>
+    ${st.mode==='auto'?`<div class="field" style="margin-top:12px"><label>Power Automate flow URL</label><input data-set="webhook" style="width:100%" placeholder="https://prod-xx.australiasoutheast.logic.azure.com/…" value="${esc(st.webhook)}">
+      <div class="help">Create a flow with the trigger “When an HTTP request is received” that emails the supplier, then paste its URL here. Without a URL, orders fall back to email.</div></div>`:''}
+    <h3>How much to order</h3>
+    <div class="wiz-grid">
+      <div class="field"><label>Safety buffer %</label><input data-set="buffer" type="number" value="${st.buffer}"><div class="help">Extra on top of the forecast for busy surprises.</div></div>
+      <div class="field"><label>Days each delivery should last</label><input data-set="cover" type="number" value="${st.cover}"><div class="help">Perishables are always capped at their shelf life.</div></div>
+    </div></div>`;
+}
+function pgAgent(){
+  const st=db.settings, cfg=alertsCfg();
+  return `<div class="card"><h2>${icon('bolt')} How much should the agent do?</h2>
+    <p class="lead">Hand routine work to CafeCast. You can cancel anything it does under Orders.</p>
+    <div class="field"><label>Ordering</label><select data-set="autopilot" style="width:100%">
+      <option value="off"${st.autopilot!=='routine'?' selected':''}>Ask me before every order</option>
+      <option value="routine"${st.autopilot==='routine'?' selected':''}>Autopilot: approve routine orders under a limit</option></select></div>
+    ${st.autopilot==='routine'?`<div class="field" style="margin-top:12px"><label>Auto-approve limit per supplier order ($)</label><input data-set="autoLimit" type="number" value="${st.autoLimit}"><div class="help">Orders above this, below a supplier minimum, or that you edited always wait for you.</div></div>`:''}
+    <div class="note">Always automatic: reading sales and stock, logging expired stock as waste, checking weather, holidays and events, and drafting orders.</div></div>
+  <div class="card"><h2>${icon('bell')} Alerts</h2>
+    <p class="lead">CafeCast only interrupts when waiting would cost money, and never more than 3 times a day. Everything else waits on the Today page.</p>
+    ${Object.entries(ALERT_DEF).map(([k,[t,ic]])=>`<label class="toggle-row"><span class="set-ic">${icon(ic)}</span><span>${t}</span><input type="checkbox" class="switch" data-alert="${k}" ${cfg[k]?'checked':''}></label>`).join('')}
+    <div class="actions" style="margin-top:12px"><button class="btn secondary" data-act="alert-test">Preview alerts</button></div>
+    <div class="help" style="margin-top:8px">In this prototype alerts appear inside the app. In production they would be phone push notifications.</div></div>`;
+}
+function pgSources(){
+  const st=db.settings, ok=st.scanOk||{}, R=connRes, busy=R&&R.busy;
+  const state=(res,fallback)=>busy?['warn','Testing…']:res?[res.ok?'live':'off',connWhy(res)]:fallback;
+  const wxF=wxStatus==='live'?['live','Live forecast loaded']:wxStatus==='cached'?['warn',`Using the forecast saved at ${db.wx?timeStr(db.wx.ts):'earlier'}. Works offline for today.`]:wxStatus==='loading'?['warn','Loading…']:['off','Not reachable. Tap Test connections for the reason.'];
+  const holF=st.lastScan!==todayISO()?['warn','Not checked yet today']:ok.hol===false?['off','Not reachable. Tap Test connections for the reason.']:['live','Checked today for the next 7 days'];
+  const pos=DS==='mine'?(st.lastImport?['live',`Imported ${dayTimeStr(st.lastImport.ts)}`]:['warn','Not connected. CafeCast uses your usual-use estimates until you import sales.']):['sample','Sample sales history from the demo spreadsheet'];
+  const rows=[
+    ['database','Sales history (POS)','Square CSV export · no key',pos,`<button class="btn ghost sm" data-act="tab" data-id="sales">Import on the Sales page</button>`],
+    ['rain','Weather','Open-Meteo · free, no key · 16-day forecast',state(R&&R.wx,wxF),''],
+    ['clock','Public holidays','Nager.Date · free, no key · next 7 days',state(R&&R.hol,holF),`<div class="field"><label>Demand change on public holidays %</label><input data-set="holidayUplift" type="number" value="${st.holidayUplift}"></div>`],
+    ['tag','Local events','Ticketmaster · free key · within 3 km, next 7 days',st.tmKey?state(R&&R.tm,ok.tm===false?['off','Last check failed. Tap Test connections.']:['live','Key added']):['warn','Optional. Add a free key to switch this on.'],
+      `<div class="field"><label>Ticketmaster API key</label><input data-set="tmKey" value="${esc(st.tmKey)}" placeholder="From developer.ticketmaster.com"></div>`],
+    ['plan','AI forecast','Google Gemini · free key · optional',st.geminiKey?state(R&&R.gem,['live','Key added']):['warn','Optional. Without a key the owner note uses a quick keyword estimate.'],
+      `<div class="field"><label>Gemini API key</label><input data-set="geminiKey" type="password" autocomplete="off" value="${esc(st.geminiKey||'')}" placeholder="Paste your Google AI Studio key"></div>
+       <div class="field"><label>Model</label><select data-set="geminiModel"><option value="gemini-3.8-flash"${st.geminiModel==='gemini-3.8-flash'?' selected':''}>Gemini 3.8 Flash</option><option value="gemini-3.5-flash-lite"${st.geminiModel==='gemini-3.5-flash-lite'?' selected':''}>Gemini 3.5 Flash-Lite</option></select></div>`]];
+  return `<div class="card"><div class="panel-title"><h2>${icon('plug')} Data sources</h2><button class="btn" data-act="conn-test" ${busy?'disabled':''}>${busy?'Testing…':'Test connections'}</button></div>
+    <p class="lead">Everything runs in the browser, with no server. ${R&&R.ts?`Last tested ${timeStr(R.ts)}.`:'Test before a demo to see exactly what works on this network.'}</p>
+    <div class="src-list">${rows.map(([ic,t,sub,[k,msg],extra])=>`<div class="src-row"><span class="set-ic">${icon(ic)}</span><div class="src-main"><strong>${t}</strong><small>${sub}</small><span class="src-state ${k}"><i></i>${esc(msg)}</span>${extra?`<div class="src-extra">${extra}</div>`:''}</div></div>`).join('')}</div>
+    <div class="field" style="margin-top:14px"><label>Demand signals</label><select data-set="liveOnly" style="width:100%"><option value="1"${st.liveOnly!==false?' selected':''}>Live APIs only (weather, holidays, Ticketmaster)</option><option value="0"${st.liveOnly===false?' selected':''}>Also include the sample café calendar (demo only)</option></select></div>
+  </div>
+  <div class="card"><h2>Demo checklist</h2>
+    <ol class="demo-list"><li>Open the <strong>GitHub Pages link in Chrome</strong>, not a file preview. Previews block outside connections.</li>
+    <li>Tap <strong>Test connections</strong> on the venue’s Wi-Fi. If something shows “Blocked”, switch to a phone hotspot.</li>
+    <li>Open the app once on demo morning while online. Today’s weather is saved, so the demo still works if the Wi-Fi drops.</li>
+    <li>Optional: add a free Ticketmaster key for local events, and a Gemini key for the AI forecast.</li></ol></div>`;
+}
+function pgVoice(){
+  return `<div class="card"><h2>${icon('mic')} Voice</h2>
+    <p class="lead">For hands-busy moments behind the counter. Tap the mic (bottom right) and speak. Anything that spends money asks you to say “confirm”.</p>
+    <div class="stat-line"><span>“What’s my plan?”</span><span class="muted">Morning brief</span></div>
+    <div class="stat-line"><span>“Approve the dairy order”</span><span class="muted">Then “confirm”</span></div>
+    <div class="stat-line"><span>“Log 3 croissants wasted”</span><span class="muted">Updates stock</span></div>
+    <div class="stat-line"><span>“Note: roadworks out front, expect it quieter”</span><span class="muted">Re-forecasts</span></div>
+    <div class="help" style="margin:8px 0">Works in Chrome, Edge and Safari over HTTPS (e.g. GitHub Pages). In other browsers, type the same commands.</div>
+    <button class="btn ghost" data-act="test-voice">Test voice</button></div>`;
+}
+function pgView(){
+  const opts=[['auto','Desktop','monitor','Adapts to the screen it’s on. Sidebar on laptops, bottom tabs on phones.'],['phone','Phone','phone','Shows the app in a 390 px phone frame with the real phone layout. Use it to rehearse the mobile demo.'],['tablet','Tablet','store','Shows an 820 px tablet frame, e.g. an iPad on the counter.']];
+  return `<div class="card"><h2>${icon('phone')} View</h2><p class="lead">Preview how CafeCast looks on other devices. The choice is remembered on this computer, and all views share the same data.</p>
+    <div class="view-opts">${opts.map(([v,t,ic,d])=>`<button class="view-opt ${viewMode===v?'on':''}" data-act="view-set" data-v="${v}"><span class="vo-ic">${icon(ic==='monitor'?'chart':ic)}</span><strong>${t}</strong><small>${d}</small></button>`).join('')}</div>
+    ${window.innerWidth<960&&!IN_FRAME?'<div class="help" style="margin-top:10px">You’re already on a small screen, so the phone layout is showing.</div>':''}</div>`;
+}
+function pgDemo(){
+  return `<div class="card"><h2>${icon('database')} Demo tools</h2>
+    <p class="lead">You’re using <strong>${esc(DATASETS[DS])}</strong>. Each dataset is saved separately in this browser. The sample datasets rebuild each new day so dates stay realistic. Your settings and keys are kept.</p>
+    <div class="field"><label>Dataset</label><select id="ds-pick2">${Object.entries(DATASETS).map(([k,v])=>`<option value="${k}"${k===DS?' selected':''}>${esc(v)}</option>`).join('')}</select></div>
+    <div class="actions" style="margin-top:12px;justify-content:flex-start;flex-wrap:wrap"><button class="btn ghost" data-act="reset-demo">Reset this dataset</button><button class="btn danger" data-act="clear-all">Start empty</button></div></div>
+  <div class="card"><h2>${icon('store')} Set up a new café</h2><p class="lead">A 5-step guided setup for a café with no sales history: about 25 minutes, using typical amounts you adjust. It’s saved as “My café” and never overwrites the demo data.</p>
+    <button class="btn" data-act="start-new">${DS==='mine'&&db.settings.setupDone?'Run the setup again':'Start new café setup'}</button></div>`;
+}
+
+/* ---------- ORDERS: sub-tabs + one collapsible card per supplier ---------- */
+function cutoffInfo(g){
+  if(!g.cutoff) return {mins:9000,text:'no cut-off set'};
+  const [h,m]=g.cutoff.split(':').map(Number), left=h*60+(m||0)-nowMins();
+  if(left<=0) return {mins:5000-left,text:`today’s ${esc(g.cutoff)} cut-off has passed`,passed:true};
+  const hh=Math.floor(left/60), mm=left%60;
+  return {mins:left,soon:left<=60,text:`order by ${esc(g.cutoff)} · ${hh?`${hh} h `:''}${mm?`${mm} min`:''} left`.replace(' ·  left',' ')};
+}
+
 /* ---------------- RENDER ---------------- */
 const TABS=[['today','Today','plan'],['orders','Orders','package'],['waste','Waste','waste'],['impact','Impact','dollar'],['sales','Sales','chart'],['setup','Setup','settings']];
 let active='today', flash='', editMenu=null;
-function softRender(){ if(active==='today'||active==='orders') render(); }
+let lastFlash='', lastFlashTs=0;
+function softRender(){ if(active==='today'||active==='orders'){ if(!flash&&lastFlash&&Date.now()-lastFlashTs<10000) flash=lastFlash; render(); } }
 function render(){
   ensure();
   const A=analyse();
-  const nOrder=A.groups.filter(g=>g.lines.some(l=>!l.skip&&l.qty>0)).length;
-  $('tabs').innerHTML=TABS.map(([id,l,ic])=>`<button class="${id===active?'active':''}" data-act="tab" data-id="${id}">${icon(ic)}<span>${l}</span>${id==='orders'&&nOrder?`<span class="count">${nOrder}</span>`:''}</button>`).join('');
-  const body=active==='today'?renderToday(A):active==='orders'?renderOrders(A):active==='waste'?renderWaste(A):active==='sales'?renderSales():active==='impact'?renderImpact(A):renderSetup(A);
+  const nOrder=A.groups.filter(g=>g.lines.some(l=>!l.skip&&l.qty>0)).length, nDec=decisionCount(A);
+  $('tabs').innerHTML=TABS.map(([id,l,ic])=>`<button class="${id===active?'active':''}" data-act="tab" data-id="${id}">${icon(ic)}<span>${l}</span>${id==='orders'&&nOrder?`<span class="count">${nOrder}</span>`:''}${id==='today'&&nDec?`<span class="count">${nDec}</span>`:''}</button>`).join('');
+  const gate=DS==='mine'&&!db.settings.setupDone&&['today','orders','waste','impact'].includes(active);
+  const body=gate?renderWizard():active==='today'?renderToday(A):active==='orders'?renderOrders(A):active==='waste'?renderWaste(A):active==='sales'?renderSales():active==='impact'?renderImpact(A):renderSetup(A);
+  if(flash&&flash!==lastFlash){ lastFlash=flash; lastFlashTs=Date.now(); }
   $('app').innerHTML=(flash?`<div class="flash">${flash}</div>`:'')+body;
-  flash='';
+  flash=''; labelTables(); drawViewCtl();
+  const nT=toasts.length; toasts=toasts.filter(t=>t.type==='cutoff'?A.groups.some(g=>'cut|'+g.supplier===t.key&&g.total>0):t.type==='delivery'?db.orders.some(o=>'del|'+o.id===t.key&&o.status!=='received'):true); if(toasts.length!==nT) drawToasts();
 }
 
 function agentBanner(A){
@@ -1194,44 +1952,19 @@ function orderCalculation(l,p){
 function renderOrders(A){
   const planById=new Map(A.plans.map(p=>[p.i.id,p])), mrv=menuRevPerDay(), asm=assume(), skipCost=id=>stockoutCost(planById.get(id),mrv,asm);
   const total=sum(A.groups,g=>g.total);
+  const live=A.groups.filter(g=>g.lines.some(l=>!l.skip&&l.qty>0));
   const draftCount=sum(A.groups,g=>g.lines.filter(l=>!l.skip&&l.qty>0).length);
-  const draftSuppliers=A.groups.filter(g=>g.lines.some(l=>!l.skip&&l.qty>0)).length;
-  const awaiting=db.orders.filter(o=>o.status!=='received');
-  const awaitingCount=sum(awaiting,o=>o.lines.length);
-  const receivedToday=db.orders.filter(o=>o.status==='received'&&o.recvTs>=startOfDay(Date.now()));
-  const drafts=A.groups.length?A.groups.map(g=>`
-    <div class="sup">
-      <div class="sup-head"><div><strong>${esc(g.supplier)}</strong> <span class="muted">${esc(g.email||'no email set')}</span>
-        <div class="muted">Arrives ${g.delivery?dayLabel(g.delivery):'–'}${g.cutoff?` · order by ${esc(g.cutoff)}`:''}${g.min&&g.total<g.min?` · <span style="color:var(--amber)">below ${money(g.min)} minimum order</span>`:''}</div></div>
-        <div class="sup-act"><span class="muted">${money(g.total)}</span><button class="btn sm" data-act="approve-sup" data-sup="${esc(g.supplier)}" ${g.total>0?'':'disabled'}>Approve & send</button></div></div>
-      <div class="tbl-wrap"><table>
-        <tr><th>Include</th><th>Item</th><th>Order</th><th>Cost</th><th>Why CafeCast suggests it</th></tr>
-        ${g.lines.map(l=>`<tr class="${l.skip?'skipped':''}"><td><input type="checkbox" data-skip="${l.ingId}" ${l.skip?'':'checked'}></td><td>${esc(l.name)}</td>
-          <td style="white-space:nowrap"><input class="qin" type="number" min="0" step="${stepFor(l.unit)}" data-draft="${l.ingId}" value="${l.qty}"> ${esc(l.unit)}${l.edited?` <span class="badge" title="Suggested ${l.auto}">edited</span>`:''}</td>
-          <td>${money(l.qty*l.cost)}</td><td><div class="reason-short">${esc(shortWhy(l.why))}</div>${(c=>c.rev>0?`<div class="if-skip">${icon('alert')}<span>If ${l.skip?'skipped':'you skip this'}: ~${money(c.rev)} lost sales (${money(c.gp)} profit) · ${c.dishes.slice(0,2).map(esc).join(', ')} unavailable ~${fmt(c.days)} day${c.days===1?'':'s'}</span></div>`:'')(skipCost(l.ingId))}<details><summary>How was ${fmt(l.auto,2)} ${esc(l.unit)} calculated?</summary>${orderCalculation(l,planById.get(l.ingId))}</details></td></tr>`).join('')}
-      </table></div>
-    </div>`).join('')
-    :`<div class="empty">Nothing needs ordering right now. CafeCast will draft an order as soon as a perishable is forecast to run low.</div>`;
-
+  const awaiting=db.orders.filter(o=>o.status!=='received'), t0=startOfDay(Date.now());
+  const doneToday=db.orders.filter(o=>o.ts>=t0).slice().reverse();
+  const stockAlerts=A.plans.filter(p=>['out','expired'].includes(p.status)).length;
   const urgency={expired:0,out:1,order:2,risk:3,exp:4,ok:5};
   const sortNeed=p=>['out','order'].includes(p.status)?p.daysLeft:(p.next?p.next.d:99);
   const shown=A.plans.filter(p=>db.settings.showAll||p.i.perishable).sort((a,b)=>(urgency[a.status]??9)-(urgency[b.status]??9)||sortNeed(a)-sortNeed(b)||b.risk*b.i.cost-a.risk*a.i.cost);
   const orders=[...db.orders].reverse().slice(0,12);
   const stText={approved:'Approved \u00b7 ready to email',submitted:'Sent automatically',received:'Received'};
-  return agentBanner(A)+`
-  <div class="card">
-    <h2>Draft orders</h2>
-    <p class="lead">Drafts require a decision. Approved items move to Awaiting delivery and are removed from new recommendations.</p>
-    <div class="order-state">
-      <span class="state-chip"><strong>${draftSuppliers}</strong> supplier draft${draftSuppliers===1?'':'s'} · ${draftCount} items</span>
-      <span class="state-chip"><strong>${awaitingCount}</strong> awaiting delivery</span>
-      <span class="state-chip"><strong>${receivedToday.length}</strong> order${receivedToday.length===1?'':'s'} received today</span>
-    </div>
-    ${drafts}
-    ${A.groups.length?`<div class="actions">${Object.keys(db.drafts).length||Object.keys(db.skip).length?'<button class="btn ghost" data-act="reset-drafts">Reset to suggested</button>':''}
-      <button class="btn" data-act="approve-all" ${total>0?'':'disabled'}>Approve all (${money(total)})</button></div>`:''}
-  </div>
-
+  const tabs=[['drafts','Drafts',live.length],['stock','Stock',stockAlerts],['history','Orders sent',awaiting.length]];
+  const sub=`<div class="subtabs" role="tablist">${tabs.map(([id,l,n])=>`<button role="tab" aria-selected="${ordersTab===id}" class="${ordersTab===id?'on':''}" data-act="otab" data-id="${id}">${l}${n?`<span class="count">${n}</span>`:''}</button>`).join('')}</div>`;
+  if(ordersTab==='stock') return sub+`
   <div class="card">
     <div class="fhead"><h2>${db.settings.showAll?'All stock':'Perishable stock'}</h2>
       <label style="display:flex;gap:8px;align-items:center;margin:0;font-size:.85rem"><input type="checkbox" id="show-all" ${db.settings.showAll?'checked':''}> Show non-perishables too</label></div>
@@ -1244,8 +1977,8 @@ function renderOrders(A){
         <td>${p.daysLeft===Infinity?'\u2013':fmt(p.daysLeft)}</td><td>${batchList(p)}</td>
         <td>${p.risk>0.05?`<span style="color:var(--amber)">${fmt(p.risk)} ${esc(p.i.unit)}</span>`:'<span class="muted">\u2013</span>'}</td><td>${pills(p)}</td></tr>`;}).join('')||'<tr><td colspan="7" class="empty">No items yet. Add them in Setup.</td></tr>'}
     </table></div>
-  </div>
-
+  </div>`;
+  if(ordersTab==='history') return sub+`
   <div class="card">
     <h2>Order history</h2>
     <p class="lead">Approved \u2192 sent to supplier \u2192 mark Received only when the delivery physically arrives. Receipt adds the delivered quantities to stock and refreshes the forecast.</p>
@@ -1256,6 +1989,38 @@ function renderOrders(A){
         <td style="white-space:nowrap">${o.status!=='received'?`<a class="btn ghost" href="${mailto(o)}">\u2709 Email</a> <button class="btn ghost" data-act="recv" data-id="${o.id}">Received</button> <button class="del" data-act="cancel-order" data-id="${o.id}" title="Cancel order">\u2715</button>`:''}</td></tr>`).join('')||'<tr><td colspan="6" class="empty">No orders yet</td></tr>'}
     </table></div>
   </div>`;
+  const groups=A.groups.map(g=>({g,c:cutoffInfo(g)})).sort((x,y)=>x.c.mins-y.c.mins);
+  const card=({g,c})=>{
+    const lines=g.lines.filter(l=>!l.skip&&l.qty>0), belowMin=g.min&&g.total>0&&g.total<g.min, edited=g.lines.some(l=>l.edited);
+    const risk=sum(g.lines.filter(l=>!l.skip),l=>skipCost(l.ingId).rev);
+    const flags=[belowMin?`below ${money(g.min)} minimum`:'',edited?'edited by you':'',g.email?'':'no supplier email'].filter(Boolean);
+    const open=supOpen[g.supplier]!=null?supOpen[g.supplier]:!!(belowMin||edited);
+    return `<details class="sup sup-card${c.soon?' soon':''}" data-sup="${esc(g.supplier)}"${open?' open':''}>
+      <summary>
+        <div class="sc-main"><strong class="sc-name">${esc(g.supplier)}</strong>
+          <span class="sc-meta">${lines.length} item${lines.length===1?'':'s'} · arrives ${g.delivery?dayLabel(g.delivery):'–'}</span>
+          <span class="sc-cut ${c.soon?'soon':c.passed?'passed':''}">${icon('clock')} ${c.text}</span>
+          ${risk>0?`<span class="if-skip">${icon('alert')}<span>If skipped: ~${money(risk)} lost sales</span></span>`:''}
+          ${flags.length?`<span class="sc-flags">${flags.map(f=>`<span class="pill mid">${esc(f)}</span>`).join('')}</span>`:''}</div>
+        <div class="sc-act"><strong>${money(g.total)}</strong><button class="btn sm" data-act="approve-sup" data-sup="${esc(g.supplier)}" ${g.total>0?'':'disabled'}>Approve</button><span class="sc-toggle">${icon('chev','chev')}<span class="sc-tt">Review</span></span></div>
+      </summary>
+      <div class="sc-body"><div class="muted sc-mail">${esc(g.email||'No email set')} · change in Setup › Suppliers</div>
+      <div class="tbl-wrap"><table>
+        <tr><th>Include</th><th>Item</th><th>Order</th><th>Cost</th><th>Why CafeCast suggests it</th></tr>
+        ${g.lines.map(l=>`<tr class="${l.skip?'skipped':''}"><td><input type="checkbox" data-skip="${l.ingId}" ${l.skip?'':'checked'}></td><td>${esc(l.name)}</td>
+          <td style="white-space:nowrap"><input class="qin" type="number" min="0" step="${stepFor(l.unit)}" data-draft="${l.ingId}" value="${l.qty}"> ${esc(l.unit)}${l.edited?` <span class="badge" title="Suggested ${l.auto}">edited</span>`:''}</td>
+          <td>${money(l.qty*l.cost)}</td><td><div class="reason-short">${esc(shortWhy(l.why))}</div>${(c=>c.rev>0?`<div class="if-skip">${icon('alert')}<span>If ${l.skip?'skipped':'you skip this'}: ~${money(c.rev)} lost sales (${money(c.gp)} profit) · ${c.dishes.slice(0,2).map(esc).join(', ')} unavailable ~${fmt(c.days)} day${c.days===1?'':'s'}</span></div>`:'')(skipCost(l.ingId))}<details><summary>How was ${fmt(l.auto,2)} ${esc(l.unit)} calculated?</summary>${orderCalculation(l,planById.get(l.ingId))}</details></td></tr>`).join('')}
+      </table></div></div>
+    </details>`;
+  };
+  const doneHtml=doneToday.length?`<div class="card"><h2>${icon('check')} Approved today</h2>${doneToday.map(o=>`<div class="done-row"><div><strong>${esc(o.supplier)}</strong><span class="muted">${timeStr(o.ts)} · ${o.lines.length} item${o.lines.length===1?'':'s'} · ${money(o.total)}${o.auto?' · by Autopilot':''}</span></div><div class="done-act">${o.status==='received'?'<span class="pill ok">Received</span>':o.status==='submitted'?'<span class="pill ok">Sent automatically</span>':`<a class="btn ghost sm" href="${mailto(o)}">✉ Email</a>`}<button class="btn ghost sm" data-act="otab" data-id="history">View</button></div></div>`).join('')}</div>`:'';
+  return sub+agentBanner(A)+pipeline()+`
+  <div class="card">
+    ${live.length?`<div class="approve-bar"><div><strong>${live.length} supplier order${live.length===1?'':'s'} · ${draftCount} items</strong><span class="muted">Sorted by order cut-off. Approve from the card, or open it to review.</span></div>
+      <div class="ab-act"><strong>${money(total)}</strong><button class="btn" data-act="approve-all" ${total>0?'':'disabled'}>Approve all</button></div></div>`:''}
+    ${groups.length?groups.map(card).join(''):`<div class="empty">Nothing needs ordering right now. CafeCast will draft an order as soon as a perishable is forecast to run low.</div>`}
+    ${Object.keys(db.drafts).length||Object.keys(db.skip).length?'<div class="actions"><button class="btn ghost sm" data-act="reset-drafts">Reset to suggested amounts</button></div>':''}
+  </div>${doneHtml}`;
 }
 
 function renderWaste(A){
@@ -1340,7 +2105,7 @@ function renderSales(){
       <h2>Sales by day</h2>
       <div class="tbl-wrap"><table>
         <tr><th>Date</th><th>Items</th><th>Revenue</th><th>Source</th></tr>
-        ${days.map(k=>`<tr><td>${k===todayISO()?'<strong>Today</strong>':new Date(k+'T00:00:00').toLocaleDateString(undefined,{weekday:'short',day:'numeric',month:'short'})}</td><td>${by[k].qty}</td><td>${money(by[k].rev)}</td><td class="muted">${[...by[k].src].join(', ')}</td></tr>`).join('')||'<tr><td colspan="4" class="empty">No sales yet</td></tr>'}
+        ${days.map(k=>`<tr><td>${k===todayISO()?'<strong>Today</strong>':fmtISO(k,{weekday:'short',day:'numeric',month:'short'})}</td><td>${by[k].qty}</td><td>${money(by[k].rev)}</td><td class="muted">${[...by[k].src].join(', ')}</td></tr>`).join('')||'<tr><td colspan="4" class="empty">No sales yet</td></tr>'}
       </table></div>
     </div>
     <div class="card">
@@ -1357,180 +2122,46 @@ function renderSales(){
   </div>`;
 }
 
-function renderSetup(A){
-  const st=db.settings, t0=startOfDay(Date.now());
-  const sold=id=>sum(db.sales.filter(s=>s.menuId===id&&s.ts>=t0-14*DAY),s=>s.qty);
-  const need=db.menu.filter(m=>needsRecipe(m)&&sold(m.id)>0);
-  const per=db.ingredients.filter(i=>i.perishable);
-  const steps=[
-    [!!st.lastImport,'Sync sales from Square','So nobody types in sales.','sales'],
-    [need.length===0,'Add recipes for items that use perishables',need.length?`${need.length} selling item${need.length>1?'s':''} still ${need.length>1?'need':'needs'} one. Only perishable ingredients matter.`:'Done. Items without perishables can be marked as such.',null],
-    [per.length>0&&per.every(i=>i.shelf&&i.email),'Check perishables: shelf life & supplier email','Used to work out expiry dates and send orders.',null],
-    [!!st.mode,'Choose how orders reach suppliers',st.mode==='auto'?'Automatic through Power Automate':'Email selected',null],
-    [!!st.place,'Set your caf\u00e9\u2019s location','For weather and local events.',null]
-  ];
-  if(!editMenu||!menuById(editMenu)) editMenu=(need[0]||db.menu[0]||{}).id||null;
-  const em=menuById(editMenu);
-  const ingOpts=[...db.ingredients].sort((a,b)=>(b.perishable-a.perishable)||a.name.localeCompare(b.name)).map(i=>`<option value="${i.id}">${esc(i.name)} (${esc(i.unit)})${i.perishable?'':' \u00b7 non-perishable'}</option>`).join('');
-  const menuSorted=[...db.menu].sort((a,b)=>(needsRecipe(b)-needsRecipe(a))||a.name.localeCompare(b.name));
-  return `
-  <div class="card">
-    <h2>Quick start</h2>
-    <p class="lead">CafeCast sits on top of what you already use (Square and your suppliers\u2019 email), so setup is a one-off of about 15 minutes.</p>
-    ${steps.map(([d,t,h,go],ix)=>`<div class="check"><div class="tick ${d?'done':''}">${d?'\u2713':ix+1}</div><div><strong>${t}</strong>${go&&!d?` \u00b7 <a href="#" data-act="tab" data-id="${go}">Go</a>`:''}<div class="muted">${h}</div></div></div>`).join('')}
-  </div>
-
-  <div class="card" id="rec-editor">
-    <h2>Menu & recipes</h2>
-    <p class="lead">Menu items are added automatically from your Square sales. You only need a recipe for items that use <strong>perishables</strong>, usually 10\u201320 items, not the whole menu. Coffee variants can copy one recipe.</p>
-    ${em?`
-    <div class="sup">
-      <div class="row">
-        <div class="field"><label>Editing</label><select id="rec-item">${menuSorted.map(m=>`<option value="${m.id}"${m.id===em.id?' selected':''}>${needsRecipe(m)?'\u26a0 ':''}${esc(m.name)}</option>`).join('')}</select></div>
-        <div class="field" style="flex:0 1 120px"><label>Price</label><input data-menuf="${em.id}:price" type="number" step="0.1" value="${em.price}"></div>
-      </div>
-      <div class="tbl-wrap"><table>
-        <tr><th>Ingredient</th><th>Used per item</th><th></th></tr>
-        ${em.recipe.map((r,ix)=>{const i=ingById(r.ing);return `<tr><td>${i?esc(i.name):'(deleted)'}</td><td>${r.qty} ${i?esc(i.unit):''}</td><td><button class="del" data-act="rec-del" data-idx="${ix}">\u2715</button></td></tr>`;}).join('')||`<tr><td colspan="3" class="muted">No recipe yet</td></tr>`}
-      </table></div>
-      <div class="row" style="margin-top:10px">
-        <div class="field"><label>Add ingredient</label><select id="rec-ing">${ingOpts}</select></div>
-        <div class="field" style="flex:0 1 130px"><label>Qty per item</label><input id="rec-qty" type="number" step="0.01" placeholder="e.g. 0.2"></div>
-        <button class="btn secondary" data-act="rec-add">Add</button>
-      </div>
-      <div class="row">
-        <div class="field"><label>Or copy the recipe from</label><select id="rec-copy">${db.menu.filter(m=>m.id!==em.id&&m.recipe.length).map(m=>`<option value="${m.id}">${esc(m.name)}</option>`).join('')}</select></div>
-        <button class="btn ghost" data-act="rec-copy">Copy</button>
-      </div>
-      <label style="display:flex;gap:8px;align-items:center;margin:4px 0 0;font-size:.88rem;color:var(--ink)"><input type="checkbox" id="rec-noper" ${em.noPerishables?'checked':''}> This item has no perishable ingredients (e.g. bought-in pastries)</label>
-    </div>`:'<div class="empty">No menu items yet. Sync sales from Square to add them.</div>'}
-    <div class="row" style="margin-top:14px">
-      <input id="menu-search" placeholder="Search ${db.menu.length} items\u2026" style="flex:2;min-width:160px">
-      <select id="menu-filter" style="flex:1;min-width:140px"><option value="all">All items</option><option value="need">Needs a recipe</option></select>
-    </div>
-    <div class="tbl-wrap"><table>
-      <tr><th>Item</th><th>Price</th><th>Ingredient cost</th><th>Margin</th><th>Recipe</th><th>Sold (14d)</th><th></th></tr>
-      ${menuSorted.map(m=>{const c=costOfItem(m),pct=m.price>0?(m.price-c)/m.price*100:0;
-        return `<tr data-menu-row="${esc(m.name.toLowerCase())}" data-need="${needsRecipe(m)?1:0}"><td>${esc(m.name)} ${m.src==='square'?'<span class="badge">from Square</span>':''}</td><td>${money(m.price)}</td><td>${m.recipe.length?money(c):'\u2013'}</td><td>${m.recipe.length?pct.toFixed(0)+'%':'\u2013'}</td>
-        <td class="muted">${m.recipe.length?m.recipe.map(r=>{const i=ingById(r.ing);return `${i?esc(i.name):'?'} \u00d7${r.qty}`;}).join(', '):(m.noPerishables?'No perishables':'<span style="color:var(--amber)">Needs recipe</span>')}</td>
-        <td>${sold(m.id)}</td><td style="white-space:nowrap"><button class="btn ghost" data-act="edit-menu" data-id="${m.id}">Edit</button> <button class="del" data-act="del-menu" data-id="${m.id}">\u2715</button></td></tr>`;}).join('')}
-    </table></div>
-  </div>
-
-  <div class="card">
-    <h2>Stock items</h2>
-    <p class="lead">Edit directly in the table. Changing <em>Stock</em> works as a quick stock count. Shelf life sets the expiry date of each new delivery.</p>
-    <div class="tbl-wrap"><table class="edit-tbl">
-      <tr><th>Name</th><th>Perishable</th><th>Shelf life (days)</th><th>Stock</th><th>Unit</th><th>Reorder at</th><th>Delivery (days)</th><th>Cost/unit</th><th>Supplier</th><th>Supplier email</th><th></th></tr>
-      ${db.ingredients.map(i=>`<tr>
-        <td><input class="w-txt" data-ingf="${i.id}:name" value="${esc(i.name)}"></td>
-        <td><input type="checkbox" data-ingf="${i.id}:perishable" ${i.perishable?'checked':''}></td>
-        <td><input class="w-num" type="number" data-ingf="${i.id}:shelf" value="${i.shelf??''}"></td>
-        <td><input class="w-num" type="number" step="0.1" data-ingf="${i.id}:stock" value="${stockOf(i)}"></td>
-        <td><input class="w-num" data-ingf="${i.id}:unit" value="${esc(i.unit)}"></td>
-        <td><input class="w-num" type="number" step="0.1" data-ingf="${i.id}:reorder" value="${i.reorder??''}"></td>
-        <td><input class="w-num" type="number" data-ingf="${i.id}:lead" value="${i.lead??''}"></td>
-        <td><input class="w-num" type="number" step="0.01" data-ingf="${i.id}:cost" value="${i.cost??''}"></td>
-        <td><input class="w-txt" data-ingf="${i.id}:supplier" value="${esc(i.supplier)}"></td>
-        <td><input class="w-mail" data-ingf="${i.id}:email" value="${esc(i.email)}"></td>
-        <td><button class="del" data-act="del-ing" data-id="${i.id}">\u2715</button></td></tr>`).join('')}
-    </table></div>
-    <details><summary>+ Add a stock item</summary>
-      <div class="row">
-        <div class="field"><label>Name</label><input id="ni-name" placeholder="e.g. Almond milk"></div>
-        <div class="field"><label>Unit</label><input id="ni-unit" placeholder="L / kg / ea"></div>
-        <div class="field"><label>Stock now</label><input id="ni-stock" type="number" step="0.1"></div>
-        <div class="field"><label>Shelf life (days)</label><input id="ni-shelf" type="number"></div>
-        <div class="field"><label>Reorder at</label><input id="ni-reorder" type="number" step="0.1"></div>
-        <div class="field"><label>Delivery (days)</label><input id="ni-lead" type="number" value="1"></div>
-        <div class="field"><label>Cost/unit ($)</label><input id="ni-cost" type="number" step="0.01"></div>
-        <div class="field"><label>Supplier</label><input id="ni-supplier"></div>
-        <div class="field"><label>Supplier email</label><input id="ni-email"></div>
-      </div>
-      <label style="display:flex;gap:8px;align-items:center;font-size:.88rem;color:var(--ink)"><input type="checkbox" id="ni-per" checked> Perishable</label>
-      <button class="btn" data-act="add-ing" style="margin-top:10px">Add item</button>
-    </details>
-  </div>
-
-  <div class="grid2">
-    <div class="card">
-      <h2>Sending orders to suppliers</h2>
-      <p class="lead">When you approve an order, how should it reach the supplier?</p>
-      <div class="field"><select data-set="mode" style="width:100%">
-        <option value="email"${st.mode!=='auto'?' selected':''}>Email: I tap Send in my email app (simplest)</option>
-        <option value="auto"${st.mode==='auto'?' selected':''}>Automatic: send through a Power Automate flow (advanced)</option></select></div>
-      ${st.mode==='auto'?`<div class="field" style="margin-top:12px"><label>Power Automate flow URL</label><input data-set="webhook" style="width:100%" placeholder="https://prod-xx.australiasoutheast.logic.azure.com/\u2026" value="${esc(st.webhook)}">
-        <div class="help">Create a flow with the trigger \u201cWhen an HTTP request is received\u201d that emails the supplier, then paste its URL here. Without a URL, orders fall back to email.</div></div>`:''}
-      <h3>How much to order</h3>
-      <div class="row">
-        <div class="field"><label>Safety buffer %</label><input data-set="buffer" type="number" value="${st.buffer}"><div class="help">Extra on top of the forecast for busy surprises.</div></div>
-        <div class="field"><label>Days each delivery should last</label><input data-set="cover" type="number" value="${st.cover}"><div class="help">Perishables are always capped at their shelf life.</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <h2>Location & local events</h2>
-      <p class="lead">Used to fetch the weather and to search online for public holidays and nearby events.</p>
-      <div class="row"><div class="field"><label>Caf\u00e9 suburb</label><input id="geo-q" value="${esc(st.place)}"></div><button class="btn secondary" data-act="geo">Set</button></div>
-      <div class="row">
-        <div class="field"><label>Public holiday demand change %</label><input data-set="holidayUplift" type="number" value="${st.holidayUplift}"><div class="help">Use a negative number if your caf\u00e9 is quieter on holidays (e.g. CBD).</div></div>
-        <div class="field"><label>Ticketmaster API key (optional)</label><input data-set="tmKey" value="${esc(st.tmKey)}" placeholder="Free from developer.ticketmaster.com"><div class="help">Lets the agent also find concerts, games and shows within 3 km.</div></div>
-      </div>
-    </div>
-  </div>
-
-  <div class="grid2">
-    <div class="card">
-      <h2>${icon('bolt')} How much should the agent do?</h2>
-      <p class="lead">Hand routine work to CafeCast. You can cancel anything it does under Orders.</p>
-      <div class="field"><label>Ordering</label><select data-set="autopilot" style="width:100%">
-        <option value="off"${st.autopilot!=='routine'?' selected':''}>Ask me before every order</option>
-        <option value="routine"${st.autopilot==='routine'?' selected':''}>Autopilot: approve routine orders under a limit</option></select></div>
-      ${st.autopilot==='routine'?`<div class="field" style="margin-top:12px"><label>Auto-approve limit per supplier order ($)</label><input data-set="autoLimit" type="number" value="${st.autoLimit}"><div class="help">Orders above this, below a supplier minimum, or that you edited always wait for you.</div></div>`:''}
-      <div class="field" style="margin-top:12px"><label>Closing time (waste-check reminder)</label><input data-set="close" type="time" value="${esc(st.close||'15:00')}"></div>
-      <div class="note">Already automatic: sales sync from the POS, expired stock is logged as waste, weather/holidays/events are checked every run, and the waste check only shows flagged items.</div>
-    </div>
-    <div class="card">
-      <h2>${icon('mic')} Voice</h2>
-      <p class="lead">For hands-busy moments behind the counter. Tap the mic (bottom right) and speak. Anything that spends money asks you to say “confirm”.</p>
-      <div class="stat-line"><span>“What’s my plan?”</span><span class="muted">Morning brief</span></div>
-      <div class="stat-line"><span>“Approve the dairy order”</span><span class="muted">Then “confirm”</span></div>
-      <div class="stat-line"><span>“Log 3 croissants wasted”</span><span class="muted">Updates stock</span></div>
-      <div class="stat-line"><span>“Note: roadworks out front, expect it quieter”</span><span class="muted">Re-forecasts</span></div>
-      <div class="help" style="margin:8px 0">Works in Chrome, Edge and Safari over HTTPS (e.g. GitHub Pages). In other browsers, type the same commands.</div>
-      <button class="btn ghost" data-act="test-voice">Test voice</button>
-    </div>
-  </div>
-
-  <div class="card ai-card">
-    <div class="ai-head"><div><h2>${icon('plan')} CafeCast AI demand forecasting</h2><p class="lead">Gemini combines POS history, weekday patterns, weather, events and optional owner knowledge to forecast demand. CafeCast then uses explainable formulas for stock, expiry and supplier-order calculations.</p></div><span class="pill ${st.geminiKey?'ok':'mid'}">${st.geminiKey?'Connected':'Setup needed'}</span></div>
-    <div class="row">
-      <div class="field"><label>Gemini API key</label><input data-set="geminiKey" type="password" autocomplete="off" value="${esc(st.geminiKey||'')}" placeholder="Paste your Google AI Studio key"><div class="help">For this PoC the key is stored only in this browser. Move it to a protected backend before production.</div></div>
-      <div class="field" style="max-width:230px"><label>Model</label><select data-set="geminiModel"><option value="gemini-3.8-flash"${st.geminiModel==='gemini-3.8-flash'?' selected':''}>Gemini 3.8 Flash</option><option value="gemini-3.5-flash-lite"${st.geminiModel==='gemini-3.5-flash-lite'?' selected':''}>Gemini 3.5 Flash-Lite</option></select><div class="help">Flash is the recommended demo model.</div></div>
-    </div>
-    <a class="btn ghost" href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">Get a free API key ↗</a>
-  </div>
-
-  <div class="card">
-    <h2>Data</h2>
-    <p class="lead">You\u2019re using <strong>${DATASETS[DS]}</strong>. Each dataset is saved separately in this browser, so changes here never affect the other one. Switch datasets at the top of the page. Resetting only reloads this dataset\u2019s original data.</p>
-    <button class="btn ghost" data-act="reset-demo">Reset this dataset</button> <button class="btn danger" data-act="clear-all">Start empty</button>
-  </div>`;
-}
 function filterMenu(){
-  const q=(($('menu-search')||{}).value||'').toLowerCase(), f=($('menu-filter')||{}).value||'all';
-  document.querySelectorAll('[data-menu-row]').forEach(r=>{ r.style.display=r.dataset.menuRow.includes(q)&&(f==='all'||r.dataset.need==='1')?'':'none'; });
+  const q=(($('menu-search')||{}).value||'').toLowerCase();
+  document.querySelectorAll('[data-menu-row]').forEach(r=>{ const f=menuFilter; r.style.display=r.dataset.menuRow.includes(q)&&(f==='all'||(f==='need'&&r.dataset.need==='1')||(f==='done'&&r.dataset.has==='1'))?'':'none'; });
+  document.querySelectorAll('#menu-seg button').forEach(x=>x.classList.toggle('on',x.dataset.v===menuFilter));
 }
+function filterStock(){ const q=(($('stock-search')||{}).value||'').toLowerCase(); document.querySelectorAll('[data-stock-row]').forEach(r=>r.style.display=r.dataset.stockRow.includes(q)?'':'none'); }
 
 /* ---------------- EVENTS ---------------- */
 document.addEventListener('click',async e=>{
   const b=e.target.closest('[data-act]'); if(!b) return;
   const act=b.dataset.act, id=b.dataset.id;
+  if(b.tagName==='BUTTON'&&b.closest('summary')) e.preventDefault();
+  if(b.dataset.toast){ toasts=toasts.filter(t=>t.key!==b.dataset.toast); drawToasts(); }
   if(b.tagName==='A'&&b.getAttribute('href')==='#') e.preventDefault();
   switch(act){
-    case 'tab': active=id; window.scrollTo(0,0); render(); break;
+    case 'tab': lastFlash=''; if(id==='setup'){ setupPage=null; menuOpen=null; } active=id; window.scrollTo(0,0); render(); break;
+    case 'otab': lastFlash=''; active='orders'; ordersTab=id||'drafts'; window.scrollTo(0,0); render(); break;
+    case 'setup-go': lastFlash=''; active='setup'; setupPage=b.dataset.page||null; if(setupPage!=='menu') menuOpen=null; window.scrollTo(0,0); render(); break;
+    case 'menu-open': active='setup'; setupPage='menu'; menuOpen=id||null; if(id) editMenu=id; window.scrollTo(0,0); render(); break;
+    case 'menu-filter': menuFilter=b.dataset.v||'all'; filterMenu(); break;
+    case 'menu-add': { const n=($('nm-name').value||'').trim(); if(!n){ flash='Give the menu item a name.'; render(); break; } const m={id:cid(),name:n,price:parseFloat($('nm-price').value)||0,recipe:[],src:'setup',noPerishables:false}; db.menu.push(m); menuOpen=m.id; editMenu=m.id; save(); render(); break; }
+    case 'sup-day': { const name=decodeURIComponent(b.dataset.sup), items=db.ingredients.filter(i=>i.supplier===name); if(!items.length) break; const cur=items[0].days||[0,1,2,3,4,5,6], d=+b.dataset.d;
+      let nd=cur.includes(d)?cur.filter(x=>x!==d):[...cur,d].sort((x,y)=>x-y); if(!nd.length) nd=cur; items.forEach(i=>i.days=nd.length===7?null:[...nd]); save(); render(); break; }
+    case 'conn-test': testConnections(); break;
+    case 'view-set': setView(b.dataset.v); break;
+    case 'alert-test': previewAlerts(); break;
+    case 'toast-x': break;
+    case 'wiz': wizNext(+b.dataset.d); break;
+    case 'wiz-go': db.settings.wiz=+b.dataset.d; save(); render(); break;
+    case 'wiz-finish': if(!db.ingredients.length){ flash='Choose at least one perishable first.'; db.settings.wiz=2; render(); break; } wizFinish(); break;
+    case 'wiz-custom': { const n=($('wz-name').value||'').trim(); if(!n) break; wizAdd('Other',n,$('wz-unit').value,parseFloat($('wz-shelf').value)||7,1,0,1); save(); render(); break; }
+    case 'start-new': { save(); DS='mine'; try{ localStorage.setItem('cafecast_dataset',DS); }catch(e){} db=load();
+      if(db.settings.setupDone&&confirm('Run the setup again? Your current \u201cMy caf\u00e9\u201d data will be replaced.')) seedBlank();
+      $('ds-pick').value=DS; active='today'; setupPage=null; menuOpen=null; save(); runAgent(false); window.scrollTo(0,0); break; }
     case 'jump': active='today'; render(); requestAnimationFrame(()=>{ const target=$(id); if(target) target.scrollIntoView({behavior:'smooth',block:'start'}); }); break;
     case 'jump-page': active=b.dataset.page||'today'; render(); requestAnimationFrame(()=>{ const target=$(id); if(target){ target.scrollIntoView({behavior:'smooth',block:'start'}); target.classList.add('anchor-flash'); setTimeout(()=>target.classList.remove('anchor-flash'),1200); } }); break;
     case 'scan': runAgent(true); break;
+    case 'phone-view': setView('phone'); break;
+    case 'phone-close': setView('auto'); break;
+    case 'ai-clear': db.events=db.events.filter(e=>!e.ai); db.aiBrief=null; save(); flash='Note removed. The forecast is back to the automatic signals.'; render(); break;
     case 'voice-open': openVoice(); if(!voiceLog.length) addVoice('cc','Hi! Tap the mic and ask me anything about today, or tap a suggestion.'); break;
     case 'voice-close': closeVoice(); break;
     case 'voice-mic': listening?stopListen():startListen(); break;
@@ -1559,18 +2190,18 @@ document.addEventListener('click',async e=>{
     case 'ctx-add': { const n=$('ctx-name').value.trim(); if(!n){ flash='Describe the event or condition first.'; render(); break; } db.events.push({id:cid(),date:$('ctx-date').value,name:n,uplift:parseFloat($('ctx-up').value)||0,auto:false,cal:true,src:'Owner input'}); flash=`Owner context added: ${esc(n)} is now included in the forecast.`; save(); render(); break; }
     case 'ev-del': { const ev=db.events.find(x=>x.id===id); if(ev&&ev.auto) db.dismissed[ev.date+'|'+ev.name]=1; db.events=db.events.filter(x=>x.id!==id); save(); render(); break; }
     case 'promo-toggle': togglePromo(b.dataset.menu,parseFloat(b.dataset.price)||0,b.dataset.reason||'',parseFloat(b.dataset.save)||0); break;
-    case 'edit-menu': editMenu=id; render(); { const el=$('rec-editor'); if(el) el.scrollIntoView({behavior:'smooth'}); } break;
+    case 'edit-menu': active='setup'; setupPage='menu'; menuOpen=id; editMenu=id; window.scrollTo(0,0); render(); break;
     case 'rec-add': { const m=menuById(editMenu), q=parseFloat($('rec-qty').value), ing=$('rec-ing').value; if(!m||!(q>0)) break; m.recipe.push({ing,qty:q}); m.noPerishables=false; save(); render(); break; }
     case 'rec-del': { const m=menuById(editMenu); if(m){ m.recipe.splice(+b.dataset.idx,1); save(); render(); } break; }
     case 'rec-copy': { const m=menuById(editMenu), src=menuById(($('rec-copy')||{}).value); if(m&&src){ m.recipe=src.recipe.map(r=>({...r})); m.noPerishables=false; flash=`Copied the ${esc(src.name)} recipe to ${esc(m.name)}.`; save(); render(); } break; }
-    case 'del-menu': if(confirm('Remove this menu item?')){ db.menu=db.menu.filter(m=>m.id!==id); save(); render(); } break;
+    case 'del-menu': if(confirm('Remove this menu item?')){ db.menu=db.menu.filter(m=>m.id!==id); if(menuOpen===id) menuOpen=null; save(); render(); } break;
     case 'del-ing': if(confirm('Remove this stock item? It will also be removed from recipes.')){ db.ingredients=db.ingredients.filter(i=>i.id!==id); db.menu.forEach(m=>m.recipe=m.recipe.filter(r=>r.ing!==id)); save(); render(); } break;
     case 'add-ing': { const name=$('ni-name').value.trim(); if(!name){ alert('Name required'); break; }
       const i={id:cid(),name,unit:$('ni-unit').value.trim()||'ea',cost:parseFloat($('ni-cost').value)||0,supplier:$('ni-supplier').value.trim(),email:$('ni-email').value.trim(),
-        reorder:parseFloat($('ni-reorder').value)||0,par:null,lead:parseFloat($('ni-lead').value)||1,shelf:parseFloat($('ni-shelf').value)||null,perishable:$('ni-per').checked,batches:[]};
+        reorder:parseFloat($('ni-reorder').value)||0,par:null,est:parseFloat(($('ni-est')||{}).value)||null,lead:parseFloat($('ni-lead').value)||1,shelf:parseFloat($('ni-shelf').value)||null,perishable:$('ni-per').checked,batches:[]};
       addBatch(i,parseFloat($('ni-stock').value)||0,newExpiry(i)); db.ingredients.push(i); flash=`Added ${esc(name)}.`; save(); render(); break; }
     case 'geo': geocode(); break;
-    case 'reset-demo': if(confirm(`Reset ${DATASETS[DS]} to its original data? The other dataset isn\u2019t affected.`)){ seed(); weather=null; editMenu=null; save(); runAgent(true); } break;
+    case 'reset-demo': if(confirm(`Reset ${DATASETS[DS]} to its original data? The other datasets aren\u2019t affected.`)){ seed(); weather=null; editMenu=null; save(); runAgent(true); } break;
     case 'clear-all': if(confirm('Delete all data and start with an empty caf\u00e9?')){ const keep=db.settings; seed(); Object.assign(db,{ingredients:[],menu:[],sales:[],waste:[],orders:[],events:[],importKeys:{}});
       db.settings.lastImport=null; db.settings.place=keep.place; db.settings.lat=keep.lat; db.settings.lon=keep.lon; save(); render(); } break;
   }
@@ -1578,6 +2209,7 @@ document.addEventListener('click',async e=>{
 document.addEventListener('keydown',e=>{
   if(e.target.id==='v-text'&&e.key==='Enter'){ e.preventDefault(); handleVoice(e.target.value); e.target.value=''; return; }
   if(e.key==='Escape'&&$('voice').classList.contains('open')){ closeVoice(); return; }
+  if(e.key==='Escape'&&phoneOpen){ closePhone(); return; }
   if(e.key!=='Enter'&&e.key!==' ') return;
   const target=e.target.closest('[data-act][role="button"]');
   if(!target) return;
@@ -1588,30 +2220,63 @@ document.addEventListener('change',e=>{
   if(t.dataset.ingf){ const [id,f]=t.dataset.ingf.split(':'), i=ingById(id); if(!i) return;
     if(f==='perishable') i.perishable=t.checked;
     else if(f==='stock') setStock(i,Math.max(0,parseFloat(t.value)||0));
-    else if(['shelf','reorder','lead','cost'].includes(f)) i[f]=t.value===''?null:parseFloat(t.value);
+    else if(['shelf','reorder','lead','cost','est','pack','par'].includes(f)) i[f]=t.value===''?null:parseFloat(t.value);
+    else if(f==='supplier'){ let v=t.value; if(v==='__new'){ v=(prompt('New supplier name')||'').trim(); if(!v){ render(); return; } i.email=''; }
+      const sp=supplierList().find(x=>x.name===v&&!x.items.every(y=>y.id===i.id)); i.supplier=v; if(sp) Object.assign(i,{email:sp.email,days:sp.days,cutoff:sp.cutoff,minOrder:sp.min,lead:sp.lead}); }
     else i[f]=t.value.trim();
     save(); render(); return; }
+  if(t.dataset.supf){ const [en,f]=t.dataset.supf.split('|'), name=decodeURIComponent(en), v=t.value.trim();
+    db.ingredients.filter(i=>i.supplier===name).forEach(i=>{ if(f==='name'){ if(v) i.supplier=v; } else if(f==='email') i.email=v; else if(f==='cutoff') i.cutoff=v; else if(f==='lead') i.lead=parseFloat(v)||0; else if(f==='min') i.minOrder=parseFloat(v)||0; });
+    save(); render(); return; }
+  if(t.dataset.recq!=null){ const m=menuById(editMenu), r=m&&m.recipe[+t.dataset.recq]; if(r){ r.qty=Math.max(0,parseFloat(t.value)||0); save(); render(); } return; }
+  if(t.dataset.alert){ alertsCfg()[t.dataset.alert]=t.checked; save(); render(); return; }
+  if(t.dataset.wizItem){ const n=t.dataset.wizItem, ex=db.ingredients.find(i=>i.name===n);
+    if(t.checked&&!ex){ const T=WIZ_ITEMS.find(x=>x[1]===n); if(T) wizAdd(...T); } else if(!t.checked&&ex){ db.ingredients=db.ingredients.filter(i=>i!==ex); }
+    save(); render(); return; }
+  if(t.dataset.wizOwn&&!t.checked){ db.ingredients=db.ingredients.filter(i=>i.id!==t.dataset.wizOwn); save(); render(); return; }
   if(t.dataset.menuf){ const [id,f]=t.dataset.menuf.split(':'), m=menuById(id); if(m){ m[f]=parseFloat(t.value)||0; save(); render(); } return; }
   if(t.dataset.draft){ const v=parseFloat(t.value); db.drafts[t.dataset.draft]=isNaN(v)?0:Math.max(0,v); save(); render(); return; }
   if(t.dataset.skip){ if(t.checked) delete db.skip[t.dataset.skip]; else db.skip[t.dataset.skip]=true; save(); render(); return; }
   if(t.dataset.assume){ db.settings.assume=db.settings.assume||{}; db.settings.assume[t.dataset.assume]=parseFloat(t.value)||0; save(); render(); return; }
   if(t.dataset.set){ const k=t.dataset.set; db.settings[k]=['buffer','cover','holidayUplift','autoLimit'].includes(k)?(parseFloat(t.value)||0):t.value.trim();
+    if(k==='liveOnly') db.settings.liveOnly=t.value==='1';
+    if(k==='tz'){ try{ new Intl.DateTimeFormat('en',{timeZone:db.settings.tz}); cafeTZ=db.settings.tz; }catch(err){ db.settings.tz=cafeTZ; flash='That isn\u2019t a valid time zone. Use a name like Australia/Sydney.'; } db.wx=null; loadWeather(); db.settings.lastScan=null; scanEvents(true); }
     if(k==='mode') db.settings.modeSet=true; if(k==='tmKey'||k==='holidayUplift'){ db.settings.lastScan=null; scanEvents(true); } save(); render(); return; }
   if(t.id==='rec-item'){ editMenu=t.value; render(); return; }
   if(t.id==='rec-noper'){ const m=menuById(editMenu); if(m){ m.noPerishables=t.checked; save(); render(); } return; }
-  if(t.id==='ds-pick'){ save(); DS=t.value; try{ localStorage.setItem('cafecast_dataset',DS); }catch(e){}
+  if(t.id==='ds-pick'||t.id==='ds-pick2'){ save(); DS=t.value; $('ds-pick').value=DS; setupPage=null; menuOpen=null; try{ localStorage.setItem('cafecast_dataset',DS); }catch(e){}
     db=load(); weather=null; editMenu=null; active='today';
     flash=`Switched to <strong>${DATASETS[DS]}</strong>. Each dataset is saved separately.`; runAgent(false); window.scrollTo(0,0); return; }
   if(t.id==='show-all'){ db.settings.showAll=t.checked; save(); render(); return; }
   if(t.id==='menu-filter'){ filterMenu(); return; }
   if(t.id==='sq-file'&&t.files&&t.files[0]) handleFile(t.files[0]);
 });
-document.addEventListener('input',e=>{ if(e.target.id==='menu-search') filterMenu(); });
+document.addEventListener('input',e=>{ if(e.target.id==='menu-search') filterMenu(); if(e.target.id==='stock-search') filterStock(); });
+document.addEventListener('toggle',e=>{ const d=e.target; if(d&&d.classList&&d.classList.contains('sup-card')) supOpen[d.dataset.sup]=d.open; },true);
+
+/* ---------------- PHONE PREVIEW ----------------
+   Loads this same page in a 390 px frame so the real phone layout (media queries, bottom tabs) can be checked on a laptop. */
+const IN_FRAME=(()=>{ try{ return window.self!==window.top; }catch(e){ return true; } })();
+if(IN_FRAME) document.documentElement.classList.add('in-frame');
+function fitPhone(){ const d=document.querySelector('.phone-dev'), V=VIEWS[viewMode]||VIEWS.phone; if(!d) return;
+  const W=V.w+24, H=V.h+24, f=$('phone-frame'); f.style.width=V.w+'px'; f.style.height=V.h+'px'; d.style.width=W+'px'; d.style.height=H+'px';
+  d.classList.toggle('tablet',viewMode==='tablet');
+  const k=Math.min(1,(window.innerHeight-100)/H,(window.innerWidth-32)/W); d.style.transform=`scale(${k})`; d.parentElement.style.height=(H*k)+'px'; d.parentElement.style.width=(W*k)+'px'; }
+function openPhone(){ if(IN_FRAME) return; if(!phoneOpen){ save(); phoneOpen=true; $('phone-frame').src=location.href.split('#')[0]+'#phone'; $('phone-ov').classList.add('open'); document.body.style.overflow='hidden'; } fitPhone(); drawViewCtl(); }
+function closePhone(){ phoneOpen=false; $('phone-ov').classList.remove('open'); $('phone-frame').src='about:blank'; document.body.style.overflow=''; db=load(); runAgent(false); }
+window.addEventListener('resize',fitPhone);
+
+/* Keep "today" honest: rebuild at midnight (cafe time), refresh weather every 3 hours, and re-check when the tab comes back */
+function tick(){ if(!db||phoneOpen) return; checkAlerts(); if(DS!=='mine'&&db.seededISO!==todayISO()){ save(); db=load(); runAgent(true); return; } if(!db.wx||Date.now()-db.wx.ts>3*3600e3) loadWeather(); }
+setInterval(tick,60e3);
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') tick(); });
 
 /* ---------------- START ---------------- */
 db=load();
 $('ds-pick').value=DS;
 runAgent(false);
+if(!IN_FRAME&&viewMode!=='auto'&&window.innerWidth>=960) openPhone();
+setTimeout(checkAlerts,4000);
 </script>
 </body>
 </html>
