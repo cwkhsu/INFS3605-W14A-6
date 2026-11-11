@@ -469,6 +469,7 @@ body.logged-out{padding-left:0!important;padding-bottom:0!important}
 .login-loading{display:flex;align-items:center;justify-content:center;gap:12px;min-height:260px;color:var(--muted);font-size:.95rem}
 .spin{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--accent);animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
 .stat-line strong.warn{color:var(--warn)}
+input.masked{-webkit-text-security:disc;text-security:disc}
 .login-card button[type=submit]{width:100%}
 .login-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .demo-login{display:grid;grid-template-columns:38px minmax(0,1fr) 18px;gap:12px;align-items:center;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:12px 14px;font:inherit;color:inherit;cursor:pointer;margin-top:8px}
@@ -577,7 +578,10 @@ const CONFIG=Object.assign({
 CONFIG.supabaseUrl=String(CONFIG.supabaseUrl||'').trim().replace(/^(https?:\/\/[^\/]+).*$/,'$1');
 const KEY_BASE='cafecast_v3';
 /* the café's own Gemini key, or the app-wide one from CONFIG */
-const gemKey=()=>((db&&db.settings&&db.settings.geminiKey)||CONFIG.geminiKey||'').trim();
+/* API keys never contain spaces or @, and Gemini keys start AIza… or AQ.… — this stops an autofilled email/password being used as a key */
+const looksLikeKey=v=>/^[A-Za-z0-9._-]{20,}$/.test(String(v||'').trim());
+const looksLikeGemini=v=>looksLikeKey(v)&&/^(AIza|AQ\.)/.test(String(v).trim());
+const gemKey=()=>{ const own=db&&db.settings&&db.settings.geminiKey; return (looksLikeGemini(own)?own:looksLikeGemini(CONFIG.geminiKey)?CONFIG.geminiKey:'').trim(); };
 /* AI forecast is available with a key in this browser, or through the CafeCast server function when signed in with Supabase */
 const viaServer=()=>!gemKey()&&!!(typeof ACCT!=='undefined'&&ACCT&&ACCT.mode==='cloud');
 const aiOn=()=>!!gemKey()||viaServer();
@@ -1286,6 +1290,7 @@ function receive(id){
 /* ---------------- SETTINGS HELPERS ---------------- */
 function ensure(){
   const s=db.settings; db.impactLog=db.impactLog||[]; db.promos=db.promos||[];
+  if(s.tmKey&&!looksLikeKey(s.tmKey)) s.tmKey=''; if(s.geminiKey&&!looksLikeGemini(s.geminiKey)) s.geminiKey='';
   if(s.autopilot==null) s.autopilot='off'; if(s.autoLimit==null) s.autoLimit=150;
   if(s.close==null) s.close='15:00'; if(s.detail==null) s.detail=false; s.assume=s.assume||{};
   if(s.owner==null||(DS==='littlefern'&&s.owner==='Sam')) s.owner=DS==='littlefern'?'Nick':'';
@@ -2139,9 +2144,9 @@ function pgSources(){
     ['rain','Weather','Open-Meteo · free, no key · 16-day forecast',state(R&&R.wx,wxF),''],
     ['clock','Public holidays','Nager.Date · free, no key · next 7 days',state(R&&R.hol,holF),`<div class="field"><label>Demand change on public holidays %</label><input data-set="holidayUplift" type="number" value="${st.holidayUplift}"></div>`],
     ['tag','Local events','Ticketmaster · free key · within 3 km, next 7 days',st.tmKey?state(R&&R.tm,ok.tm===false?['off','Last check failed. Tap Test connections.']:['live','Key added']):['warn','Optional. Add a free key to switch this on.'],
-      `<div class="field"><label>Ticketmaster API key</label><input data-set="tmKey" value="${esc(st.tmKey)}" placeholder="From developer.ticketmaster.com"></div>`],
-    ['plan','AI forecast','Google Gemini · free key · optional',aiOn()?state(R&&R.gem,['live',st.geminiKey?'Using this café’s own key':'Built in · runs securely on the CafeCast server']):['warn','Optional. Without a key the owner note uses a quick keyword estimate.'],
-      `<div class="field"><label>Gemini API key</label><input data-set="geminiKey" type="password" autocomplete="off" value="${esc(st.geminiKey||'')}" placeholder="${viaServer()||CONFIG.geminiKey?'Not needed · leave empty':'Paste your Google AI Studio key'}"></div>
+      `<div class="field"><label>Ticketmaster API key</label><input data-set="tmKey" name="cc-events-token" autocomplete="off" autocapitalize="none" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" value="${esc(st.tmKey)}" placeholder="From developer.ticketmaster.com"></div>`],
+    ['plan','AI forecast',CLOUD?'Google Gemini · key kept on the CafeCast server':'Google Gemini · free key · optional',aiOn()?state(R&&R.gem,['live',st.geminiKey?'Using this café’s own key':'Built in · runs securely on the CafeCast server']):['warn','Optional. Without a key the owner note uses a quick keyword estimate.'],
+      `${CLOUD?'':`<div class="field"><label>Gemini API key</label><input data-set="geminiKey" name="cc-ai-token" class="masked" autocomplete="off" autocapitalize="none" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-bwignore="true" data-form-type="other" value="${esc(st.geminiKey||'')}" placeholder="${CONFIG.geminiKey?'Not needed · leave empty':'Paste your Google AI Studio key'}"></div>`}
        <div class="field"><label>Model</label><select data-set="geminiModel"><option value="gemini-3.8-flash"${st.geminiModel==='gemini-3.8-flash'?' selected':''}>Gemini 3.8 Flash</option><option value="gemini-3.5-flash-lite"${st.geminiModel==='gemini-3.5-flash-lite'?' selected':''}>Gemini 3.5 Flash-Lite</option></select></div>`]];
   return `<div class="card"><div class="panel-title"><h2>${icon('plug')} Data sources</h2><button class="btn" data-act="conn-test" ${busy?'disabled':''}>${busy?'Testing…':'Test connections'}</button></div>
     <p class="lead">Everything runs in the browser, with no server. ${R&&R.ts?`Last tested ${timeStr(R.ts)}.`:'Test to see exactly what works on this network.'}</p>
@@ -2568,6 +2573,8 @@ document.addEventListener('change',e=>{
   if(t.dataset.draft){ const v=parseFloat(t.value); db.drafts[t.dataset.draft]=isNaN(v)?0:Math.max(0,v); save(); render(); return; }
   if(t.dataset.skip){ if(t.checked) delete db.skip[t.dataset.skip]; else db.skip[t.dataset.skip]=true; save(); render(); return; }
   if(t.dataset.assume){ db.settings.assume=db.settings.assume||{}; db.settings.assume[t.dataset.assume]=parseFloat(t.value)||0; save(); render(); return; }
+  if(t.dataset.set==='tmKey'||t.dataset.set==='geminiKey'){ const v=t.value.trim(), ok=t.dataset.set==='tmKey'?looksLikeKey(v):looksLikeGemini(v);
+    if(v&&!ok){ t.value=''; db.settings[t.dataset.set]=''; flash=t.dataset.set==='tmKey'?'That isn’t a Ticketmaster key. Paste the Consumer Key from developer.ticketmaster.com.':'That isn’t a Gemini key. Gemini keys start with AIza or AQ.'; save(); render(); return; } }
   if(t.dataset.set){ const k=t.dataset.set; db.settings[k]=['buffer','cover','holidayUplift','autoLimit'].includes(k)?(parseFloat(t.value)||0):t.value.trim();
     if(k==='liveOnly') db.settings.liveOnly=t.value==='1';
     if(k==='tz'){ try{ new Intl.DateTimeFormat('en',{timeZone:db.settings.tz}); cafeTZ=db.settings.tz; }catch(err){ db.settings.tz=cafeTZ; flash='That isn\u2019t a valid time zone. Use a name like Australia/Sydney.'; } db.wx=null; loadWeather(); db.settings.lastScan=null; scanEvents(true); }
