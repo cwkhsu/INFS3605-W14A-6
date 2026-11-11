@@ -562,13 +562,20 @@ body.logged-out{padding-left:0!important;padding-bottom:0!important}
 /* ---------------- APP SETTINGS ----------------
    supabaseUrl + supabaseAnonKey: from Supabase › Project Settings › API. Turns on accounts that sync across devices.
    (The anon key is designed to be public; your data is protected by the row-level security rules in the setup SQL.)
-   googleMapsKey (optional): a Google Maps JavaScript API key with Places API (New) enabled, restricted to your site's address. */
+   googleMapsKey (optional): a Google Maps JavaScript API key with Places API (New) enabled, restricted to your site's address.
+   geminiKey (optional): one Gemini API key for every café account. A café's own key in Setup › Data sources takes priority.
+     Restrict it to your site's address in Google Cloud › Credentials, because anyone can see this file. */
 const CONFIG=Object.assign({
-  supabaseUrl:'https://ulypgiehvodcsdvenwpy.supabase.co/rest/v1/',
+  supabaseUrl:'https://ulypgiehvodcsdvenwpy.supabase.co',
   supabaseAnonKey:'sb_publishable_YM2BWZTdDnl_qo8MkKEQuw_nU2OUg4r',
-  googleMapsKey:''
+  googleMapsKey:'',
+  geminiKey:''
 },window.CAFECAST_CONFIG||{});
+/* use just the project address, even if a longer URL (e.g. …/rest/v1/) was pasted */
+CONFIG.supabaseUrl=String(CONFIG.supabaseUrl||'').trim().replace(/^(https?:\/\/[^\/]+).*$/,'$1');
 const KEY_BASE='cafecast_v3';
+/* the café's own Gemini key, or the app-wide one from CONFIG */
+const gemKey=()=>((db&&db.settings&&db.settings.geminiKey)||CONFIG.geminiKey||'').trim();
 const DATASETS={demo:'Corner Caf\u00e9',littlefern:'Little Fern Caf\u00e9',mine:'My caf\u00e9'};
 let DS=(()=>{ try{ const d=localStorage.getItem('cafecast_dataset'); return DATASETS[d]?d:'littlefern'; }catch(e){ return 'littlefern'; } })();
 /* Each login has its own storage key. Built-in demo logins keep the original keys so existing demo data is not lost. */
@@ -1012,7 +1019,7 @@ function aiSnapshot(){
 function cleanJsonText(s){ return String(s||'').replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim(); }
 async function runGeminiContext(){
   if(aiBusy) return;
-  const key=(db.settings.geminiKey||'').trim(), input=(($('ai-context')||{}).value||'').trim();
+  const key=gemKey(), input=(($('ai-context')||{}).value||'').trim();
   const status=$('ai-status'), button=$('ai-run');
   if(!key){
     return quickContext(input);
@@ -1601,11 +1608,11 @@ function renderToday(A){
     </div>
     <div class="hero-sources">${sourceChips()}</div>
     <div class="hero-ai">
-      <div class="hero-ai-copy"><strong>${icon('plan')} Know something CafeCast can’t see?</strong>Type it here and the forecast and every order update straight away. ${s.geminiKey?'Gemini combines your note with POS history, live weather, holidays and events.':'Without a Gemini key, CafeCast uses a quick keyword estimate. Add a key in Setup for the AI forecast.'}${s.geminiKey?'<br><span class="pill">Powered by Gemini</span>':''}</div>
+      <div class="hero-ai-copy"><strong>${icon('plan')} Know something CafeCast can’t see?</strong>Type it here and the forecast and every order update straight away. ${gemKey()?'Gemini combines your note with POS history, live weather, holidays and events.':'Without a Gemini key, CafeCast uses a quick keyword estimate. Add a key in Setup for the AI forecast.'}${gemKey()?'<br><span class="pill">Powered by Gemini</span>':''}</div>
       <div class="hero-ai-controls">
         <div><label for="ai-context">What’s different today?</label><input id="ai-context" value="${ai?esc(ai.input||''):''}" placeholder="e.g. Roadworks have closed nearby parking"></div>
-        <button class="btn" id="ai-run" data-act="ai-context">${s.geminiKey?'Generate AI forecast':'Update forecast'}</button>
-        <div id="ai-status" class="hero-ai-status">${s.geminiKey?'Ready. Gemini will use all connected data.':'Tip: include a % for an exact change, e.g. “school group of 40, +20%”.'}</div>
+        <button class="btn" id="ai-run" data-act="ai-context">${gemKey()?'Generate AI forecast':'Update forecast'}</button>
+        <div id="ai-status" class="hero-ai-status">${gemKey()?'Ready. Gemini will use all connected data.':'Tip: include a % for an exact change, e.g. “school group of 40, +20%”.'}</div>
         ${ai?`<div class="hero-ai-result"><strong>${esc(ai.title)}</strong><span class="pill">${ai.uplift>=0?'+':''}${ai.uplift}% vs normal</span><br>${esc(ai.summary)} <strong>Next:</strong> ${esc(ai.nextStep)} <button class="hero-link" data-act="ai-clear">Remove note</button></div>`:''}
       </div>
     </div>
@@ -1799,7 +1806,7 @@ async function testConnections(){
     probe(`https://api.open-meteo.com/v1/forecast?latitude=${s.lat}&longitude=${s.lon}&daily=weathercode&forecast_days=1&timezone=${encodeURIComponent(TZ())}`),
     probe(`https://date.nager.at/api/v3/PublicHolidays/${todayISO().slice(0,4)}/AU`),
     s.tmKey?probe(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${encodeURIComponent(s.tmKey)}&size=1&countryCode=AU`):Promise.resolve(null),
-    s.geminiKey?probe(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(s.geminiKey)}`):Promise.resolve(null)]);
+    gemKey()?probe(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(gemKey())}`):Promise.resolve(null)]);
   connRes={ts:Date.now(),wx,hol,tm,gem}; connBusy=false;
   if(wx.ok) loadWeather();
   if(hol.ok||(tm&&tm.ok)){ s.lastScan=null; scanEvents(true); }
@@ -2091,8 +2098,8 @@ function pgSources(){
     ['clock','Public holidays','Nager.Date · free, no key · next 7 days',state(R&&R.hol,holF),`<div class="field"><label>Demand change on public holidays %</label><input data-set="holidayUplift" type="number" value="${st.holidayUplift}"></div>`],
     ['tag','Local events','Ticketmaster · free key · within 3 km, next 7 days',st.tmKey?state(R&&R.tm,ok.tm===false?['off','Last check failed. Tap Test connections.']:['live','Key added']):['warn','Optional. Add a free key to switch this on.'],
       `<div class="field"><label>Ticketmaster API key</label><input data-set="tmKey" value="${esc(st.tmKey)}" placeholder="From developer.ticketmaster.com"></div>`],
-    ['plan','AI forecast','Google Gemini · free key · optional',st.geminiKey?state(R&&R.gem,['live','Key added']):['warn','Optional. Without a key the owner note uses a quick keyword estimate.'],
-      `<div class="field"><label>Gemini API key</label><input data-set="geminiKey" type="password" autocomplete="off" value="${esc(st.geminiKey||'')}" placeholder="Paste your Google AI Studio key"></div>
+    ['plan','AI forecast','Google Gemini · free key · optional',gemKey()?state(R&&R.gem,['live',st.geminiKey?'Key added':'Using CafeCast’s shared key']):['warn','Optional. Without a key the owner note uses a quick keyword estimate.'],
+      `<div class="field"><label>Gemini API key</label><input data-set="geminiKey" type="password" autocomplete="off" value="${esc(st.geminiKey||'')}" placeholder="${CONFIG.geminiKey?'Optional: use your own key instead':'Paste your Google AI Studio key'}"></div>
        <div class="field"><label>Model</label><select data-set="geminiModel"><option value="gemini-3.8-flash"${st.geminiModel==='gemini-3.8-flash'?' selected':''}>Gemini 3.8 Flash</option><option value="gemini-3.5-flash-lite"${st.geminiModel==='gemini-3.5-flash-lite'?' selected':''}>Gemini 3.5 Flash-Lite</option></select></div>`]];
   return `<div class="card"><div class="panel-title"><h2>${icon('plug')} Data sources</h2><button class="btn" data-act="conn-test" ${busy?'disabled':''}>${busy?'Testing…':'Test connections'}</button></div>
     <p class="lead">Everything runs in the browser, with no server. ${R&&R.ts?`Last tested ${timeStr(R.ts)}.`:'Test to see exactly what works on this network.'}</p>
