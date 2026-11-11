@@ -563,19 +563,24 @@ body.logged-out{padding-left:0!important;padding-bottom:0!important}
    supabaseUrl + supabaseAnonKey: from Supabase › Project Settings › API. Turns on accounts that sync across devices.
    (The anon key is designed to be public; your data is protected by the row-level security rules in the setup SQL.)
    googleMapsKey (optional): a Google Maps JavaScript API key with Places API (New) enabled, restricted to your site's address.
-   geminiKey (optional): one Gemini API key for every café account. A café's own key in Setup › Data sources takes priority.
-     Restrict it to your site's address in Google Cloud › Credentials, because anyone can see this file. */
+   AI forecast: with Supabase set, the Gemini key is kept on the server in the `gemini-forecast` Edge Function
+     (Supabase › Edge Functions › Secrets › GEMINI_API_KEY), so it never appears in this public file.
+   geminiKey (leave empty with Supabase): only for running without Supabase. A café's own key in Setup › Data sources takes priority. */
 const CONFIG=Object.assign({
   supabaseUrl:'https://ulypgiehvodcsdvenwpy.supabase.co',
   supabaseAnonKey:'sb_publishable_YM2BWZTdDnl_qo8MkKEQuw_nU2OUg4r',
   googleMapsKey:'',
-  geminiKey:''
+  geminiKey:'',
+  geminiModel:'gemini-3.8-flash'
 },window.CAFECAST_CONFIG||{});
 /* use just the project address, even if a longer URL (e.g. …/rest/v1/) was pasted */
 CONFIG.supabaseUrl=String(CONFIG.supabaseUrl||'').trim().replace(/^(https?:\/\/[^\/]+).*$/,'$1');
 const KEY_BASE='cafecast_v3';
 /* the café's own Gemini key, or the app-wide one from CONFIG */
 const gemKey=()=>((db&&db.settings&&db.settings.geminiKey)||CONFIG.geminiKey||'').trim();
+/* AI forecast is available with a key in this browser, or through the CafeCast server function when signed in with Supabase */
+const viaServer=()=>!gemKey()&&!!(typeof ACCT!=='undefined'&&ACCT&&ACCT.mode==='cloud');
+const aiOn=()=>!!gemKey()||viaServer();
 const DATASETS={demo:'Corner Caf\u00e9',littlefern:'Little Fern Caf\u00e9',mine:'My caf\u00e9'};
 let DS=(()=>{ try{ const d=localStorage.getItem('cafecast_dataset'); return DATASETS[d]?d:'littlefern'; }catch(e){ return 'littlefern'; } })();
 /* Each login has its own storage key. Built-in demo logins keep the original keys so existing demo data is not lost. */
@@ -1016,29 +1021,59 @@ function aiSnapshot(){
     expiry_risks:risks.map(p=>({item:p.i.name,quantity:p.risk,unit:p.i.unit,days_to_expiry:p.next?p.next.d:null}))
   };
 }
+/* Calls the gemini-forecast Supabase Edge Function. Returns {text, model}, or {ok, configured} for a ping. */
+async function callForecastServer(body){
+  const {data,error}=await client().functions.invoke('gemini-forecast',{body});
+  if(error){
+    let msg=error.message||'The AI forecast service didn’t respond.';
+    try{ const j=await error.context.json(); if(j&&j.error) msg=j.error; }catch(e){}
+    if(/failed to send|fetch|network/i.test(msg)) msg='Can’t reach the AI forecast service. Check your connection, or that the gemini-forecast function is deployed in Supabase.';
+    if(/not found|404/i.test(msg)) msg='The AI forecast service isn’t set up yet: deploy the gemini-forecast function in Supabase.';
+    throw new Error(msg);
+  }
+  if(data&&data.error) throw new Error(data.error);
+  return data||{};
+}
 function cleanJsonText(s){ return String(s||'').replace(/^```(?:json)?\s*/i,'').replace(/\s*```$/,'').trim(); }
 async function runGeminiContext(){
   if(aiBusy) return;
   const key=gemKey(), input=(($('ai-context')||{}).value||'').trim();
   const status=$('ai-status'), button=$('ai-run');
-  if(!key){
+  if(!aiOn()){
     return quickContext(input);
   }
   aiBusy=true;
   if(button){ button.disabled=true; button.textContent='Forecasting…'; }
   if(status){ status.className='hero-ai-status'; status.textContent='Gemini is combining POS history, weather, events and your optional note…'; }
   try{
-    const model=db.settings.geminiModel||'gemini-3.8-flash';
     const prompt=`You are the CafeCast AI Demand Forecasting Agent for an independent café. Forecast TODAY'S total customer demand relative to a normal trading day by combining the supplied POS sales history, weekday pattern, weather, nearby events and optional owner note. The percentage you return must be the FINAL total change from normal, not an additional adjustment. Do not calculate stock orders or invent facts. Return JSON only with these fields: title (short string), demand_change_percent (integer from -60 to 100), summary (one sentence naming the most important drivers), next_step (one concrete preparation action for the owner), confidence ("Low", "Medium", or "High"). If evidence is weak, stay close to the weekday pattern and use Low confidence.\n\nCAFÉ DATA:\n${JSON.stringify(aiSnapshot())}\n\nOPTIONAL OWNER NOTE:\n${input||'None provided'}`;
-    const response=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(model)}:generateContent?key=${encodeURIComponent(key)}`,{
-      method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{temperature:0.2,responseMimeType:'application/json'}})
-    });
-    const data=await response.json();
-    if(!response.ok) throw new Error((data.error&&data.error.message)||`Gemini request failed (${response.status})`);
-    const raw=data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text;
-    if(!raw) throw new Error('Gemini returned no usable response. Please try again.');
-    const result=JSON.parse(cleanJsonText(raw));
+    /* Try the chosen model first (Gemini 3.8 Flash by default), then fall back to Gemini 3.5 Flash-Lite if it's busy or unavailable */
+    const models=[...new Set([db.settings.geminiModel||CONFIG.geminiModel,'gemini-3.8-flash','gemini-3.5-flash-lite'].filter(Boolean))];
+    let model='', result=null, lastErr=null;
+    if(!key){
+      /* signed in with Supabase: the server function holds the key and does the model fallback */
+      const out=await callForecastServer({prompt,models});
+      result=JSON.parse(cleanJsonText(out.text)); model=out.model;
+    }
+    else for(const m of models){
+      try{
+        const response=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${encodeURIComponent(m)}:generateContent`,{
+          method:'POST',headers:{'Content-Type':'application/json','x-goog-api-key':key},
+          body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{temperature:0.2,responseMimeType:'application/json'}})
+        });
+        const data=await response.json().catch(()=>({}));
+        if(!response.ok){ const e=new Error((data.error&&data.error.message)||`Gemini request failed (${response.status})`); e.status=response.status; throw e; }
+        const raw=data.candidates&&data.candidates[0]&&data.candidates[0].content&&data.candidates[0].content.parts&&data.candidates[0].content.parts[0]&&data.candidates[0].content.parts[0].text;
+        if(!raw) throw new Error('Gemini returned no usable response. Please try again.');
+        result=JSON.parse(cleanJsonText(raw)); model=m; break;
+      }catch(e){
+        lastErr=e; console.warn(`CafeCast: ${m} failed`,e);
+        /* a rejected key won't work on any model, so stop there */
+        if(e.status===401||e.status===403||(e.status===400&&/api key/i.test(e.message))) break;
+        if(status) status.textContent='Trying Gemini 3.5 Flash-Lite…';
+      }
+    }
+    if(!result) throw lastErr||new Error('Gemini could not generate the forecast.');
     const uplift=Math.max(-60,Math.min(100,Math.round(Number(result.demand_change_percent)||0)));
     const tbl=dowTable(), weekday=tbl[wdOf(0)]??1, wx=isWet()?0.9:1;
     const nonAiEvents=sum(eventsOn(todayISO()).filter(e=>!e.ai),e=>+e.uplift||0);
@@ -1608,11 +1643,11 @@ function renderToday(A){
     </div>
     <div class="hero-sources">${sourceChips()}</div>
     <div class="hero-ai">
-      <div class="hero-ai-copy"><strong>${icon('plan')} Know something CafeCast can’t see?</strong>Type it here and the forecast and every order update straight away. ${gemKey()?'Gemini combines your note with POS history, live weather, holidays and events.':'Without a Gemini key, CafeCast uses a quick keyword estimate. Add a key in Setup for the AI forecast.'}${gemKey()?'<br><span class="pill">Powered by Gemini</span>':''}</div>
+      <div class="hero-ai-copy"><strong>${icon('plan')} Know something CafeCast can’t see?</strong>Type it here and the forecast and every order update straight away. ${aiOn()?'Gemini combines your note with POS history, live weather, holidays and events.':'Without a Gemini key, CafeCast uses a quick keyword estimate. Add a key in Setup for the AI forecast.'}${aiOn()?'<br><span class="pill">Powered by Gemini</span>':''}</div>
       <div class="hero-ai-controls">
         <div><label for="ai-context">What’s different today?</label><input id="ai-context" value="${ai?esc(ai.input||''):''}" placeholder="e.g. Roadworks have closed nearby parking"></div>
-        <button class="btn" id="ai-run" data-act="ai-context">${gemKey()?'Generate AI forecast':'Update forecast'}</button>
-        <div id="ai-status" class="hero-ai-status">${gemKey()?'Ready. Gemini will use all connected data.':'Tip: include a % for an exact change, e.g. “school group of 40, +20%”.'}</div>
+        <button class="btn" id="ai-run" data-act="ai-context">${aiOn()?'Generate AI forecast':'Update forecast'}</button>
+        <div id="ai-status" class="hero-ai-status">${aiOn()?'Ready. Gemini will use all connected data.':'Tip: include a % for an exact change, e.g. “school group of 40, +20%”.'}</div>
         ${ai?`<div class="hero-ai-result"><strong>${esc(ai.title)}</strong><span class="pill">${ai.uplift>=0?'+':''}${ai.uplift}% vs normal</span><br>${esc(ai.summary)} <strong>Next:</strong> ${esc(ai.nextStep)} <button class="hero-link" data-act="ai-clear">Remove note</button></div>`:''}
       </div>
     </div>
@@ -1782,14 +1817,21 @@ function learningState(){ const est=db.ingredients.filter(i=>+i.est>0).length, d
 
 /* ---------- connection tests ---------- */
 let connRes=null, connBusy=false;
-async function probe(url,ms=7000){
+async function probeServer(){
+  const s0=performance.now();
+  try{ const r=await callForecastServer({ping:true}); const ms=Math.round(performance.now()-s0);
+    return r.configured?{ok:true,status:200,ms}:{ok:false,status:0,ms,msg:'Server function is running, but GEMINI_API_KEY isn’t added in Supabase › Edge Functions › Secrets.'}; }
+  catch(e){ return {ok:false,status:0,ms:Math.round(performance.now()-s0),msg:e.message}; }
+}
+async function probe(url,ms=7000,headers){
   const c=new AbortController(), t=setTimeout(()=>c.abort(),ms), s0=performance.now();
-  try{ const r=await fetch(url,{signal:c.signal}); return {ok:r.ok,status:r.status,ms:Math.round(performance.now()-s0)}; }
+  try{ const r=await fetch(url,{signal:c.signal,headers:headers||{}}); return {ok:r.ok,status:r.status,ms:Math.round(performance.now()-s0)}; }
   catch(e){ return {ok:false,status:0,err:e&&e.name==='AbortError'?'timeout':'blocked',ms:Math.round(performance.now()-s0)}; }
   finally{ clearTimeout(t); }
 }
 function connWhy(r){
   if(!r) return '';
+  if(r.msg) return r.msg;
   if(r.ok) return `Connected · replied in ${r.ms} ms`;
   if(navigator.onLine===false) return 'This device is offline. Connect to Wi-Fi or a hotspot.';
   if(r.err==='timeout') return 'No reply within 7 seconds. The network is slow or filtering this service.';
@@ -1806,7 +1848,7 @@ async function testConnections(){
     probe(`https://api.open-meteo.com/v1/forecast?latitude=${s.lat}&longitude=${s.lon}&daily=weathercode&forecast_days=1&timezone=${encodeURIComponent(TZ())}`),
     probe(`https://date.nager.at/api/v3/PublicHolidays/${todayISO().slice(0,4)}/AU`),
     s.tmKey?probe(`https://app.ticketmaster.com/discovery/v2/events.json?apikey=${encodeURIComponent(s.tmKey)}&size=1&countryCode=AU`):Promise.resolve(null),
-    gemKey()?probe(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(gemKey())}`):Promise.resolve(null)]);
+    gemKey()?probe('https://generativelanguage.googleapis.com/v1beta/models',7000,{'x-goog-api-key':gemKey()}):viaServer()?probeServer():Promise.resolve(null)]);
   connRes={ts:Date.now(),wx,hol,tm,gem}; connBusy=false;
   if(wx.ok) loadWeather();
   if(hol.ok||(tm&&tm.ok)){ s.lastScan=null; scanEvents(true); }
@@ -2098,8 +2140,8 @@ function pgSources(){
     ['clock','Public holidays','Nager.Date · free, no key · next 7 days',state(R&&R.hol,holF),`<div class="field"><label>Demand change on public holidays %</label><input data-set="holidayUplift" type="number" value="${st.holidayUplift}"></div>`],
     ['tag','Local events','Ticketmaster · free key · within 3 km, next 7 days',st.tmKey?state(R&&R.tm,ok.tm===false?['off','Last check failed. Tap Test connections.']:['live','Key added']):['warn','Optional. Add a free key to switch this on.'],
       `<div class="field"><label>Ticketmaster API key</label><input data-set="tmKey" value="${esc(st.tmKey)}" placeholder="From developer.ticketmaster.com"></div>`],
-    ['plan','AI forecast','Google Gemini · free key · optional',gemKey()?state(R&&R.gem,['live',st.geminiKey?'Key added':'Using CafeCast’s shared key']):['warn','Optional. Without a key the owner note uses a quick keyword estimate.'],
-      `<div class="field"><label>Gemini API key</label><input data-set="geminiKey" type="password" autocomplete="off" value="${esc(st.geminiKey||'')}" placeholder="${CONFIG.geminiKey?'Optional: use your own key instead':'Paste your Google AI Studio key'}"></div>
+    ['plan','AI forecast','Google Gemini · free key · optional',aiOn()?state(R&&R.gem,['live',st.geminiKey?'Using this café’s own key':'Built in · runs securely on the CafeCast server']):['warn','Optional. Without a key the owner note uses a quick keyword estimate.'],
+      `<div class="field"><label>Gemini API key</label><input data-set="geminiKey" type="password" autocomplete="off" value="${esc(st.geminiKey||'')}" placeholder="${viaServer()||CONFIG.geminiKey?'Not needed · leave empty':'Paste your Google AI Studio key'}"></div>
        <div class="field"><label>Model</label><select data-set="geminiModel"><option value="gemini-3.8-flash"${st.geminiModel==='gemini-3.8-flash'?' selected':''}>Gemini 3.8 Flash</option><option value="gemini-3.5-flash-lite"${st.geminiModel==='gemini-3.5-flash-lite'?' selected':''}>Gemini 3.5 Flash-Lite</option></select></div>`]];
   return `<div class="card"><div class="panel-title"><h2>${icon('plug')} Data sources</h2><button class="btn" data-act="conn-test" ${busy?'disabled':''}>${busy?'Testing…':'Test connections'}</button></div>
     <p class="lead">Everything runs in the browser, with no server. ${R&&R.ts?`Last tested ${timeStr(R.ts)}.`:'Test to see exactly what works on this network.'}</p>
