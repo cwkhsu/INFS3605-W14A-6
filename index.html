@@ -462,7 +462,13 @@ body.logged-out{padding-left:0!important;padding-bottom:0!important}
 .login-card form{display:flex;flex-direction:column;gap:12px}
 .login-card .field{flex:none}.login-card .field input{width:100%}
 .login-seg{display:flex;width:100%}.login-seg button{flex:1;padding:9px 10px}
-.login-err{min-height:18px;color:var(--warn);font-size:.84rem;font-weight:500}
+.login-err{min-height:18px;color:var(--warn);font-size:.84rem;font-weight:500}.login-err:empty{min-height:0}
+.login-note{background:var(--soft);border-radius:12px;padding:10px 12px;font-size:.86rem;line-height:1.45;color:var(--ink)}
+.link-btn{align-self:center;border:0;background:none;color:var(--accent);font:600 .86rem var(--font);cursor:pointer;padding:6px}
+.link-btn:hover{text-decoration:underline}
+.login-loading{display:flex;align-items:center;justify-content:center;gap:12px;min-height:260px;color:var(--muted);font-size:.95rem}
+.spin{width:22px;height:22px;border-radius:50%;border:3px solid var(--line);border-top-color:var(--accent);animation:spin .8s linear infinite}@keyframes spin{to{transform:rotate(360deg)}}
+.stat-line strong.warn{color:var(--warn)}
 .login-card button[type=submit]{width:100%}
 .login-two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 .demo-login{display:grid;grid-template-columns:38px minmax(0,1fr) 18px;gap:12px;align-items:center;width:100%;text-align:left;border:1px solid var(--line);background:var(--bg);border-radius:16px;padding:12px 14px;font:inherit;color:inherit;cursor:pointer;margin-top:8px}
@@ -477,6 +483,13 @@ body.logged-out{padding-left:0!important;padding-bottom:0!important}
 .start-opt:has(input:checked){border-color:var(--accent);background:var(--soft)}
 @media(max-width:820px){.login-wrap{grid-template-columns:1fr}.login-hero{padding:24px 22px;gap:10px}.lh-points{display:none}.login-card{padding:22px 20px}.lh-title{font-size:1.7rem}}
 @media(max-width:480px){.login-two{grid-template-columns:1fr}#login{padding:0;align-items:stretch}.login-wrap{border-radius:0}}
+/* suburb picker */
+.geo-list:empty{display:none}.geo-list{margin-top:8px;border:1px solid var(--line);border-radius:14px;background:var(--card);overflow:hidden}
+.geo-head{font-size:.7rem;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:700;padding:9px 12px 4px}
+.geo-opt{display:grid;grid-template-columns:1fr 18px;gap:10px;align-items:center;width:100%;text-align:left;border:0;border-top:1px solid var(--line);background:none;padding:10px 12px;font:inherit;color:inherit;cursor:pointer}
+.geo-head+.geo-opt{border-top:0}.geo-opt:hover{background:var(--cream)}.geo-opt.top{background:var(--soft)}
+.geo-opt strong{font-size:.92rem}.geo-opt .pill{margin-left:4px}.geo-opt small{display:block;color:var(--muted);font-size:.76rem;margin-top:2px}
+.geo-msg{padding:10px 12px;color:var(--muted);font-size:.84rem}
 /* account chip */
 .acct{display:flex;align-items:center;gap:10px;width:100%;max-width:420px}
 .acct-av{width:34px;height:34px;border-radius:11px;background:var(--accent);color:#fff;display:grid;place-items:center;font-weight:700;flex:0 0 auto}
@@ -512,7 +525,7 @@ body.logged-out{padding-left:0!important;padding-bottom:0!important}
 <body class="logged-out">
 <div id="login" role="main" aria-label="Sign in to CafeCast"></div>
 <header>
-  <div class="brand"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-3"/><path d="M7 3v2M11 3v2"/></svg></div><div class="brand-copy"><h1>CafeCast</h1><div class="sub">Decisions, not dashboards.</div></div></div>
+  <div class="brand"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-3"/><path d="M7 3v2M11 3v2"/></svg></div><div class="brand-copy"><h1>CafeCast</h1><div class="sub">Easier decisions, less waste.</div></div></div>
   <nav id="tabs"></nav>
   <div class="view-ctl"><span class="vc-l">View</span><div class="view-ctl-slot"></div></div>
   <div class="ds" id="acct-box"></div>
@@ -539,15 +552,24 @@ body.logged-out{padding-left:0!important;padding-bottom:0!important}
 </div></div>
 
 <!-- Little Fern Café dataset, generated from Cafe_Inventory_Demo_Data.xlsx. Day numbers are relative to the workbook’s "today" (Wed 14 Oct 2026) and are shifted to the real date when loaded. -->
-<script type="application/json" id="lf-data">{"cafe":{"name":"Little Fern Café","place":"Kensington NSW 2033","lat":-33.906,"lon":151.224,"buffer":15,"hours":"Mon-Fri 6:30-15:00; Sat-Sun 7:00-15:00","owner":"Sam (Owner)"},"sup":{"SUP01":{"name":"Harbour Dairy Co.","email":"orders@harbourdairy.example","lead":1,"days":[1,3,5],"cutoff":"14:00","min":80},"SUP02":{"name":"Crust & Crumb Bakery","email":"luca@crustcrumb.example","lead":1,"days":[0,1,2,3,4,5,6],"cutoff":"16:00","min":40},"SUP03":{"name":"Greenline Fresh Produce","email":"sales@greenline.example","lead":1,"days":[2,4,6],"cutoff":"15:00","min":60},"SUP04":{"name":"Eastside Butchery & Deli","email":"tom@eastsidedeli.example","lead":2,"days":[2,5],"cutoff":"12:00","min":100},"SUP05":{"name":"Southern Roast Coffee","email":"ava@southernroast.example","lead":3,"days":[1],"cutoff":"10:00","min":150}},"ing":[["ING01","Full cream milk","L",9,1.65,"SUP01",2,224,66,1],["ING02","Skim milk","L",9,1.7,"SUP01",2,16,4,1],["ING03","Oat milk","L",30,3.2,"SUP01",1,27,8,1],["ING04","Almond milk","L",30,3.4,"SUP01",1,13,4,1],["ING05","Thickened cream","L",12,6.8,"SUP01",1,3,1,1],["ING06","Butter","kg",45,14.5,"SUP01",0.5,5.5,1.5,0],["ING07","Free-range eggs","each",28,0.55,"SUP01",30,330,90,1],["ING08","Greek yoghurt","kg",18,7.2,"SUP01",1,10,3,1],["ING09","Feta","kg",21,18,"SUP04",0.5,7,1.5,1],["ING10","Halloumi","kg",30,24,"SUP04",0.5,3,0.5,1],["ING11","Cheddar","kg",35,15,"SUP04",1,3,1,0],["ING12","Sourdough loaf","loaf",3,6.5,"SUP02",1,30,15,1],["ING13","Butter croissant","each",2,1.9,"SUP02",6,60,30,1],["ING14","Banana bread loaf","loaf",5,9,"SUP02",1,3,2,1],["ING15","Blueberry muffin","each",3,1.6,"SUP02",6,36,18,1],["ING16","Avocado","each",5,1.8,"SUP03",12,120,36,1],["ING17","Truss tomatoes","kg",6,6.5,"SUP03",1,11,3,1],["ING18","Baby spinach","kg",5,14,"SUP03",0.5,3,1,1],["ING19","Mixed berries","kg",4,16,"SUP03",0.5,9,2.5,1],["ING20","Bananas","kg",6,3.8,"SUP03",1,13,4,1],["ING21","Swiss brown mushrooms","kg",5,12,"SUP03",0.5,8.5,2.5,1],["ING22","Rocket","kg",4,16,"SUP03",0.25,2.5,0.75,1],["ING23","Lemons","each",14,0.6,"SUP03",10,40,10,1],["ING24","Bacon","kg",10,16.5,"SUP04",1,7,1,1],["ING25","Smoked salmon","kg",10,42,"SUP04",0.5,4,1,1],["ING26","Chicken breast","kg",4,13,"SUP04",1,10,2,1],["ING27","Espresso beans","kg",30,38,"SUP05",1,57,7,1],["ING28","Acai sorbet packs","each",180,2.4,"SUP03",20,20,20,0]],"bat":[["ING01",40.19,2],["ING01",33.49,8],["ING02",7.25,2],["ING02",4.83,8],["ING03",24.19,20],["ING04",15.15,18],["ING05",2.42,7],["ING06",9.77,35],["ING07",249,24],["ING07",100,27],["ING08",15.33,3],["ING09",4.63,13],["ING10",4.17,2],["ING11",2.99,23],["ING12",17,3],["ING13",33,2],["ING14",3,4],["ING15",30,2],["ING16",17,1],["ING16",10,4],["ING17",6.47,3],["ING18",4.18,1],["ING19",13.24,2],["ING20",11.44,3],["ING21",1.56,1],["ING22",1.45,2],["ING23",96,10],["ING24",4.42,6],["ING25",2.11,4],["ING26",3.36,2],["ING27",28.7,25],["ING28",169,140]],"menu":[["MNU01","Flat white",5.2],["MNU02","Latte",5.2],["MNU03","Cappuccino",5.2],["MNU04","Oat flat white",5.9],["MNU05","Almond latte",5.9],["MNU06","Skim latte",5.2],["MNU07","Iced latte",6.5],["MNU08","Banana berry smoothie",9.5],["MNU09","Smashed avo on sourdough",19.5],["MNU10","Big breakfast",24],["MNU11","Salmon eggs benedict",25],["MNU12","Mushroom & feta toast",18.5],["MNU13","Halloumi bruschetta",19],["MNU14","Chicken & rocket sandwich",16.5],["MNU15","Acai berry bowl",17],["MNU16","Yoghurt, berry & granola cup",11],["MNU17","Butter croissant",5.5],["MNU18","Banana bread slice",6],["MNU19","Blueberry muffin",5],["MNU20","Cheese & tomato toastie",12.5]],"rec":[["MNU01","ING01",0.18],["MNU01","ING27",0.019],["MNU02","ING01",0.24],["MNU02","ING27",0.019],["MNU03","ING01",0.2],["MNU03","ING27",0.019],["MNU04","ING03",0.18],["MNU04","ING27",0.019],["MNU05","ING04",0.24],["MNU05","ING27",0.019],["MNU06","ING02",0.24],["MNU06","ING27",0.019],["MNU07","ING01",0.22],["MNU07","ING27",0.019],["MNU08","ING20",0.15],["MNU08","ING19",0.08],["MNU08","ING08",0.08],["MNU08","ING01",0.15],["MNU09","ING12",0.125],["MNU09","ING16",1],["MNU09","ING09",0.03],["MNU09","ING23",0.25],["MNU09","ING07",1],["MNU10","ING12",0.125],["MNU10","ING07",2],["MNU10","ING24",0.08],["MNU10","ING21",0.06],["MNU10","ING17",0.08],["MNU10","ING18",0.03],["MNU10","ING06",0.015],["MNU10","ING05",0.02],["MNU11","ING12",0.125],["MNU11","ING07",2],["MNU11","ING25",0.06],["MNU11","ING06",0.03],["MNU11","ING18",0.02],["MNU11","ING23",0.25],["MNU11","ING05",0.03],["MNU12","ING12",0.125],["MNU12","ING21",0.12],["MNU12","ING09",0.04],["MNU12","ING06",0.01],["MNU13","ING12",0.125],["MNU13","ING10",0.08],["MNU13","ING17",0.1],["MNU13","ING22",0.02],["MNU14","ING12",0.125],["MNU14","ING26",0.12],["MNU14","ING22",0.03],["MNU14","ING06",0.01],["MNU15","ING28",1],["MNU15","ING19",0.07],["MNU15","ING20",0.08],["MNU16","ING08",0.15],["MNU16","ING19",0.05],["MNU17","ING13",1],["MNU17","ING06",0.01],["MNU18","ING14",0.1],["MNU18","ING06",0.01],["MNU19","ING15",1],["MNU20","ING12",0.125],["MNU20","ING11",0.05],["MNU20","ING17",0.06],["MNU20","ING06",0.01]],"sales":[[-42,"MNU01",40,208],[-42,"MNU02",76,395.2],[-42,"MNU03",107,556.4],[-42,"MNU04",32,188.8],[-42,"MNU05",15,88.5],[-42,"MNU06",19,98.8],[-42,"MNU07",18,117],[-42,"MNU08",16,152],[-42,"MNU09",33,643.5],[-42,"MNU10",11,264],[-42,"MNU11",9,225],[-42,"MNU12",2,37],[-42,"MNU13",8,152],[-42,"MNU14",18,297],[-42,"MNU16",5,55],[-42,"MNU17",28,154],[-42,"MNU18",8,48],[-42,"MNU19",18,90],[-42,"MNU20",11,137.5],[-41,"MNU01",54,280.8],[-41,"MNU02",78,405.6],[-41,"MNU03",127,660.4],[-41,"MNU04",52,306.8],[-41,"MNU05",15,88.5],[-41,"MNU06",17,88.4],[-41,"MNU07",20,130],[-41,"MNU08",16,152],[-41,"MNU09",22,429],[-41,"MNU10",6,144],[-41,"MNU11",9,225],[-41,"MNU12",10,185],[-41,"MNU13",8,152],[-41,"MNU14",56,924],[-41,"MNU16",8,88],[-41,"MNU17",29,159.5],[-41,"MNU18",11,66],[-41,"MNU19",11,55],[-41,"MNU20",19,237.5],[-40,"MNU01",52,270.4],[-40,"MNU02",93,483.6],[-40,"MNU03",136,707.2],[-40,"MNU04",44,259.6],[-40,"MNU05",12,70.8],[-40,"MNU06",24,124.8],[-40,"MNU07",27,175.5],[-40,"MNU08",12,114],[-40,"MNU09",25,487.5],[-40,"MNU10",15,360],[-40,"MNU11",15,375],[-40,"MNU12",12,222],[-40,"MNU13",8,152],[-40,"MNU14",17,280.5],[-40,"MNU16",8,88],[-40,"MNU17",34,187],[-40,"MNU18",20,120],[-40,"MNU19",21,105],[-40,"MNU20",14,175],[-39,"MNU01",86,447.2],[-39,"MNU02",108,561.6],[-39,"MNU03",158,821.6],[-39,"MNU04",53,312.7],[-39,"MNU05",16,94.4],[-39,"MNU06",27,140.4],[-39,"MNU07",28,182],[-39,"MNU08",27,256.5],[-39,"MNU09",55,1072.5],[-39,"MNU10",21,504],[-39,"MNU11",18,450],[-39,"MNU12",15,277.5],[-39,"MNU13",13,247],[-39,"MNU14",24,396],[-39,"MNU16",11,121],[-39,"MNU17",39,214.5],[-39,"MNU18",24,144],[-39,"MNU19",14,70],[-39,"MNU20",17,212.5],[-38,"MNU01",70,364],[-38,"MNU02",104,540.8],[-38,"MNU03",169,878.8],[-38,"MNU04",49,289.1],[-38,"MNU05",14,82.6],[-38,"MNU06",23,119.6],[-38,"MNU07",26,169],[-38,"MNU08",26,247],[-38,"MNU09",40,780],[-38,"MNU10",37,888],[-38,"MNU11",21,525],[-38,"MNU12",16,296],[-38,"MNU13",5,95],[-38,"MNU14",14,231],[-38,"MNU16",8,88],[-38,"MNU17",30,165],[-38,"MNU18",28,168],[-38,"MNU19",17,85],[-38,"MNU20",13,162.5],[-37,"MNU01",46,239.2],[-37,"MNU02",74,384.8],[-37,"MNU03",100,520],[-37,"MNU04",46,271.4],[-37,"MNU05",14,82.6],[-37,"MNU06",15,78],[-37,"MNU07",27,175.5],[-37,"MNU08",19,180.5],[-37,"MNU09",31,604.5],[-37,"MNU10",11,264],[-37,"MNU11",15,375],[-37,"MNU12",12,222],[-37,"MNU13",8,152],[-37,"MNU14",18,297],[-37,"MNU16",9,99],[-37,"MNU17",27,148.5],[-37,"MNU18",10,60],[-37,"MNU19",8,40],[-37,"MNU20",11,137.5],[-36,"MNU01",48,249.6],[-36,"MNU02",80,416],[-36,"MNU03",118,613.6],[-36,"MNU04",44,259.6],[-36,"MNU05",17,100.3],[-36,"MNU06",18,93.6],[-36,"MNU07",25,162.5],[-36,"MNU08",11,104.5],[-36,"MNU09",31,604.5],[-36,"MNU10",17,408],[-36,"MNU11",14,350],[-36,"MNU12",5,92.5],[-36,"MNU13",7,133],[-36,"MNU14",14,231],[-36,"MNU16",8,88],[-36,"MNU17",26,143],[-36,"MNU18",18,108],[-36,"MNU19",22,110],[-36,"MNU20",10,125],[-35,"MNU01",51,265.2],[-35,"MNU02",88,457.6],[-35,"MNU03",120,624],[-35,"MNU04",44,259.6],[-35,"MNU05",14,82.6],[-35,"MNU06",21,109.2],[-35,"MNU07",23,149.5],[-35,"MNU08",15,142.5],[-35,"MNU09",38,741],[-35,"MNU10",19,456],[-35,"MNU11",13,325],[-35,"MNU12",13,240.5],[-35,"MNU13",7,133],[-35,"MNU14",19,313.5],[-35,"MNU16",3,33],[-35,"MNU17",19,104.5],[-35,"MNU18",18,108],[-35,"MNU19",12,60],[-35,"MNU20",17,212.5],[-34,"MNU01",55,286],[-34,"MNU02",87,452.4],[-34,"MNU03",105,546],[-34,"MNU04",44,259.6],[-34,"MNU05",12,70.8],[-34,"MNU06",14,72.8],[-34,"MNU07",16,104],[-34,"MNU08",11,104.5],[-34,"MNU09",36,702],[-34,"MNU10",7,168],[-34,"MNU11",19,475],[-34,"MNU12",10,185],[-34,"MNU13",14,266],[-34,"MNU14",17,280.5],[-34,"MNU16",7,77],[-34,"MNU17",27,148.5],[-34,"MNU18",16,96],[-34,"MNU19",14,70],[-34,"MNU20",9,112.5],[-33,"MNU01",73,379.6],[-33,"MNU02",80,416],[-33,"MNU03",135,702],[-33,"MNU04",46,271.4],[-33,"MNU05",22,129.8],[-33,"MNU06",13,67.6],[-33,"MNU07",22,143],[-33,"MNU08",12,114],[-33,"MNU09",22,429],[-33,"MNU10",18,432],[-33,"MNU11",13,325],[-33,"MNU12",10,185],[-33,"MNU13",9,171],[-33,"MNU14",25,412.5],[-33,"MNU16",5,55],[-33,"MNU17",24,132],[-33,"MNU18",11,66],[-33,"MNU19",16,80],[-33,"MNU20",13,162.5],[-32,"MNU01",84,436.8],[-32,"MNU02",100,520],[-32,"MNU03",141,733.2],[-32,"MNU04",54,318.6],[-32,"MNU05",15,88.5],[-32,"MNU06",30,156],[-32,"MNU07",26,169],[-32,"MNU08",18,171],[-32,"MNU09",50,975],[-32,"MNU10",31,744],[-32,"MNU11",6,150],[-32,"MNU12",14,259],[-32,"MNU13",16,304],[-32,"MNU14",24,396],[-32,"MNU16",11,121],[-32,"MNU17",38,209],[-32,"MNU18",17,102],[-32,"MNU19",18,90],[-32,"MNU20",18,225],[-31,"MNU01",65,338],[-31,"MNU02",104,540.8],[-31,"MNU03",155,806],[-31,"MNU04",56,330.4],[-31,"MNU05",18,106.2],[-31,"MNU06",20,104],[-31,"MNU07",27,175.5],[-31,"MNU08",23,218.5],[-31,"MNU09",39,760.5],[-31,"MNU10",22,528],[-31,"MNU11",14,350],[-31,"MNU12",17,314.5],[-31,"MNU13",16,304],[-31,"MNU14",24,396],[-31,"MNU16",7,77],[-31,"MNU17",36,198],[-31,"MNU18",17,102],[-31,"MNU19",12,60],[-31,"MNU20",17,212.5],[-30,"MNU01",53,275.6],[-30,"MNU02",55,286],[-30,"MNU03",108,561.6],[-30,"MNU04",38,224.2],[-30,"MNU05",10,59],[-30,"MNU06",27,140.4],[-30,"MNU07",22,143],[-30,"MNU08",14,133],[-30,"MNU09",17,331.5],[-30,"MNU10",15,360],[-30,"MNU11",11,275],[-30,"MNU12",12,222],[-30,"MNU13",7,133],[-30,"MNU14",12,198],[-30,"MNU16",7,77],[-30,"MNU17",26,143],[-30,"MNU18",19,114],[-30,"MNU19",10,50],[-30,"MNU20",11,137.5],[-29,"MNU01",46,239.2],[-29,"MNU02",71,369.2],[-29,"MNU03",121,629.2],[-29,"MNU04",43,253.7],[-29,"MNU05",12,70.8],[-29,"MNU06",21,109.2],[-29,"MNU07",20,130],[-29,"MNU08",19,180.5],[-29,"MNU09",26,507],[-29,"MNU10",4,96],[-29,"MNU11",11,275],[-29,"MNU12",5,92.5],[-29,"MNU13",9,171],[-29,"MNU14",18,297],[-29,"MNU16",3,33],[-29,"MNU17",21,115.5],[-29,"MNU18",9,54],[-29,"MNU19",15,75],[-29,"MNU20",11,137.5],[-28,"MNU01",48,249.6],[-28,"MNU02",74,384.8],[-28,"MNU03",106,551.2],[-28,"MNU04",41,241.9],[-28,"MNU05",8,47.2],[-28,"MNU06",16,83.2],[-28,"MNU07",17,110.5],[-28,"MNU08",18,171],[-28,"MNU09",17,331.5],[-28,"MNU10",19,456],[-28,"MNU11",18,450],[-28,"MNU12",15,277.5],[-28,"MNU13",4,76],[-28,"MNU14",18,297],[-28,"MNU16",4,44],[-28,"MNU17",23,126.5],[-28,"MNU18",8,48],[-28,"MNU19",17,85],[-28,"MNU20",14,175],[-27,"MNU01",43,223.6],[-27,"MNU02",90,468],[-27,"MNU03",135,702],[-27,"MNU04",33,194.7],[-27,"MNU05",12,70.8],[-27,"MNU06",23,119.6],[-27,"MNU07",17,110.5],[-27,"MNU08",17,161.5],[-27,"MNU09",28,546],[-27,"MNU10",10,240],[-27,"MNU11",12,300],[-27,"MNU12",5,92.5],[-27,"MNU13",5,95],[-27,"MNU14",14,231],[-27,"MNU16",11,121],[-27,"MNU17",25,137.5],[-27,"MNU18",13,78],[-27,"MNU19",11,55],[-27,"MNU20",11,137.5],[-26,"MNU01",68,353.6],[-26,"MNU02",72,374.4],[-26,"MNU03",131,681.2],[-26,"MNU04",45,265.5],[-26,"MNU05",15,88.5],[-26,"MNU06",12,62.4],[-26,"MNU07",27,175.5],[-26,"MNU08",18,171],[-26,"MNU09",34,663],[-26,"MNU10",19,456],[-26,"MNU11",13,325],[-26,"MNU12",12,222],[-26,"MNU13",7,133],[-26,"MNU14",22,363],[-26,"MNU16",9,99],[-26,"MNU17",28,154],[-26,"MNU18",24,144],[-26,"MNU19",10,50],[-26,"MNU20",15,187.5],[-25,"MNU01",73,379.6],[-25,"MNU02",133,691.6],[-25,"MNU03",139,722.8],[-25,"MNU04",66,389.4],[-25,"MNU05",18,106.2],[-25,"MNU06",28,145.6],[-25,"MNU07",31,201.5],[-25,"MNU08",16,152],[-25,"MNU09",52,1014],[-25,"MNU10",26,624],[-25,"MNU11",28,700],[-25,"MNU12",15,277.5],[-25,"MNU13",13,247],[-25,"MNU14",26,429],[-25,"MNU16",14,154],[-25,"MNU17",40,220],[-25,"MNU18",32,192],[-25,"MNU19",23,115],[-25,"MNU20",15,187.5],[-24,"MNU01",70,364],[-24,"MNU02",109,566.8],[-24,"MNU03",165,858],[-24,"MNU04",65,383.5],[-24,"MNU05",18,106.2],[-24,"MNU06",20,104],[-24,"MNU07",30,195],[-24,"MNU08",26,247],[-24,"MNU09",57,1111.5],[-24,"MNU10",20,480],[-24,"MNU11",15,375],[-24,"MNU12",16,296],[-24,"MNU13",9,171],[-24,"MNU14",20,330],[-24,"MNU16",11,121],[-24,"MNU17",23,126.5],[-24,"MNU18",20,120],[-24,"MNU19",26,130],[-24,"MNU20",18,225],[-23,"MNU01",49,254.8],[-23,"MNU02",69,358.8],[-23,"MNU03",114,592.8],[-23,"MNU04",29,171.1],[-23,"MNU05",12,70.8],[-23,"MNU06",16,83.2],[-23,"MNU07",23,149.5],[-23,"MNU08",19,180.5],[-23,"MNU09",37,721.5],[-23,"MNU10",13,312],[-23,"MNU11",15,375],[-23,"MNU12",7,129.5],[-23,"MNU13",9,171],[-23,"MNU14",13,214.5],[-23,"MNU16",10,110],[-23,"MNU17",28,154],[-23,"MNU18",15,90],[-23,"MNU19",10,50],[-23,"MNU20",14,175],[-22,"MNU01",48,249.6],[-22,"MNU02",74,384.8],[-22,"MNU03",106,551.2],[-22,"MNU04",47,277.3],[-22,"MNU05",7,41.3],[-22,"MNU06",20,104],[-22,"MNU07",17,110.5],[-22,"MNU08",15,142.5],[-22,"MNU09",24,468],[-22,"MNU10",19,456],[-22,"MNU11",9,225],[-22,"MNU12",8,148],[-22,"MNU13",4,76],[-22,"MNU14",15,247.5],[-22,"MNU15",3,51],[-22,"MNU16",5,55],[-22,"MNU17",20,110],[-22,"MNU18",11,66],[-22,"MNU19",7,35],[-22,"MNU20",13,162.5],[-21,"MNU01",58,301.6],[-21,"MNU02",90,468],[-21,"MNU03",97,504.4],[-21,"MNU04",39,230.1],[-21,"MNU05",11,64.9],[-21,"MNU06",15,78],[-21,"MNU07",12,78],[-21,"MNU08",13,123.5],[-21,"MNU09",29,565.5],[-21,"MNU10",11,264],[-21,"MNU11",7,175],[-21,"MNU12",10,185],[-21,"MNU13",11,209],[-21,"MNU14",17,280.5],[-21,"MNU15",6,102],[-21,"MNU16",5,55],[-21,"MNU17",23,126.5],[-21,"MNU18",14,84],[-21,"MNU19",13,65],[-21,"MNU20",7,87.5],[-20,"MNU01",43,223.6],[-20,"MNU02",54,280.8],[-20,"MNU03",105,546],[-20,"MNU04",35,206.5],[-20,"MNU05",17,100.3],[-20,"MNU06",11,57.2],[-20,"MNU07",38,247],[-20,"MNU08",26,247],[-20,"MNU09",30,585],[-20,"MNU10",23,552],[-20,"MNU11",9,225],[-20,"MNU12",15,277.5],[-20,"MNU13",8,152],[-20,"MNU14",24,396],[-20,"MNU15",6,102],[-20,"MNU16",6,66],[-20,"MNU17",22,121],[-20,"MNU18",12,72],[-20,"MNU19",11,55],[-20,"MNU20",23,287.5],[-19,"MNU01",70,364],[-19,"MNU02",98,509.6],[-19,"MNU03",134,696.8],[-19,"MNU04",43,253.7],[-19,"MNU05",22,129.8],[-19,"MNU06",27,140.4],[-19,"MNU07",27,175.5],[-19,"MNU08",20,190],[-19,"MNU09",45,877.5],[-19,"MNU10",19,456],[-19,"MNU11",12,300],[-19,"MNU12",11,203.5],[-19,"MNU13",6,114],[-19,"MNU14",26,429],[-19,"MNU15",8,136],[-19,"MNU16",7,77],[-19,"MNU17",26,143],[-19,"MNU18",14,84],[-19,"MNU19",19,95],[-19,"MNU20",17,212.5],[-18,"MNU01",60,312],[-18,"MNU02",103,535.6],[-18,"MNU03",140,728],[-18,"MNU04",52,306.8],[-18,"MNU05",13,76.7],[-18,"MNU06",23,119.6],[-18,"MNU07",24,156],[-18,"MNU08",15,142.5],[-18,"MNU09",32,624],[-18,"MNU10",30,720],[-18,"MNU11",19,475],[-18,"MNU12",20,370],[-18,"MNU13",7,133],[-18,"MNU14",20,330],[-18,"MNU15",14,238],[-18,"MNU16",8,88],[-18,"MNU17",27,148.5],[-18,"MNU18",22,132],[-18,"MNU19",14,70],[-18,"MNU20",17,212.5],[-17,"MNU01",64,332.8],[-17,"MNU02",107,556.4],[-17,"MNU03",120,624],[-17,"MNU04",51,300.9],[-17,"MNU05",24,141.6],[-17,"MNU06",16,83.2],[-17,"MNU07",22,143],[-17,"MNU08",19,180.5],[-17,"MNU09",54,1053],[-17,"MNU10",23,552],[-17,"MNU11",24,600],[-17,"MNU12",12,222],[-17,"MNU13",15,285],[-17,"MNU14",19,313.5],[-17,"MNU15",9,153],[-17,"MNU16",12,132],[-17,"MNU17",40,220],[-17,"MNU18",20,120],[-17,"MNU19",15,75],[-17,"MNU20",20,250],[-16,"MNU01",48,249.6],[-16,"MNU02",81,421.2],[-16,"MNU03",104,540.8],[-16,"MNU04",34,200.6],[-16,"MNU05",12,70.8],[-16,"MNU06",15,78],[-16,"MNU07",30,195],[-16,"MNU08",11,104.5],[-16,"MNU09",19,370.5],[-16,"MNU10",9,216],[-16,"MNU11",15,375],[-16,"MNU12",8,148],[-16,"MNU13",8,152],[-16,"MNU14",17,280.5],[-16,"MNU15",10,170],[-16,"MNU16",9,99],[-16,"MNU17",25,137.5],[-16,"MNU18",13,78],[-16,"MNU19",18,90],[-16,"MNU20",6,75],[-15,"MNU01",48,249.6],[-15,"MNU02",94,488.8],[-15,"MNU03",112,582.4],[-15,"MNU04",41,241.9],[-15,"MNU05",18,106.2],[-15,"MNU06",12,62.4],[-15,"MNU07",20,130],[-15,"MNU08",14,133],[-15,"MNU09",30,585],[-15,"MNU10",19,456],[-15,"MNU11",9,225],[-15,"MNU12",14,259],[-15,"MNU13",7,133],[-15,"MNU14",22,363],[-15,"MNU15",4,68],[-15,"MNU16",7,77],[-15,"MNU17",23,126.5],[-15,"MNU18",13,78],[-15,"MNU19",14,70],[-15,"MNU20",17,212.5],[-14,"MNU01",45,234],[-14,"MNU02",68,353.6],[-14,"MNU03",112,582.4],[-14,"MNU04",38,224.2],[-14,"MNU05",19,112.1],[-14,"MNU06",23,119.6],[-14,"MNU07",19,123.5],[-14,"MNU08",13,123.5],[-14,"MNU09",30,585],[-14,"MNU10",16,384],[-14,"MNU11",7,175],[-14,"MNU12",10,185],[-14,"MNU13",7,133],[-14,"MNU14",14,231],[-14,"MNU15",6,102],[-14,"MNU16",8,88],[-14,"MNU17",25,137.5],[-14,"MNU18",8,48],[-14,"MNU19",20,100],[-14,"MNU20",8,100],[-13,"MNU01",55,286],[-13,"MNU02",87,452.4],[-13,"MNU03",121,629.2],[-13,"MNU04",45,265.5],[-13,"MNU05",15,88.5],[-13,"MNU06",14,72.8],[-13,"MNU07",29,188.5],[-13,"MNU08",32,304],[-13,"MNU09",34,663],[-13,"MNU10",21,504],[-13,"MNU11",8,200],[-13,"MNU12",4,74],[-13,"MNU13",7,133],[-13,"MNU14",16,264],[-13,"MNU15",10,170],[-13,"MNU16",6,66],[-13,"MNU17",40,220],[-13,"MNU18",16,96],[-13,"MNU19",11,55],[-13,"MNU20",17,212.5],[-12,"MNU01",58,301.6],[-12,"MNU02",95,494],[-12,"MNU03",103,535.6],[-12,"MNU04",41,241.9],[-12,"MNU05",18,106.2],[-12,"MNU06",23,119.6],[-12,"MNU07",35,227.5],[-12,"MNU08",25,237.5],[-12,"MNU09",20,390],[-12,"MNU10",25,600],[-12,"MNU11",15,375],[-12,"MNU12",11,203.5],[-12,"MNU13",10,190],[-12,"MNU14",18,297],[-12,"MNU15",13,221],[-12,"MNU16",10,110],[-12,"MNU17",31,170.5],[-12,"MNU18",17,102],[-12,"MNU19",11,55],[-12,"MNU20",15,187.5],[-11,"MNU01",74,384.8],[-11,"MNU02",110,572],[-11,"MNU03",143,743.6],[-11,"MNU04",49,289.1],[-11,"MNU05",26,153.4],[-11,"MNU06",30,156],[-11,"MNU07",33,214.5],[-11,"MNU08",30,285],[-11,"MNU09",44,858],[-11,"MNU10",22,528],[-11,"MNU11",23,575],[-11,"MNU12",20,370],[-11,"MNU13",16,304],[-11,"MNU14",17,280.5],[-11,"MNU15",5,85],[-11,"MNU16",12,132],[-11,"MNU17",30,165],[-11,"MNU18",24,144],[-11,"MNU19",20,100],[-11,"MNU20",24,300],[-10,"MNU01",57,296.4],[-10,"MNU02",110,572],[-10,"MNU03",131,681.2],[-10,"MNU04",48,283.2],[-10,"MNU05",24,141.6],[-10,"MNU06",20,104],[-10,"MNU07",40,260],[-10,"MNU08",32,304],[-10,"MNU09",42,819],[-10,"MNU10",16,384],[-10,"MNU11",12,300],[-10,"MNU12",22,407],[-10,"MNU13",14,266],[-10,"MNU14",19,313.5],[-10,"MNU15",10,170],[-10,"MNU16",17,187],[-10,"MNU17",36,198],[-10,"MNU18",22,132],[-10,"MNU19",23,115],[-10,"MNU20",12,150],[-9,"MNU01",56,291.2],[-9,"MNU02",75,390],[-9,"MNU03",110,572],[-9,"MNU04",46,271.4],[-9,"MNU05",15,88.5],[-9,"MNU06",18,93.6],[-9,"MNU07",37,240.5],[-9,"MNU08",34,323],[-9,"MNU09",30,585],[-9,"MNU10",16,384],[-9,"MNU11",13,325],[-9,"MNU12",15,277.5],[-9,"MNU13",11,209],[-9,"MNU14",23,379.5],[-9,"MNU15",10,170],[-9,"MNU16",10,110],[-9,"MNU17",22,121],[-9,"MNU18",16,96],[-9,"MNU19",25,125],[-9,"MNU20",16,200],[-8,"MNU01",46,239.2],[-8,"MNU02",94,488.8],[-8,"MNU03",121,629.2],[-8,"MNU04",33,194.7],[-8,"MNU05",12,70.8],[-8,"MNU06",30,156],[-8,"MNU07",20,130],[-8,"MNU08",20,190],[-8,"MNU09",29,565.5],[-8,"MNU10",16,384],[-8,"MNU11",12,300],[-8,"MNU12",12,222],[-8,"MNU13",6,114],[-8,"MNU14",21,346.5],[-8,"MNU15",6,102],[-8,"MNU16",7,77],[-8,"MNU17",37,203.5],[-8,"MNU18",21,126],[-8,"MNU19",20,100],[-8,"MNU20",14,175],[-7,"MNU01",58,301.6],[-7,"MNU02",79,410.8],[-7,"MNU03",138,717.6],[-7,"MNU04",45,265.5],[-7,"MNU05",15,88.5],[-7,"MNU06",18,93.6],[-7,"MNU07",23,149.5],[-7,"MNU08",18,171],[-7,"MNU09",39,760.5],[-7,"MNU10",15,360],[-7,"MNU11",10,250],[-7,"MNU12",11,203.5],[-7,"MNU13",9,171],[-7,"MNU14",13,214.5],[-7,"MNU15",9,153],[-7,"MNU16",4,44],[-7,"MNU17",31,170.5],[-7,"MNU18",15,90],[-7,"MNU19",21,105],[-7,"MNU20",8,100],[-6,"MNU01",57,296.4],[-6,"MNU02",99,514.8],[-6,"MNU03",140,728],[-6,"MNU04",47,277.3],[-6,"MNU05",10,59],[-6,"MNU06",18,93.6],[-6,"MNU07",31,201.5],[-6,"MNU08",36,342],[-6,"MNU09",35,682.5],[-6,"MNU10",19,456],[-6,"MNU11",22,550],[-6,"MNU12",9,166.5],[-6,"MNU13",7,133],[-6,"MNU14",17,280.5],[-6,"MNU15",8,136],[-6,"MNU16",5,55],[-6,"MNU17",37,203.5],[-6,"MNU18",11,66],[-6,"MNU19",21,105],[-6,"MNU20",19,237.5],[-5,"MNU01",50,260],[-5,"MNU02",111,577.2],[-5,"MNU03",150,780],[-5,"MNU04",59,348.1],[-5,"MNU05",18,106.2],[-5,"MNU06",22,114.4],[-5,"MNU07",34,221],[-5,"MNU08",30,285],[-5,"MNU09",37,721.5],[-5,"MNU10",11,264],[-5,"MNU11",7,175],[-5,"MNU12",7,129.5],[-5,"MNU13",11,209],[-5,"MNU14",19,313.5],[-5,"MNU15",17,289],[-5,"MNU16",11,121],[-5,"MNU17",38,209],[-5,"MNU18",18,108],[-5,"MNU19",18,90],[-5,"MNU20",14,175],[-4,"MNU01",65,338],[-4,"MNU02",114,592.8],[-4,"MNU03",152,790.4],[-4,"MNU04",55,324.5],[-4,"MNU05",21,123.9],[-4,"MNU06",28,145.6],[-4,"MNU07",50,325],[-4,"MNU08",43,408.5],[-4,"MNU09",48,936],[-4,"MNU10",27,648],[-4,"MNU11",15,375],[-4,"MNU12",17,314.5],[-4,"MNU13",12,228],[-4,"MNU14",24,396],[-4,"MNU15",12,204],[-4,"MNU16",11,121],[-4,"MNU17",53,291.5],[-4,"MNU18",10,60],[-4,"MNU19",29,145],[-4,"MNU20",21,262.5],[-3,"MNU01",52,270.4],[-3,"MNU02",97,504.4],[-3,"MNU03",151,785.2],[-3,"MNU04",60,354],[-3,"MNU05",17,100.3],[-3,"MNU06",26,135.2],[-3,"MNU07",37,240.5],[-3,"MNU08",15,142.5],[-3,"MNU09",39,760.5],[-3,"MNU10",19,456],[-3,"MNU11",22,550],[-3,"MNU12",22,407],[-3,"MNU13",10,190],[-3,"MNU14",16,264],[-3,"MNU15",8,136],[-3,"MNU16",16,176],[-3,"MNU17",28,154],[-3,"MNU18",22,132],[-3,"MNU19",16,80],[-3,"MNU20",19,237.5],[-2,"MNU01",44,228.8],[-2,"MNU02",89,462.8],[-2,"MNU03",83,431.6],[-2,"MNU04",37,218.3],[-2,"MNU05",11,64.9],[-2,"MNU06",21,109.2],[-2,"MNU07",18,117],[-2,"MNU08",12,114],[-2,"MNU09",23,448.5],[-2,"MNU10",18,432],[-2,"MNU11",13,325],[-2,"MNU12",13,240.5],[-2,"MNU13",6,114],[-2,"MNU14",12,198],[-2,"MNU15",6,102],[-2,"MNU16",6,66],[-2,"MNU17",34,187],[-2,"MNU18",13,78],[-2,"MNU19",11,55],[-2,"MNU20",18,225],[-1,"MNU01",56,291.2],[-1,"MNU02",74,384.8],[-1,"MNU03",102,530.4],[-1,"MNU04",32,188.8],[-1,"MNU05",9,53.1],[-1,"MNU06",21,109.2],[-1,"MNU07",14,91],[-1,"MNU08",20,190],[-1,"MNU09",28,546],[-1,"MNU10",14,336],[-1,"MNU11",13,325],[-1,"MNU12",13,240.5],[-1,"MNU13",5,95],[-1,"MNU14",19,313.5],[-1,"MNU15",10,170],[-1,"MNU16",6,66],[-1,"MNU17",19,104.5],[-1,"MNU18",14,84],[-1,"MNU19",16,80],[-1,"MNU20",10,125]],"waste":[[-14,"ING01",3.66,"Spoiled",6.04],[-14,"ING02",0.38,"Spoiled",0.65],[-14,"ING05",0.03,"Expired",0.2],[-14,"ING07",5,"Expired",2.75],[-14,"ING11",0.01,"Expired",0.15],[-14,"ING12",3,"Stale",19.5],[-14,"ING16",2,"Expired",3.6],[-14,"ING18",0.09,"Bruised/overripe",1.26],[-14,"ING19",0.25,"Spoiled",4],[-14,"ING20",0.1,"Bruised/overripe",0.38],[-14,"ING24",0.16,"Expired",2.64],[-14,"ING27",0.03,"Stale beans",1.14],[-13,"ING01",3.3,"Spoiled",5.44],[-13,"ING02",0.05,"Spoiled",0.08],[-13,"ING03",0.12,"Opened > 7 days",0.38],[-13,"ING06",0.05,"Spoiled",0.73],[-13,"ING08",0.13,"Expired",0.94],[-13,"ING10",0.01,"Mould",0.24],[-13,"ING12",1,"Stale",6.5],[-13,"ING15",1,"Stale",1.6],[-13,"ING18",0.03,"Expired",0.42],[-13,"ING19",0.31,"Spoiled",4.96],[-13,"ING21",0.22,"Expired",2.64],[-13,"ING22",0.07,"Spoiled",1.12],[-13,"ING26",0.11,"Use-by date",1.43],[-13,"ING27",0.03,"Stale beans",1.14],[-12,"ING01",1.04,"Expired",1.72],[-12,"ING02",0.13,"Spoiled",0.22],[-12,"ING03",0.12,"Opened > 7 days",0.38],[-12,"ING05",0.02,"Spoiled",0.14],[-12,"ING07",2,"Expired",1.1],[-12,"ING08",0.06,"Expired",0.43],[-12,"ING11",0.02,"Mould",0.3],[-12,"ING18",0.14,"Spoiled",1.96],[-12,"ING21",0.15,"Expired",1.8],[-12,"ING22",0.1,"Spoiled",1.6],[-12,"ING23",1,"Expired",0.6],[-11,"ING02",0.25,"Spoiled",0.42],[-11,"ING03",0.04,"Opened > 7 days",0.13],[-11,"ING07",1,"Spoiled",0.55],[-11,"ING08",0.08,"Expired",0.58],[-11,"ING09",0.03,"Mould",0.54],[-11,"ING10",0.05,"Expired",1.2],[-11,"ING11",0.01,"Mould",0.15],[-11,"ING12",2,"Unsold end of day",13],[-11,"ING16",2,"Bruised/overripe",3.6],[-11,"ING17",0.47,"Bruised/overripe",3.06],[-11,"ING19",0.43,"Bruised/overripe",6.88],[-11,"ING22",0.09,"Spoiled",1.44],[-11,"ING23",1,"Spoiled",0.6],[-11,"ING24",0.05,"Use-by date",0.82],[-10,"ING02",0.16,"Spoiled",0.27],[-10,"ING03",0.07,"Opened > 7 days",0.22],[-10,"ING04",0.05,"Opened > 7 days",0.17],[-10,"ING06",0.04,"Expired",0.58],[-10,"ING16",3,"Bruised/overripe",5.4],[-10,"ING17",0.22,"Expired",1.43],[-10,"ING18",0.03,"Spoiled",0.42],[-10,"ING20",0.25,"Bruised/overripe",0.95],[-10,"ING23",1,"Expired",0.6],[-10,"ING25",0.02,"Use-by date",0.84],[-9,"ING01",2.08,"Spoiled",3.43],[-9,"ING04",0.04,"Opened > 7 days",0.14],[-9,"ING07",3,"Expired",1.65],[-9,"ING10",0.02,"Mould",0.48],[-9,"ING11",0.06,"Mould",0.9],[-9,"ING12",4,"Stale",26],[-9,"ING15",7,"Stale",11.2],[-9,"ING17",0.68,"Expired",4.42],[-9,"ING19",0.42,"Expired",6.72],[-9,"ING20",0.57,"Spoiled",2.17],[-9,"ING21",0.31,"Bruised/overripe",3.72],[-9,"ING22",0.17,"Spoiled",2.72],[-9,"ING23",2,"Spoiled",1.2],[-9,"ING24",0.15,"Expired",2.48],[-8,"ING04",0.07,"Opened > 7 days",0.24],[-8,"ING05",0.04,"Expired",0.27],[-8,"ING06",0.15,"Spoiled",2.17],[-8,"ING07",3,"Expired",1.65],[-8,"ING09",0.11,"Mould",1.98],[-8,"ING10",0.03,"Mould",0.72],[-8,"ING12",4,"Stale",26],[-8,"ING15",2,"Unsold end of day",3.2],[-8,"ING16",3,"Bruised/overripe",5.4],[-8,"ING17",0.12,"Bruised/overripe",0.78],[-8,"ING19",0.36,"Spoiled",5.76],[-8,"ING20",0.56,"Bruised/overripe",2.13],[-8,"ING21",0.43,"Spoiled",5.16],[-8,"ING22",0.12,"Spoiled",1.92],[-8,"ING23",1,"Bruised/overripe",0.6],[-8,"ING24",0.13,"Expired",2.14],[-8,"ING26",0.1,"Use-by date",1.3],[-8,"ING27",0.03,"Stale beans",1.14],[-7,"ING02",0.21,"Expired",0.36],[-7,"ING03",0.05,"Opened > 7 days",0.16],[-7,"ING04",0.03,"Opened > 7 days",0.1],[-7,"ING05",0.03,"Spoiled",0.2],[-7,"ING06",0.04,"Spoiled",0.58],[-7,"ING07",4,"Spoiled",2.2],[-7,"ING08",0.1,"Spoiled",0.72],[-7,"ING09",0.08,"Mould",1.44],[-7,"ING10",0.01,"Mould",0.24],[-7,"ING11",0.01,"Mould",0.15],[-7,"ING12",2,"Unsold end of day",13],[-7,"ING13",5,"Stale",9.5],[-7,"ING15",3,"Stale",4.8],[-7,"ING17",0.29,"Expired",1.88],[-7,"ING18",0.07,"Spoiled",0.98],[-7,"ING21",0.13,"Bruised/overripe",1.56],[-7,"ING24",0.09,"Use-by date",1.48],[-7,"ING26",0.1,"Use-by date",1.3],[-6,"ING01",1.12,"Spoiled",1.85],[-6,"ING02",0.05,"Spoiled",0.08],[-6,"ING05",0.05,"Expired",0.34],[-6,"ING06",0.05,"Expired",0.73],[-6,"ING08",0.09,"Spoiled",0.65],[-6,"ING09",0.04,"Expired",0.72],[-6,"ING10",0.01,"Mould",0.24],[-6,"ING12",1,"Stale",6.5],[-6,"ING13",4,"Unsold end of day",7.6],[-6,"ING15",3,"Stale",4.8],[-6,"ING16",4,"Spoiled",7.2],[-6,"ING17",0.3,"Spoiled",1.95],[-6,"ING20",0.71,"Expired",2.7],[-6,"ING21",0.28,"Expired",3.36],[-6,"ING23",1,"Expired",0.6],[-6,"ING25",0.05,"Use-by date",2.1],[-6,"ING27",0.05,"Stale beans",1.9],[-5,"ING01",1.19,"Spoiled",1.96],[-5,"ING03",0.09,"Opened > 7 days",0.29],[-5,"ING05",0.01,"Expired",0.07],[-5,"ING06",0.02,"Expired",0.29],[-5,"ING07",1,"Expired",0.55],[-5,"ING09",0.02,"Mould",0.36],[-5,"ING10",0.01,"Expired",0.24],[-5,"ING12",1,"Stale",6.5],[-5,"ING13",2,"Stale",3.8],[-5,"ING16",2,"Expired",3.6],[-5,"ING17",0.07,"Bruised/overripe",0.46],[-5,"ING18",0.02,"Bruised/overripe",0.28],[-5,"ING20",0.44,"Spoiled",1.67],[-5,"ING22",0.04,"Expired",0.64],[-5,"ING23",1,"Spoiled",0.6],[-5,"ING24",0.08,"Expired",1.32],[-5,"ING26",0.13,"Expired",1.69],[-5,"ING27",0.06,"Stale beans",2.28],[-4,"ING07",5,"Expired",2.75],[-4,"ING08",0.14,"Spoiled",1.01],[-4,"ING09",0.08,"Expired",1.44],[-4,"ING10",0.01,"Mould",0.24],[-4,"ING11",0.04,"Expired",0.6],[-4,"ING12",3,"Stale",19.5],[-4,"ING19",0.2,"Expired",3.2],[-4,"ING21",0.18,"Spoiled",2.16],[-4,"ING24",0.17,"Use-by date",2.8],[-4,"ING26",0.14,"Use-by date",1.82],[-4,"ING27",0.02,"Stale beans",0.76],[-3,"ING01",2.21,"Spoiled",3.65],[-3,"ING02",0.1,"Expired",0.17],[-3,"ING03",0.17,"Opened > 7 days",0.54],[-3,"ING04",0.02,"Opened > 7 days",0.07],[-3,"ING07",5,"Expired",2.75],[-3,"ING09",0.05,"Mould",0.9],[-3,"ING11",0.02,"Expired",0.3],[-3,"ING12",2,"Stale",13],[-3,"ING13",1,"Unsold end of day",1.9],[-3,"ING15",1,"Unsold end of day",1.6],[-3,"ING16",3,"Spoiled",5.4],[-3,"ING17",0.36,"Spoiled",2.34],[-3,"ING19",0.34,"Expired",5.44],[-3,"ING20",0.09,"Bruised/overripe",0.34],[-3,"ING22",0.05,"Bruised/overripe",0.8],[-2,"ING02",0.1,"Expired",0.17],[-2,"ING03",0.09,"Opened > 7 days",0.29],[-2,"ING05",0.03,"Spoiled",0.2],[-2,"ING07",3,"Spoiled",1.65],[-2,"ING08",0.03,"Expired",0.22],[-2,"ING10",0.04,"Mould",0.96],[-2,"ING13",11,"Unsold end of day",20.9],[-2,"ING17",0.38,"Spoiled",2.47],[-2,"ING20",0.36,"Spoiled",1.37],[-2,"ING21",0.4,"Spoiled",4.8],[-2,"ING22",0.03,"Spoiled",0.48],[-2,"ING23",2,"Bruised/overripe",1.2],[-2,"ING24",0.14,"Expired",2.31],[-2,"ING25",0.04,"Use-by date",1.68],[-1,"ING01",4.55,"Spoiled",7.51],[-1,"ING03",0.1,"Opened > 7 days",0.32],[-1,"ING04",0.06,"Opened > 7 days",0.2],[-1,"ING07",6,"Spoiled",3.3],[-1,"ING10",0.03,"Expired",0.72],[-1,"ING12",3,"Stale",19.5],[-1,"ING15",4,"Stale",6.4],[-1,"ING16",3,"Expired",5.4],[-1,"ING18",0.05,"Bruised/overripe",0.7],[-1,"ING21",0.47,"Bruised/overripe",5.64],[-1,"ING23",1,"Expired",0.6],[-1,"ING24",0.15,"Expired",2.48],[-1,"ING26",0.14,"Use-by date",1.82]],"ev":[[4,"Spring Food & Wine Street Fair",45,"Festival",0.3,7500],[9,"Kensington Twilight Markets",11,"Market",0.4,2200],[11,"Coogee Ocean Swim",3,"Sport",3.2,3000],[2,"Local business networking breakfast",2,"Business",0.2,120],[5,"Closing at 1pm (staff event)",-40,"Owner input",0,0]],"extras":[[2,["MNU09","MNU17"],30,"30 smashed avo + 30 croissants for networking breakfast"]],"notes":[[6,"Supplier issue","Greenline says berries short supply next week - prices +20%","Jess (Manager)"],[10,"Promotion","Planning $5 iced latte special on hot days","Sam (Owner)"],[1,"Stock note","Found 2 trays of eggs cracked on delivery - credit requested","Jess (Manager)"]]}</script>
+<script type="application/json" id="lf-data">{"cafe":{"name":"Little Fern Café","place":"Kensington NSW 2033","lat":-33.906,"lon":151.224,"buffer":15,"hours":"Mon-Fri 6:30-15:00; Sat-Sun 7:00-15:00","owner":"Nick (Owner)"},"sup":{"SUP01":{"name":"Harbour Dairy Co.","email":"orders@harbourdairy.example","lead":1,"days":[1,3,5],"cutoff":"14:00","min":80},"SUP02":{"name":"Crust & Crumb Bakery","email":"luca@crustcrumb.example","lead":1,"days":[0,1,2,3,4,5,6],"cutoff":"16:00","min":40},"SUP03":{"name":"Greenline Fresh Produce","email":"sales@greenline.example","lead":1,"days":[2,4,6],"cutoff":"15:00","min":60},"SUP04":{"name":"Eastside Butchery & Deli","email":"tom@eastsidedeli.example","lead":2,"days":[2,5],"cutoff":"12:00","min":100},"SUP05":{"name":"Southern Roast Coffee","email":"ava@southernroast.example","lead":3,"days":[1],"cutoff":"10:00","min":150}},"ing":[["ING01","Full cream milk","L",9,1.65,"SUP01",2,224,66,1],["ING02","Skim milk","L",9,1.7,"SUP01",2,16,4,1],["ING03","Oat milk","L",30,3.2,"SUP01",1,27,8,1],["ING04","Almond milk","L",30,3.4,"SUP01",1,13,4,1],["ING05","Thickened cream","L",12,6.8,"SUP01",1,3,1,1],["ING06","Butter","kg",45,14.5,"SUP01",0.5,5.5,1.5,0],["ING07","Free-range eggs","each",28,0.55,"SUP01",30,330,90,1],["ING08","Greek yoghurt","kg",18,7.2,"SUP01",1,10,3,1],["ING09","Feta","kg",21,18,"SUP04",0.5,7,1.5,1],["ING10","Halloumi","kg",30,24,"SUP04",0.5,3,0.5,1],["ING11","Cheddar","kg",35,15,"SUP04",1,3,1,0],["ING12","Sourdough loaf","loaf",3,6.5,"SUP02",1,30,15,1],["ING13","Butter croissant","each",2,1.9,"SUP02",6,60,30,1],["ING14","Banana bread loaf","loaf",5,9,"SUP02",1,3,2,1],["ING15","Blueberry muffin","each",3,1.6,"SUP02",6,36,18,1],["ING16","Avocado","each",5,1.8,"SUP03",12,120,36,1],["ING17","Truss tomatoes","kg",6,6.5,"SUP03",1,11,3,1],["ING18","Baby spinach","kg",5,14,"SUP03",0.5,3,1,1],["ING19","Mixed berries","kg",4,16,"SUP03",0.5,9,2.5,1],["ING20","Bananas","kg",6,3.8,"SUP03",1,13,4,1],["ING21","Swiss brown mushrooms","kg",5,12,"SUP03",0.5,8.5,2.5,1],["ING22","Rocket","kg",4,16,"SUP03",0.25,2.5,0.75,1],["ING23","Lemons","each",14,0.6,"SUP03",10,40,10,1],["ING24","Bacon","kg",10,16.5,"SUP04",1,7,1,1],["ING25","Smoked salmon","kg",10,42,"SUP04",0.5,4,1,1],["ING26","Chicken breast","kg",4,13,"SUP04",1,10,2,1],["ING27","Espresso beans","kg",30,38,"SUP05",1,57,7,1],["ING28","Acai sorbet packs","each",180,2.4,"SUP03",20,20,20,0]],"bat":[["ING01",40.19,2],["ING01",33.49,8],["ING02",7.25,2],["ING02",4.83,8],["ING03",24.19,20],["ING04",15.15,18],["ING05",2.42,7],["ING06",9.77,35],["ING07",249,24],["ING07",100,27],["ING08",15.33,3],["ING09",4.63,13],["ING10",4.17,2],["ING11",2.99,23],["ING12",17,3],["ING13",33,2],["ING14",3,4],["ING15",30,2],["ING16",17,1],["ING16",10,4],["ING17",6.47,3],["ING18",4.18,1],["ING19",13.24,2],["ING20",11.44,3],["ING21",1.56,1],["ING22",1.45,2],["ING23",96,10],["ING24",4.42,6],["ING25",2.11,4],["ING26",3.36,2],["ING27",28.7,25],["ING28",169,140]],"menu":[["MNU01","Flat white",5.2],["MNU02","Latte",5.2],["MNU03","Cappuccino",5.2],["MNU04","Oat flat white",5.9],["MNU05","Almond latte",5.9],["MNU06","Skim latte",5.2],["MNU07","Iced latte",6.5],["MNU08","Banana berry smoothie",9.5],["MNU09","Smashed avo on sourdough",19.5],["MNU10","Big breakfast",24],["MNU11","Salmon eggs benedict",25],["MNU12","Mushroom & feta toast",18.5],["MNU13","Halloumi bruschetta",19],["MNU14","Chicken & rocket sandwich",16.5],["MNU15","Acai berry bowl",17],["MNU16","Yoghurt, berry & granola cup",11],["MNU17","Butter croissant",5.5],["MNU18","Banana bread slice",6],["MNU19","Blueberry muffin",5],["MNU20","Cheese & tomato toastie",12.5]],"rec":[["MNU01","ING01",0.18],["MNU01","ING27",0.019],["MNU02","ING01",0.24],["MNU02","ING27",0.019],["MNU03","ING01",0.2],["MNU03","ING27",0.019],["MNU04","ING03",0.18],["MNU04","ING27",0.019],["MNU05","ING04",0.24],["MNU05","ING27",0.019],["MNU06","ING02",0.24],["MNU06","ING27",0.019],["MNU07","ING01",0.22],["MNU07","ING27",0.019],["MNU08","ING20",0.15],["MNU08","ING19",0.08],["MNU08","ING08",0.08],["MNU08","ING01",0.15],["MNU09","ING12",0.125],["MNU09","ING16",1],["MNU09","ING09",0.03],["MNU09","ING23",0.25],["MNU09","ING07",1],["MNU10","ING12",0.125],["MNU10","ING07",2],["MNU10","ING24",0.08],["MNU10","ING21",0.06],["MNU10","ING17",0.08],["MNU10","ING18",0.03],["MNU10","ING06",0.015],["MNU10","ING05",0.02],["MNU11","ING12",0.125],["MNU11","ING07",2],["MNU11","ING25",0.06],["MNU11","ING06",0.03],["MNU11","ING18",0.02],["MNU11","ING23",0.25],["MNU11","ING05",0.03],["MNU12","ING12",0.125],["MNU12","ING21",0.12],["MNU12","ING09",0.04],["MNU12","ING06",0.01],["MNU13","ING12",0.125],["MNU13","ING10",0.08],["MNU13","ING17",0.1],["MNU13","ING22",0.02],["MNU14","ING12",0.125],["MNU14","ING26",0.12],["MNU14","ING22",0.03],["MNU14","ING06",0.01],["MNU15","ING28",1],["MNU15","ING19",0.07],["MNU15","ING20",0.08],["MNU16","ING08",0.15],["MNU16","ING19",0.05],["MNU17","ING13",1],["MNU17","ING06",0.01],["MNU18","ING14",0.1],["MNU18","ING06",0.01],["MNU19","ING15",1],["MNU20","ING12",0.125],["MNU20","ING11",0.05],["MNU20","ING17",0.06],["MNU20","ING06",0.01]],"sales":[[-42,"MNU01",40,208],[-42,"MNU02",76,395.2],[-42,"MNU03",107,556.4],[-42,"MNU04",32,188.8],[-42,"MNU05",15,88.5],[-42,"MNU06",19,98.8],[-42,"MNU07",18,117],[-42,"MNU08",16,152],[-42,"MNU09",33,643.5],[-42,"MNU10",11,264],[-42,"MNU11",9,225],[-42,"MNU12",2,37],[-42,"MNU13",8,152],[-42,"MNU14",18,297],[-42,"MNU16",5,55],[-42,"MNU17",28,154],[-42,"MNU18",8,48],[-42,"MNU19",18,90],[-42,"MNU20",11,137.5],[-41,"MNU01",54,280.8],[-41,"MNU02",78,405.6],[-41,"MNU03",127,660.4],[-41,"MNU04",52,306.8],[-41,"MNU05",15,88.5],[-41,"MNU06",17,88.4],[-41,"MNU07",20,130],[-41,"MNU08",16,152],[-41,"MNU09",22,429],[-41,"MNU10",6,144],[-41,"MNU11",9,225],[-41,"MNU12",10,185],[-41,"MNU13",8,152],[-41,"MNU14",56,924],[-41,"MNU16",8,88],[-41,"MNU17",29,159.5],[-41,"MNU18",11,66],[-41,"MNU19",11,55],[-41,"MNU20",19,237.5],[-40,"MNU01",52,270.4],[-40,"MNU02",93,483.6],[-40,"MNU03",136,707.2],[-40,"MNU04",44,259.6],[-40,"MNU05",12,70.8],[-40,"MNU06",24,124.8],[-40,"MNU07",27,175.5],[-40,"MNU08",12,114],[-40,"MNU09",25,487.5],[-40,"MNU10",15,360],[-40,"MNU11",15,375],[-40,"MNU12",12,222],[-40,"MNU13",8,152],[-40,"MNU14",17,280.5],[-40,"MNU16",8,88],[-40,"MNU17",34,187],[-40,"MNU18",20,120],[-40,"MNU19",21,105],[-40,"MNU20",14,175],[-39,"MNU01",86,447.2],[-39,"MNU02",108,561.6],[-39,"MNU03",158,821.6],[-39,"MNU04",53,312.7],[-39,"MNU05",16,94.4],[-39,"MNU06",27,140.4],[-39,"MNU07",28,182],[-39,"MNU08",27,256.5],[-39,"MNU09",55,1072.5],[-39,"MNU10",21,504],[-39,"MNU11",18,450],[-39,"MNU12",15,277.5],[-39,"MNU13",13,247],[-39,"MNU14",24,396],[-39,"MNU16",11,121],[-39,"MNU17",39,214.5],[-39,"MNU18",24,144],[-39,"MNU19",14,70],[-39,"MNU20",17,212.5],[-38,"MNU01",70,364],[-38,"MNU02",104,540.8],[-38,"MNU03",169,878.8],[-38,"MNU04",49,289.1],[-38,"MNU05",14,82.6],[-38,"MNU06",23,119.6],[-38,"MNU07",26,169],[-38,"MNU08",26,247],[-38,"MNU09",40,780],[-38,"MNU10",37,888],[-38,"MNU11",21,525],[-38,"MNU12",16,296],[-38,"MNU13",5,95],[-38,"MNU14",14,231],[-38,"MNU16",8,88],[-38,"MNU17",30,165],[-38,"MNU18",28,168],[-38,"MNU19",17,85],[-38,"MNU20",13,162.5],[-37,"MNU01",46,239.2],[-37,"MNU02",74,384.8],[-37,"MNU03",100,520],[-37,"MNU04",46,271.4],[-37,"MNU05",14,82.6],[-37,"MNU06",15,78],[-37,"MNU07",27,175.5],[-37,"MNU08",19,180.5],[-37,"MNU09",31,604.5],[-37,"MNU10",11,264],[-37,"MNU11",15,375],[-37,"MNU12",12,222],[-37,"MNU13",8,152],[-37,"MNU14",18,297],[-37,"MNU16",9,99],[-37,"MNU17",27,148.5],[-37,"MNU18",10,60],[-37,"MNU19",8,40],[-37,"MNU20",11,137.5],[-36,"MNU01",48,249.6],[-36,"MNU02",80,416],[-36,"MNU03",118,613.6],[-36,"MNU04",44,259.6],[-36,"MNU05",17,100.3],[-36,"MNU06",18,93.6],[-36,"MNU07",25,162.5],[-36,"MNU08",11,104.5],[-36,"MNU09",31,604.5],[-36,"MNU10",17,408],[-36,"MNU11",14,350],[-36,"MNU12",5,92.5],[-36,"MNU13",7,133],[-36,"MNU14",14,231],[-36,"MNU16",8,88],[-36,"MNU17",26,143],[-36,"MNU18",18,108],[-36,"MNU19",22,110],[-36,"MNU20",10,125],[-35,"MNU01",51,265.2],[-35,"MNU02",88,457.6],[-35,"MNU03",120,624],[-35,"MNU04",44,259.6],[-35,"MNU05",14,82.6],[-35,"MNU06",21,109.2],[-35,"MNU07",23,149.5],[-35,"MNU08",15,142.5],[-35,"MNU09",38,741],[-35,"MNU10",19,456],[-35,"MNU11",13,325],[-35,"MNU12",13,240.5],[-35,"MNU13",7,133],[-35,"MNU14",19,313.5],[-35,"MNU16",3,33],[-35,"MNU17",19,104.5],[-35,"MNU18",18,108],[-35,"MNU19",12,60],[-35,"MNU20",17,212.5],[-34,"MNU01",55,286],[-34,"MNU02",87,452.4],[-34,"MNU03",105,546],[-34,"MNU04",44,259.6],[-34,"MNU05",12,70.8],[-34,"MNU06",14,72.8],[-34,"MNU07",16,104],[-34,"MNU08",11,104.5],[-34,"MNU09",36,702],[-34,"MNU10",7,168],[-34,"MNU11",19,475],[-34,"MNU12",10,185],[-34,"MNU13",14,266],[-34,"MNU14",17,280.5],[-34,"MNU16",7,77],[-34,"MNU17",27,148.5],[-34,"MNU18",16,96],[-34,"MNU19",14,70],[-34,"MNU20",9,112.5],[-33,"MNU01",73,379.6],[-33,"MNU02",80,416],[-33,"MNU03",135,702],[-33,"MNU04",46,271.4],[-33,"MNU05",22,129.8],[-33,"MNU06",13,67.6],[-33,"MNU07",22,143],[-33,"MNU08",12,114],[-33,"MNU09",22,429],[-33,"MNU10",18,432],[-33,"MNU11",13,325],[-33,"MNU12",10,185],[-33,"MNU13",9,171],[-33,"MNU14",25,412.5],[-33,"MNU16",5,55],[-33,"MNU17",24,132],[-33,"MNU18",11,66],[-33,"MNU19",16,80],[-33,"MNU20",13,162.5],[-32,"MNU01",84,436.8],[-32,"MNU02",100,520],[-32,"MNU03",141,733.2],[-32,"MNU04",54,318.6],[-32,"MNU05",15,88.5],[-32,"MNU06",30,156],[-32,"MNU07",26,169],[-32,"MNU08",18,171],[-32,"MNU09",50,975],[-32,"MNU10",31,744],[-32,"MNU11",6,150],[-32,"MNU12",14,259],[-32,"MNU13",16,304],[-32,"MNU14",24,396],[-32,"MNU16",11,121],[-32,"MNU17",38,209],[-32,"MNU18",17,102],[-32,"MNU19",18,90],[-32,"MNU20",18,225],[-31,"MNU01",65,338],[-31,"MNU02",104,540.8],[-31,"MNU03",155,806],[-31,"MNU04",56,330.4],[-31,"MNU05",18,106.2],[-31,"MNU06",20,104],[-31,"MNU07",27,175.5],[-31,"MNU08",23,218.5],[-31,"MNU09",39,760.5],[-31,"MNU10",22,528],[-31,"MNU11",14,350],[-31,"MNU12",17,314.5],[-31,"MNU13",16,304],[-31,"MNU14",24,396],[-31,"MNU16",7,77],[-31,"MNU17",36,198],[-31,"MNU18",17,102],[-31,"MNU19",12,60],[-31,"MNU20",17,212.5],[-30,"MNU01",53,275.6],[-30,"MNU02",55,286],[-30,"MNU03",108,561.6],[-30,"MNU04",38,224.2],[-30,"MNU05",10,59],[-30,"MNU06",27,140.4],[-30,"MNU07",22,143],[-30,"MNU08",14,133],[-30,"MNU09",17,331.5],[-30,"MNU10",15,360],[-30,"MNU11",11,275],[-30,"MNU12",12,222],[-30,"MNU13",7,133],[-30,"MNU14",12,198],[-30,"MNU16",7,77],[-30,"MNU17",26,143],[-30,"MNU18",19,114],[-30,"MNU19",10,50],[-30,"MNU20",11,137.5],[-29,"MNU01",46,239.2],[-29,"MNU02",71,369.2],[-29,"MNU03",121,629.2],[-29,"MNU04",43,253.7],[-29,"MNU05",12,70.8],[-29,"MNU06",21,109.2],[-29,"MNU07",20,130],[-29,"MNU08",19,180.5],[-29,"MNU09",26,507],[-29,"MNU10",4,96],[-29,"MNU11",11,275],[-29,"MNU12",5,92.5],[-29,"MNU13",9,171],[-29,"MNU14",18,297],[-29,"MNU16",3,33],[-29,"MNU17",21,115.5],[-29,"MNU18",9,54],[-29,"MNU19",15,75],[-29,"MNU20",11,137.5],[-28,"MNU01",48,249.6],[-28,"MNU02",74,384.8],[-28,"MNU03",106,551.2],[-28,"MNU04",41,241.9],[-28,"MNU05",8,47.2],[-28,"MNU06",16,83.2],[-28,"MNU07",17,110.5],[-28,"MNU08",18,171],[-28,"MNU09",17,331.5],[-28,"MNU10",19,456],[-28,"MNU11",18,450],[-28,"MNU12",15,277.5],[-28,"MNU13",4,76],[-28,"MNU14",18,297],[-28,"MNU16",4,44],[-28,"MNU17",23,126.5],[-28,"MNU18",8,48],[-28,"MNU19",17,85],[-28,"MNU20",14,175],[-27,"MNU01",43,223.6],[-27,"MNU02",90,468],[-27,"MNU03",135,702],[-27,"MNU04",33,194.7],[-27,"MNU05",12,70.8],[-27,"MNU06",23,119.6],[-27,"MNU07",17,110.5],[-27,"MNU08",17,161.5],[-27,"MNU09",28,546],[-27,"MNU10",10,240],[-27,"MNU11",12,300],[-27,"MNU12",5,92.5],[-27,"MNU13",5,95],[-27,"MNU14",14,231],[-27,"MNU16",11,121],[-27,"MNU17",25,137.5],[-27,"MNU18",13,78],[-27,"MNU19",11,55],[-27,"MNU20",11,137.5],[-26,"MNU01",68,353.6],[-26,"MNU02",72,374.4],[-26,"MNU03",131,681.2],[-26,"MNU04",45,265.5],[-26,"MNU05",15,88.5],[-26,"MNU06",12,62.4],[-26,"MNU07",27,175.5],[-26,"MNU08",18,171],[-26,"MNU09",34,663],[-26,"MNU10",19,456],[-26,"MNU11",13,325],[-26,"MNU12",12,222],[-26,"MNU13",7,133],[-26,"MNU14",22,363],[-26,"MNU16",9,99],[-26,"MNU17",28,154],[-26,"MNU18",24,144],[-26,"MNU19",10,50],[-26,"MNU20",15,187.5],[-25,"MNU01",73,379.6],[-25,"MNU02",133,691.6],[-25,"MNU03",139,722.8],[-25,"MNU04",66,389.4],[-25,"MNU05",18,106.2],[-25,"MNU06",28,145.6],[-25,"MNU07",31,201.5],[-25,"MNU08",16,152],[-25,"MNU09",52,1014],[-25,"MNU10",26,624],[-25,"MNU11",28,700],[-25,"MNU12",15,277.5],[-25,"MNU13",13,247],[-25,"MNU14",26,429],[-25,"MNU16",14,154],[-25,"MNU17",40,220],[-25,"MNU18",32,192],[-25,"MNU19",23,115],[-25,"MNU20",15,187.5],[-24,"MNU01",70,364],[-24,"MNU02",109,566.8],[-24,"MNU03",165,858],[-24,"MNU04",65,383.5],[-24,"MNU05",18,106.2],[-24,"MNU06",20,104],[-24,"MNU07",30,195],[-24,"MNU08",26,247],[-24,"MNU09",57,1111.5],[-24,"MNU10",20,480],[-24,"MNU11",15,375],[-24,"MNU12",16,296],[-24,"MNU13",9,171],[-24,"MNU14",20,330],[-24,"MNU16",11,121],[-24,"MNU17",23,126.5],[-24,"MNU18",20,120],[-24,"MNU19",26,130],[-24,"MNU20",18,225],[-23,"MNU01",49,254.8],[-23,"MNU02",69,358.8],[-23,"MNU03",114,592.8],[-23,"MNU04",29,171.1],[-23,"MNU05",12,70.8],[-23,"MNU06",16,83.2],[-23,"MNU07",23,149.5],[-23,"MNU08",19,180.5],[-23,"MNU09",37,721.5],[-23,"MNU10",13,312],[-23,"MNU11",15,375],[-23,"MNU12",7,129.5],[-23,"MNU13",9,171],[-23,"MNU14",13,214.5],[-23,"MNU16",10,110],[-23,"MNU17",28,154],[-23,"MNU18",15,90],[-23,"MNU19",10,50],[-23,"MNU20",14,175],[-22,"MNU01",48,249.6],[-22,"MNU02",74,384.8],[-22,"MNU03",106,551.2],[-22,"MNU04",47,277.3],[-22,"MNU05",7,41.3],[-22,"MNU06",20,104],[-22,"MNU07",17,110.5],[-22,"MNU08",15,142.5],[-22,"MNU09",24,468],[-22,"MNU10",19,456],[-22,"MNU11",9,225],[-22,"MNU12",8,148],[-22,"MNU13",4,76],[-22,"MNU14",15,247.5],[-22,"MNU15",3,51],[-22,"MNU16",5,55],[-22,"MNU17",20,110],[-22,"MNU18",11,66],[-22,"MNU19",7,35],[-22,"MNU20",13,162.5],[-21,"MNU01",58,301.6],[-21,"MNU02",90,468],[-21,"MNU03",97,504.4],[-21,"MNU04",39,230.1],[-21,"MNU05",11,64.9],[-21,"MNU06",15,78],[-21,"MNU07",12,78],[-21,"MNU08",13,123.5],[-21,"MNU09",29,565.5],[-21,"MNU10",11,264],[-21,"MNU11",7,175],[-21,"MNU12",10,185],[-21,"MNU13",11,209],[-21,"MNU14",17,280.5],[-21,"MNU15",6,102],[-21,"MNU16",5,55],[-21,"MNU17",23,126.5],[-21,"MNU18",14,84],[-21,"MNU19",13,65],[-21,"MNU20",7,87.5],[-20,"MNU01",43,223.6],[-20,"MNU02",54,280.8],[-20,"MNU03",105,546],[-20,"MNU04",35,206.5],[-20,"MNU05",17,100.3],[-20,"MNU06",11,57.2],[-20,"MNU07",38,247],[-20,"MNU08",26,247],[-20,"MNU09",30,585],[-20,"MNU10",23,552],[-20,"MNU11",9,225],[-20,"MNU12",15,277.5],[-20,"MNU13",8,152],[-20,"MNU14",24,396],[-20,"MNU15",6,102],[-20,"MNU16",6,66],[-20,"MNU17",22,121],[-20,"MNU18",12,72],[-20,"MNU19",11,55],[-20,"MNU20",23,287.5],[-19,"MNU01",70,364],[-19,"MNU02",98,509.6],[-19,"MNU03",134,696.8],[-19,"MNU04",43,253.7],[-19,"MNU05",22,129.8],[-19,"MNU06",27,140.4],[-19,"MNU07",27,175.5],[-19,"MNU08",20,190],[-19,"MNU09",45,877.5],[-19,"MNU10",19,456],[-19,"MNU11",12,300],[-19,"MNU12",11,203.5],[-19,"MNU13",6,114],[-19,"MNU14",26,429],[-19,"MNU15",8,136],[-19,"MNU16",7,77],[-19,"MNU17",26,143],[-19,"MNU18",14,84],[-19,"MNU19",19,95],[-19,"MNU20",17,212.5],[-18,"MNU01",60,312],[-18,"MNU02",103,535.6],[-18,"MNU03",140,728],[-18,"MNU04",52,306.8],[-18,"MNU05",13,76.7],[-18,"MNU06",23,119.6],[-18,"MNU07",24,156],[-18,"MNU08",15,142.5],[-18,"MNU09",32,624],[-18,"MNU10",30,720],[-18,"MNU11",19,475],[-18,"MNU12",20,370],[-18,"MNU13",7,133],[-18,"MNU14",20,330],[-18,"MNU15",14,238],[-18,"MNU16",8,88],[-18,"MNU17",27,148.5],[-18,"MNU18",22,132],[-18,"MNU19",14,70],[-18,"MNU20",17,212.5],[-17,"MNU01",64,332.8],[-17,"MNU02",107,556.4],[-17,"MNU03",120,624],[-17,"MNU04",51,300.9],[-17,"MNU05",24,141.6],[-17,"MNU06",16,83.2],[-17,"MNU07",22,143],[-17,"MNU08",19,180.5],[-17,"MNU09",54,1053],[-17,"MNU10",23,552],[-17,"MNU11",24,600],[-17,"MNU12",12,222],[-17,"MNU13",15,285],[-17,"MNU14",19,313.5],[-17,"MNU15",9,153],[-17,"MNU16",12,132],[-17,"MNU17",40,220],[-17,"MNU18",20,120],[-17,"MNU19",15,75],[-17,"MNU20",20,250],[-16,"MNU01",48,249.6],[-16,"MNU02",81,421.2],[-16,"MNU03",104,540.8],[-16,"MNU04",34,200.6],[-16,"MNU05",12,70.8],[-16,"MNU06",15,78],[-16,"MNU07",30,195],[-16,"MNU08",11,104.5],[-16,"MNU09",19,370.5],[-16,"MNU10",9,216],[-16,"MNU11",15,375],[-16,"MNU12",8,148],[-16,"MNU13",8,152],[-16,"MNU14",17,280.5],[-16,"MNU15",10,170],[-16,"MNU16",9,99],[-16,"MNU17",25,137.5],[-16,"MNU18",13,78],[-16,"MNU19",18,90],[-16,"MNU20",6,75],[-15,"MNU01",48,249.6],[-15,"MNU02",94,488.8],[-15,"MNU03",112,582.4],[-15,"MNU04",41,241.9],[-15,"MNU05",18,106.2],[-15,"MNU06",12,62.4],[-15,"MNU07",20,130],[-15,"MNU08",14,133],[-15,"MNU09",30,585],[-15,"MNU10",19,456],[-15,"MNU11",9,225],[-15,"MNU12",14,259],[-15,"MNU13",7,133],[-15,"MNU14",22,363],[-15,"MNU15",4,68],[-15,"MNU16",7,77],[-15,"MNU17",23,126.5],[-15,"MNU18",13,78],[-15,"MNU19",14,70],[-15,"MNU20",17,212.5],[-14,"MNU01",45,234],[-14,"MNU02",68,353.6],[-14,"MNU03",112,582.4],[-14,"MNU04",38,224.2],[-14,"MNU05",19,112.1],[-14,"MNU06",23,119.6],[-14,"MNU07",19,123.5],[-14,"MNU08",13,123.5],[-14,"MNU09",30,585],[-14,"MNU10",16,384],[-14,"MNU11",7,175],[-14,"MNU12",10,185],[-14,"MNU13",7,133],[-14,"MNU14",14,231],[-14,"MNU15",6,102],[-14,"MNU16",8,88],[-14,"MNU17",25,137.5],[-14,"MNU18",8,48],[-14,"MNU19",20,100],[-14,"MNU20",8,100],[-13,"MNU01",55,286],[-13,"MNU02",87,452.4],[-13,"MNU03",121,629.2],[-13,"MNU04",45,265.5],[-13,"MNU05",15,88.5],[-13,"MNU06",14,72.8],[-13,"MNU07",29,188.5],[-13,"MNU08",32,304],[-13,"MNU09",34,663],[-13,"MNU10",21,504],[-13,"MNU11",8,200],[-13,"MNU12",4,74],[-13,"MNU13",7,133],[-13,"MNU14",16,264],[-13,"MNU15",10,170],[-13,"MNU16",6,66],[-13,"MNU17",40,220],[-13,"MNU18",16,96],[-13,"MNU19",11,55],[-13,"MNU20",17,212.5],[-12,"MNU01",58,301.6],[-12,"MNU02",95,494],[-12,"MNU03",103,535.6],[-12,"MNU04",41,241.9],[-12,"MNU05",18,106.2],[-12,"MNU06",23,119.6],[-12,"MNU07",35,227.5],[-12,"MNU08",25,237.5],[-12,"MNU09",20,390],[-12,"MNU10",25,600],[-12,"MNU11",15,375],[-12,"MNU12",11,203.5],[-12,"MNU13",10,190],[-12,"MNU14",18,297],[-12,"MNU15",13,221],[-12,"MNU16",10,110],[-12,"MNU17",31,170.5],[-12,"MNU18",17,102],[-12,"MNU19",11,55],[-12,"MNU20",15,187.5],[-11,"MNU01",74,384.8],[-11,"MNU02",110,572],[-11,"MNU03",143,743.6],[-11,"MNU04",49,289.1],[-11,"MNU05",26,153.4],[-11,"MNU06",30,156],[-11,"MNU07",33,214.5],[-11,"MNU08",30,285],[-11,"MNU09",44,858],[-11,"MNU10",22,528],[-11,"MNU11",23,575],[-11,"MNU12",20,370],[-11,"MNU13",16,304],[-11,"MNU14",17,280.5],[-11,"MNU15",5,85],[-11,"MNU16",12,132],[-11,"MNU17",30,165],[-11,"MNU18",24,144],[-11,"MNU19",20,100],[-11,"MNU20",24,300],[-10,"MNU01",57,296.4],[-10,"MNU02",110,572],[-10,"MNU03",131,681.2],[-10,"MNU04",48,283.2],[-10,"MNU05",24,141.6],[-10,"MNU06",20,104],[-10,"MNU07",40,260],[-10,"MNU08",32,304],[-10,"MNU09",42,819],[-10,"MNU10",16,384],[-10,"MNU11",12,300],[-10,"MNU12",22,407],[-10,"MNU13",14,266],[-10,"MNU14",19,313.5],[-10,"MNU15",10,170],[-10,"MNU16",17,187],[-10,"MNU17",36,198],[-10,"MNU18",22,132],[-10,"MNU19",23,115],[-10,"MNU20",12,150],[-9,"MNU01",56,291.2],[-9,"MNU02",75,390],[-9,"MNU03",110,572],[-9,"MNU04",46,271.4],[-9,"MNU05",15,88.5],[-9,"MNU06",18,93.6],[-9,"MNU07",37,240.5],[-9,"MNU08",34,323],[-9,"MNU09",30,585],[-9,"MNU10",16,384],[-9,"MNU11",13,325],[-9,"MNU12",15,277.5],[-9,"MNU13",11,209],[-9,"MNU14",23,379.5],[-9,"MNU15",10,170],[-9,"MNU16",10,110],[-9,"MNU17",22,121],[-9,"MNU18",16,96],[-9,"MNU19",25,125],[-9,"MNU20",16,200],[-8,"MNU01",46,239.2],[-8,"MNU02",94,488.8],[-8,"MNU03",121,629.2],[-8,"MNU04",33,194.7],[-8,"MNU05",12,70.8],[-8,"MNU06",30,156],[-8,"MNU07",20,130],[-8,"MNU08",20,190],[-8,"MNU09",29,565.5],[-8,"MNU10",16,384],[-8,"MNU11",12,300],[-8,"MNU12",12,222],[-8,"MNU13",6,114],[-8,"MNU14",21,346.5],[-8,"MNU15",6,102],[-8,"MNU16",7,77],[-8,"MNU17",37,203.5],[-8,"MNU18",21,126],[-8,"MNU19",20,100],[-8,"MNU20",14,175],[-7,"MNU01",58,301.6],[-7,"MNU02",79,410.8],[-7,"MNU03",138,717.6],[-7,"MNU04",45,265.5],[-7,"MNU05",15,88.5],[-7,"MNU06",18,93.6],[-7,"MNU07",23,149.5],[-7,"MNU08",18,171],[-7,"MNU09",39,760.5],[-7,"MNU10",15,360],[-7,"MNU11",10,250],[-7,"MNU12",11,203.5],[-7,"MNU13",9,171],[-7,"MNU14",13,214.5],[-7,"MNU15",9,153],[-7,"MNU16",4,44],[-7,"MNU17",31,170.5],[-7,"MNU18",15,90],[-7,"MNU19",21,105],[-7,"MNU20",8,100],[-6,"MNU01",57,296.4],[-6,"MNU02",99,514.8],[-6,"MNU03",140,728],[-6,"MNU04",47,277.3],[-6,"MNU05",10,59],[-6,"MNU06",18,93.6],[-6,"MNU07",31,201.5],[-6,"MNU08",36,342],[-6,"MNU09",35,682.5],[-6,"MNU10",19,456],[-6,"MNU11",22,550],[-6,"MNU12",9,166.5],[-6,"MNU13",7,133],[-6,"MNU14",17,280.5],[-6,"MNU15",8,136],[-6,"MNU16",5,55],[-6,"MNU17",37,203.5],[-6,"MNU18",11,66],[-6,"MNU19",21,105],[-6,"MNU20",19,237.5],[-5,"MNU01",50,260],[-5,"MNU02",111,577.2],[-5,"MNU03",150,780],[-5,"MNU04",59,348.1],[-5,"MNU05",18,106.2],[-5,"MNU06",22,114.4],[-5,"MNU07",34,221],[-5,"MNU08",30,285],[-5,"MNU09",37,721.5],[-5,"MNU10",11,264],[-5,"MNU11",7,175],[-5,"MNU12",7,129.5],[-5,"MNU13",11,209],[-5,"MNU14",19,313.5],[-5,"MNU15",17,289],[-5,"MNU16",11,121],[-5,"MNU17",38,209],[-5,"MNU18",18,108],[-5,"MNU19",18,90],[-5,"MNU20",14,175],[-4,"MNU01",65,338],[-4,"MNU02",114,592.8],[-4,"MNU03",152,790.4],[-4,"MNU04",55,324.5],[-4,"MNU05",21,123.9],[-4,"MNU06",28,145.6],[-4,"MNU07",50,325],[-4,"MNU08",43,408.5],[-4,"MNU09",48,936],[-4,"MNU10",27,648],[-4,"MNU11",15,375],[-4,"MNU12",17,314.5],[-4,"MNU13",12,228],[-4,"MNU14",24,396],[-4,"MNU15",12,204],[-4,"MNU16",11,121],[-4,"MNU17",53,291.5],[-4,"MNU18",10,60],[-4,"MNU19",29,145],[-4,"MNU20",21,262.5],[-3,"MNU01",52,270.4],[-3,"MNU02",97,504.4],[-3,"MNU03",151,785.2],[-3,"MNU04",60,354],[-3,"MNU05",17,100.3],[-3,"MNU06",26,135.2],[-3,"MNU07",37,240.5],[-3,"MNU08",15,142.5],[-3,"MNU09",39,760.5],[-3,"MNU10",19,456],[-3,"MNU11",22,550],[-3,"MNU12",22,407],[-3,"MNU13",10,190],[-3,"MNU14",16,264],[-3,"MNU15",8,136],[-3,"MNU16",16,176],[-3,"MNU17",28,154],[-3,"MNU18",22,132],[-3,"MNU19",16,80],[-3,"MNU20",19,237.5],[-2,"MNU01",44,228.8],[-2,"MNU02",89,462.8],[-2,"MNU03",83,431.6],[-2,"MNU04",37,218.3],[-2,"MNU05",11,64.9],[-2,"MNU06",21,109.2],[-2,"MNU07",18,117],[-2,"MNU08",12,114],[-2,"MNU09",23,448.5],[-2,"MNU10",18,432],[-2,"MNU11",13,325],[-2,"MNU12",13,240.5],[-2,"MNU13",6,114],[-2,"MNU14",12,198],[-2,"MNU15",6,102],[-2,"MNU16",6,66],[-2,"MNU17",34,187],[-2,"MNU18",13,78],[-2,"MNU19",11,55],[-2,"MNU20",18,225],[-1,"MNU01",56,291.2],[-1,"MNU02",74,384.8],[-1,"MNU03",102,530.4],[-1,"MNU04",32,188.8],[-1,"MNU05",9,53.1],[-1,"MNU06",21,109.2],[-1,"MNU07",14,91],[-1,"MNU08",20,190],[-1,"MNU09",28,546],[-1,"MNU10",14,336],[-1,"MNU11",13,325],[-1,"MNU12",13,240.5],[-1,"MNU13",5,95],[-1,"MNU14",19,313.5],[-1,"MNU15",10,170],[-1,"MNU16",6,66],[-1,"MNU17",19,104.5],[-1,"MNU18",14,84],[-1,"MNU19",16,80],[-1,"MNU20",10,125]],"waste":[[-14,"ING01",3.66,"Spoiled",6.04],[-14,"ING02",0.38,"Spoiled",0.65],[-14,"ING05",0.03,"Expired",0.2],[-14,"ING07",5,"Expired",2.75],[-14,"ING11",0.01,"Expired",0.15],[-14,"ING12",3,"Stale",19.5],[-14,"ING16",2,"Expired",3.6],[-14,"ING18",0.09,"Bruised/overripe",1.26],[-14,"ING19",0.25,"Spoiled",4],[-14,"ING20",0.1,"Bruised/overripe",0.38],[-14,"ING24",0.16,"Expired",2.64],[-14,"ING27",0.03,"Stale beans",1.14],[-13,"ING01",3.3,"Spoiled",5.44],[-13,"ING02",0.05,"Spoiled",0.08],[-13,"ING03",0.12,"Opened > 7 days",0.38],[-13,"ING06",0.05,"Spoiled",0.73],[-13,"ING08",0.13,"Expired",0.94],[-13,"ING10",0.01,"Mould",0.24],[-13,"ING12",1,"Stale",6.5],[-13,"ING15",1,"Stale",1.6],[-13,"ING18",0.03,"Expired",0.42],[-13,"ING19",0.31,"Spoiled",4.96],[-13,"ING21",0.22,"Expired",2.64],[-13,"ING22",0.07,"Spoiled",1.12],[-13,"ING26",0.11,"Use-by date",1.43],[-13,"ING27",0.03,"Stale beans",1.14],[-12,"ING01",1.04,"Expired",1.72],[-12,"ING02",0.13,"Spoiled",0.22],[-12,"ING03",0.12,"Opened > 7 days",0.38],[-12,"ING05",0.02,"Spoiled",0.14],[-12,"ING07",2,"Expired",1.1],[-12,"ING08",0.06,"Expired",0.43],[-12,"ING11",0.02,"Mould",0.3],[-12,"ING18",0.14,"Spoiled",1.96],[-12,"ING21",0.15,"Expired",1.8],[-12,"ING22",0.1,"Spoiled",1.6],[-12,"ING23",1,"Expired",0.6],[-11,"ING02",0.25,"Spoiled",0.42],[-11,"ING03",0.04,"Opened > 7 days",0.13],[-11,"ING07",1,"Spoiled",0.55],[-11,"ING08",0.08,"Expired",0.58],[-11,"ING09",0.03,"Mould",0.54],[-11,"ING10",0.05,"Expired",1.2],[-11,"ING11",0.01,"Mould",0.15],[-11,"ING12",2,"Unsold end of day",13],[-11,"ING16",2,"Bruised/overripe",3.6],[-11,"ING17",0.47,"Bruised/overripe",3.06],[-11,"ING19",0.43,"Bruised/overripe",6.88],[-11,"ING22",0.09,"Spoiled",1.44],[-11,"ING23",1,"Spoiled",0.6],[-11,"ING24",0.05,"Use-by date",0.82],[-10,"ING02",0.16,"Spoiled",0.27],[-10,"ING03",0.07,"Opened > 7 days",0.22],[-10,"ING04",0.05,"Opened > 7 days",0.17],[-10,"ING06",0.04,"Expired",0.58],[-10,"ING16",3,"Bruised/overripe",5.4],[-10,"ING17",0.22,"Expired",1.43],[-10,"ING18",0.03,"Spoiled",0.42],[-10,"ING20",0.25,"Bruised/overripe",0.95],[-10,"ING23",1,"Expired",0.6],[-10,"ING25",0.02,"Use-by date",0.84],[-9,"ING01",2.08,"Spoiled",3.43],[-9,"ING04",0.04,"Opened > 7 days",0.14],[-9,"ING07",3,"Expired",1.65],[-9,"ING10",0.02,"Mould",0.48],[-9,"ING11",0.06,"Mould",0.9],[-9,"ING12",4,"Stale",26],[-9,"ING15",7,"Stale",11.2],[-9,"ING17",0.68,"Expired",4.42],[-9,"ING19",0.42,"Expired",6.72],[-9,"ING20",0.57,"Spoiled",2.17],[-9,"ING21",0.31,"Bruised/overripe",3.72],[-9,"ING22",0.17,"Spoiled",2.72],[-9,"ING23",2,"Spoiled",1.2],[-9,"ING24",0.15,"Expired",2.48],[-8,"ING04",0.07,"Opened > 7 days",0.24],[-8,"ING05",0.04,"Expired",0.27],[-8,"ING06",0.15,"Spoiled",2.17],[-8,"ING07",3,"Expired",1.65],[-8,"ING09",0.11,"Mould",1.98],[-8,"ING10",0.03,"Mould",0.72],[-8,"ING12",4,"Stale",26],[-8,"ING15",2,"Unsold end of day",3.2],[-8,"ING16",3,"Bruised/overripe",5.4],[-8,"ING17",0.12,"Bruised/overripe",0.78],[-8,"ING19",0.36,"Spoiled",5.76],[-8,"ING20",0.56,"Bruised/overripe",2.13],[-8,"ING21",0.43,"Spoiled",5.16],[-8,"ING22",0.12,"Spoiled",1.92],[-8,"ING23",1,"Bruised/overripe",0.6],[-8,"ING24",0.13,"Expired",2.14],[-8,"ING26",0.1,"Use-by date",1.3],[-8,"ING27",0.03,"Stale beans",1.14],[-7,"ING02",0.21,"Expired",0.36],[-7,"ING03",0.05,"Opened > 7 days",0.16],[-7,"ING04",0.03,"Opened > 7 days",0.1],[-7,"ING05",0.03,"Spoiled",0.2],[-7,"ING06",0.04,"Spoiled",0.58],[-7,"ING07",4,"Spoiled",2.2],[-7,"ING08",0.1,"Spoiled",0.72],[-7,"ING09",0.08,"Mould",1.44],[-7,"ING10",0.01,"Mould",0.24],[-7,"ING11",0.01,"Mould",0.15],[-7,"ING12",2,"Unsold end of day",13],[-7,"ING13",5,"Stale",9.5],[-7,"ING15",3,"Stale",4.8],[-7,"ING17",0.29,"Expired",1.88],[-7,"ING18",0.07,"Spoiled",0.98],[-7,"ING21",0.13,"Bruised/overripe",1.56],[-7,"ING24",0.09,"Use-by date",1.48],[-7,"ING26",0.1,"Use-by date",1.3],[-6,"ING01",1.12,"Spoiled",1.85],[-6,"ING02",0.05,"Spoiled",0.08],[-6,"ING05",0.05,"Expired",0.34],[-6,"ING06",0.05,"Expired",0.73],[-6,"ING08",0.09,"Spoiled",0.65],[-6,"ING09",0.04,"Expired",0.72],[-6,"ING10",0.01,"Mould",0.24],[-6,"ING12",1,"Stale",6.5],[-6,"ING13",4,"Unsold end of day",7.6],[-6,"ING15",3,"Stale",4.8],[-6,"ING16",4,"Spoiled",7.2],[-6,"ING17",0.3,"Spoiled",1.95],[-6,"ING20",0.71,"Expired",2.7],[-6,"ING21",0.28,"Expired",3.36],[-6,"ING23",1,"Expired",0.6],[-6,"ING25",0.05,"Use-by date",2.1],[-6,"ING27",0.05,"Stale beans",1.9],[-5,"ING01",1.19,"Spoiled",1.96],[-5,"ING03",0.09,"Opened > 7 days",0.29],[-5,"ING05",0.01,"Expired",0.07],[-5,"ING06",0.02,"Expired",0.29],[-5,"ING07",1,"Expired",0.55],[-5,"ING09",0.02,"Mould",0.36],[-5,"ING10",0.01,"Expired",0.24],[-5,"ING12",1,"Stale",6.5],[-5,"ING13",2,"Stale",3.8],[-5,"ING16",2,"Expired",3.6],[-5,"ING17",0.07,"Bruised/overripe",0.46],[-5,"ING18",0.02,"Bruised/overripe",0.28],[-5,"ING20",0.44,"Spoiled",1.67],[-5,"ING22",0.04,"Expired",0.64],[-5,"ING23",1,"Spoiled",0.6],[-5,"ING24",0.08,"Expired",1.32],[-5,"ING26",0.13,"Expired",1.69],[-5,"ING27",0.06,"Stale beans",2.28],[-4,"ING07",5,"Expired",2.75],[-4,"ING08",0.14,"Spoiled",1.01],[-4,"ING09",0.08,"Expired",1.44],[-4,"ING10",0.01,"Mould",0.24],[-4,"ING11",0.04,"Expired",0.6],[-4,"ING12",3,"Stale",19.5],[-4,"ING19",0.2,"Expired",3.2],[-4,"ING21",0.18,"Spoiled",2.16],[-4,"ING24",0.17,"Use-by date",2.8],[-4,"ING26",0.14,"Use-by date",1.82],[-4,"ING27",0.02,"Stale beans",0.76],[-3,"ING01",2.21,"Spoiled",3.65],[-3,"ING02",0.1,"Expired",0.17],[-3,"ING03",0.17,"Opened > 7 days",0.54],[-3,"ING04",0.02,"Opened > 7 days",0.07],[-3,"ING07",5,"Expired",2.75],[-3,"ING09",0.05,"Mould",0.9],[-3,"ING11",0.02,"Expired",0.3],[-3,"ING12",2,"Stale",13],[-3,"ING13",1,"Unsold end of day",1.9],[-3,"ING15",1,"Unsold end of day",1.6],[-3,"ING16",3,"Spoiled",5.4],[-3,"ING17",0.36,"Spoiled",2.34],[-3,"ING19",0.34,"Expired",5.44],[-3,"ING20",0.09,"Bruised/overripe",0.34],[-3,"ING22",0.05,"Bruised/overripe",0.8],[-2,"ING02",0.1,"Expired",0.17],[-2,"ING03",0.09,"Opened > 7 days",0.29],[-2,"ING05",0.03,"Spoiled",0.2],[-2,"ING07",3,"Spoiled",1.65],[-2,"ING08",0.03,"Expired",0.22],[-2,"ING10",0.04,"Mould",0.96],[-2,"ING13",11,"Unsold end of day",20.9],[-2,"ING17",0.38,"Spoiled",2.47],[-2,"ING20",0.36,"Spoiled",1.37],[-2,"ING21",0.4,"Spoiled",4.8],[-2,"ING22",0.03,"Spoiled",0.48],[-2,"ING23",2,"Bruised/overripe",1.2],[-2,"ING24",0.14,"Expired",2.31],[-2,"ING25",0.04,"Use-by date",1.68],[-1,"ING01",4.55,"Spoiled",7.51],[-1,"ING03",0.1,"Opened > 7 days",0.32],[-1,"ING04",0.06,"Opened > 7 days",0.2],[-1,"ING07",6,"Spoiled",3.3],[-1,"ING10",0.03,"Expired",0.72],[-1,"ING12",3,"Stale",19.5],[-1,"ING15",4,"Stale",6.4],[-1,"ING16",3,"Expired",5.4],[-1,"ING18",0.05,"Bruised/overripe",0.7],[-1,"ING21",0.47,"Bruised/overripe",5.64],[-1,"ING23",1,"Expired",0.6],[-1,"ING24",0.15,"Expired",2.48],[-1,"ING26",0.14,"Use-by date",1.82]],"ev":[[4,"Spring Food & Wine Street Fair",45,"Festival",0.3,7500],[9,"Kensington Twilight Markets",11,"Market",0.4,2200],[11,"Coogee Ocean Swim",3,"Sport",3.2,3000],[2,"Local business networking breakfast",2,"Business",0.2,120],[5,"Closing at 1pm (staff event)",-40,"Owner input",0,0]],"extras":[[2,["MNU09","MNU17"],30,"30 smashed avo + 30 croissants for networking breakfast"]],"notes":[[6,"Supplier issue","Greenline says berries short supply next week - prices +20%","Jess (Manager)"],[10,"Promotion","Planning $5 iced latte special on hot days","Nick (Owner)"],[1,"Stock note","Found 2 trays of eggs cracked on delivery - credit requested","Jess (Manager)"]]}</script>
 
 <script>
 /* =========================================================
    CafeCast: perishable ordering agent for independent cafés
    Single-file prototype. Data lives in this browser (localStorage).
    ========================================================= */
+/* ---------------- APP SETTINGS ----------------
+   supabaseUrl + supabaseAnonKey: from Supabase › Project Settings › API. Turns on accounts that sync across devices.
+   (The anon key is designed to be public; your data is protected by the row-level security rules in the setup SQL.)
+   googleMapsKey (optional): a Google Maps JavaScript API key with Places API (New) enabled, restricted to your site's address. */
+const CONFIG=Object.assign({
+  supabaseUrl:'',
+  supabaseAnonKey:'',
+  googleMapsKey:''
+},window.CAFECAST_CONFIG||{});
 const KEY_BASE='cafecast_v3';
-const DATASETS={demo:'Demo caf\u00e9 (original)',littlefern:'Little Fern Caf\u00e9 (spreadsheet data)',mine:'My caf\u00e9 (new setup)'};
+const DATASETS={demo:'Corner Caf\u00e9',littlefern:'Little Fern Caf\u00e9',mine:'My caf\u00e9'};
 let DS=(()=>{ try{ const d=localStorage.getItem('cafecast_dataset'); return DATASETS[d]?d:'littlefern'; }catch(e){ return 'littlefern'; } })();
 /* Each login has its own storage key. Built-in demo logins keep the original keys so existing demo data is not lost. */
 let ACCT=null;
@@ -639,7 +661,7 @@ function load(){
   seed(); KEEP.forEach(k=>{ if(keep[k]!==undefined) db.settings[k]=keep[k]; }); db.impactLog=log; db.wx=wx;
   refreshNote=true; save(); return db;
 }
-function save(){ if(phoneOpen||!db||!ACCT) return; try{ localStorage.setItem(keyFor(DS),JSON.stringify(db)); }catch(e){} }
+function save(){ if(phoneOpen||!db||!ACCT) return; try{ localStorage.setItem(keyFor(DS),JSON.stringify(db)); }catch(e){} scheduleSync(); }
 function seed(){ return DS==='littlefern'?seedLittleFern():DS==='mine'?seedBlank():seedDemo(); }
 
 function seedDemo(){
@@ -672,7 +694,7 @@ function seedDemo(){
   // a few past waste entries so the weekly waste insight has something to show
   const pw=(i,q,reason,d)=>db.waste.push({id:cid(),ingId:i.id,name:i.name,unit:i.unit,qty:q,reason,cost:r2(i.cost*q),ts:Date.now()-d*DAY,auto:false});
   pw(milk,3,'Spoiled / expired',4); pw(bread,2,'Over-prepped',2); pw(avo,5,'Spoiled / expired',1);
-  importSquare(sampleCSV(),'Square export (demo data)');
+  importSquare(sampleCSV(),'Square export');
   return db;
 }
 
@@ -695,12 +717,12 @@ function seedLittleFern(){
   const sales=D.sales.map(([k,mid,q,rev])=>({id:cid(),menuId:mids[mid],qty:q,ts:at(past(k,42)),rev,src:'square'}));
   const waste=D.waste.map(([k,iid,q,reason,cost])=>{ const i=byId(iid); return {id:cid(),ingId:ids[iid],name:i?i.name:iid,unit:i?i.unit:'',qty:q,reason,cost,ts:at(past(k,14),15),auto:false}; });
   const events=D.ev.map(([k,name,up,type,dist,att])=>({id:cid(),date:iso(fut(k)),name,uplift:up,auto:false,cal:true,sample:true,
-    src:type==='Owner input'?'Sample owner input':`Sample café calendar · ${type}${dist?` · ${dist} km away`:''}${att?` · ~${att} people`:''}`}));
+    src:type==='Owner input'?'Owner input':`Café calendar · ${type}${dist?` · ${dist} km away`:''}${att?` · ~${att} people`:''}`}));
   const extras=D.extras.map(([k,ms,q,text])=>({id:cid(),date:iso(fut(k)),menuIds:ms.map(x=>mids[x]).filter(Boolean),qty:q,text}));
   const notes=D.notes.map(([k,type,text,by])=>({id:cid(),date:iso(k),type,text,by}));
   db={v:3,seededISO:todayISO(),dataset:'littlefern',ingredients,menu,sales,waste,orders:[],events,extras,notes,promos:[],drafts:{},skip:{},wasteChecks:{},importKeys:{},dismissed:{},
     settings:{buffer:D.cafe.buffer,cover:2,mode:'email',modeSet:true,webhook:'',lat:D.cafe.lat,lon:D.cafe.lon,place:D.cafe.place,state:'AU-NSW',holidayUplift:10,tmKey:'',geminiKey:'',geminiModel:'gemini-3.8-flash',showAll:false,
-      stockCountTs:t0,lastImport:{ts:Date.now(),label:`${D.cafe.name} sales history (6 weeks, from spreadsheet)`,rows:sales.length},lastScan:null,lastScanTs:null,scanNote:'',cafeName:D.cafe.name},aiBrief:null};
+      stockCountTs:t0,lastImport:{ts:Date.now(),label:'Square sales history (6 weeks)',rows:sales.length},lastScan:null,lastScanTs:null,scanNote:'',cafeName:D.cafe.name},aiBrief:null};
   return db;
 }
 
@@ -790,7 +812,7 @@ function sampleCSV(){
   }
   return rows.map(r=>r.map(c=>/[",\n]/.test(String(c))?'"'+String(c).replace(/"/g,'""')+'"':c).join(',')).join('\n');
 }
-function download(name,text){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:'text/csv'})); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500); }
+function download(name,text,type){ const a=document.createElement('a'); a.href=URL.createObjectURL(new Blob([text],{type:type||'text/csv'})); a.download=name; document.body.appendChild(a); a.click(); setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove();},500); }
 function loadScript(src){ return new Promise((res,rej)=>{ if(document.querySelector(`script[src="${src}"]`)) return res(); const s=document.createElement('script'); s.src=src; s.onload=res; s.onerror=rej; document.head.appendChild(s); }); }
 async function handleFile(f){
   try{
@@ -1094,19 +1116,84 @@ async function scanEvents(force){
   s.lastScan=t; s.scanOk=ok; s.scanNote=notes.length?`Checked ${notes.join(' and ')} online for the next 7 days`:'Couldn’t reach the events services';
   save(); softRender();
 }
-function runAgent(force){ ensure(); if(refreshNote){ flash=`Sample data rebuilt for ${todayStr({weekday:'long',day:'numeric',month:'short'})} so sales history, expiry dates and weekdays line up with today. Your settings were kept.`; refreshNote=false; } const n=autoExpire(); if(n) flash=`${n} expired batch${n>1?'es were':' was'} removed from stock and logged as waste.`; db.settings.lastScanTs=Date.now(); save(); loadWeather(); scanEvents(force); render(); autopilot(); }
-async function geocode(){
-  const q=($('geo-q').value||'').trim(); if(!q) return;
-  try{
-    const d=await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(q.split(',')[0])}&count=1&language=en&format=json&countryCode=AU`)).json();
-    const r=d.results&&d.results[0]; if(!r){ flash='Couldn\u2019t find that suburb.'; return render(); }
-    const ST={'New South Wales':'AU-NSW','Victoria':'AU-VIC','Queensland':'AU-QLD','Western Australia':'AU-WA','South Australia':'AU-SA','Tasmania':'AU-TAS','Australian Capital Territory':'AU-ACT','Northern Territory':'AU-NT'};
-    if(r.timezone) cafeTZ=r.timezone; db.wx=null;
-    Object.assign(db.settings,{tz:r.timezone||db.settings.tz,lat:r.latitude,lon:r.longitude,place:r.name+(r.admin1?', '+r.admin1:''),state:ST[r.admin1]||db.settings.state,lastScan:null});
-    flash=`Location set to ${esc(db.settings.place)}. Weather and local events will use it.`;
-    save(); loadWeather(); scanEvents(true); render();
-  }catch(e){ flash='Location lookup failed. Check your connection.'; render(); }
+function runAgent(force){ ensure(); refreshNote=false; const n=autoExpire(); if(n) flash=`${n} expired batch${n>1?'es were':' was'} removed from stock and logged as waste.`; db.settings.lastScanTs=Date.now(); save(); loadWeather(); scanEvents(force); render(); autopilot(); }
+/* ---------------- SUBURB SEARCH ----------------
+   Shows a short list of matching Australian suburbs to pick from (so "Burwood" offers Burwood NSW 2134 and Burwood VIC 3125).
+   A state or postcode typed with the name wins; otherwise the café's current state (NSW by default) is listed first.
+   Uses Google Places when a Google Maps key is set in CONFIG, otherwise the free Open-Meteo place search. */
+const AU_STATES={NSW:['New South Wales','Australia/Sydney'],VIC:['Victoria','Australia/Melbourne'],QLD:['Queensland','Australia/Brisbane'],SA:['South Australia','Australia/Adelaide'],
+  WA:['Western Australia','Australia/Perth'],TAS:['Tasmania','Australia/Hobart'],ACT:['Australian Capital Territory','Australia/Sydney'],NT:['Northern Territory','Australia/Darwin']};
+const stateShort=n=>{ n=String(n||'').trim(); if(AU_STATES[n.toUpperCase()]) return n.toUpperCase(); const k=Object.keys(AU_STATES).find(k=>AU_STATES[k][0].toLowerCase()===n.toLowerCase()); return k||''; };
+const stateOfPostcode=pc=>{ const n=+pc; if(!(n>0)) return ''; if((n>=2600&&n<=2618)||(n>=2900&&n<=2920)) return 'ACT'; return n<800?'':n<1000?'NT':n<3000?'NSW':n<4000?'VIC':n<5000?'QLD':n<6000?'SA':n<7000?'WA':n<8000?'TAS':''; };
+function parseSuburbQuery(q){
+  let t=' '+String(q||'').replace(/,/g,' ')+' ', st='', pc='';
+  const m=t.match(/\b(\d{4})\b/); if(m){ pc=m[1]; t=t.replace(m[0],' '); }
+  for(const [k,[full]] of Object.entries(AU_STATES)){ const re=new RegExp('\\b('+k+'|'+full+')\\b','i'); if(re.test(t)){ st=k; t=t.replace(re,' '); } }
+  if(!st&&pc) st=stateOfPostcode(pc);
+  const name=t.replace(/\s+/g,' ').trim(), alt=name.replace(/\s+(sydney|melbourne|brisbane|perth|adelaide|hobart|darwin|australia)$/i,'').trim();
+  return {name,alt:alt!==name?alt:'',state:st,postcode:pc,hint:/sydney/i.test(q)?'NSW':/melbourne/i.test(q)?'VIC':/brisbane/i.test(q)?'QLD':/perth/i.test(q)?'WA':/adelaide/i.test(q)?'SA':/hobart/i.test(q)?'TAS':''};
 }
+let geoSeq=0, geoTimer=null, geoResults=[], gmapsP=null;
+function rankSuburbs(list,Q){
+  const pref=Q.state||Q.hint||String(db.settings.state||'AU-NSW').replace('AU-','')||'NSW', nm=Q.name.toLowerCase();
+  list.forEach(x=>{ const n=x.name.toLowerCase(); x.score=(n===nm?60:n.startsWith(nm)?25:0)+(x.state===pref?(Q.state?200:80):0)+(Q.postcode&&x.postcode===Q.postcode?300:0)+Math.min(10,(x.pop||0)/20000)+(x.state?0:-50); });
+  const seen=new Set();
+  return list.sort((a,b)=>b.score-a.score).filter(x=>{ const k=x.name.toLowerCase()+'|'+x.state; if(seen.has(k)) return false; seen.add(k); return true; }).slice(0,6);
+}
+async function suburbsOpenMeteo(Q){
+  const get=async n=>((await (await fetch(`https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(n)}&count=20&language=en&format=json&countryCode=AU`)).json()).results||[]);
+  let rs=await get(Q.name); if(!rs.length&&Q.alt){ rs=await get(Q.alt); Q.name=Q.alt; }
+  return rs.map(r=>{ const st=stateShort(r.admin1); return {name:r.name,state:st,postcode:(r.postcodes||[])[0]||'',area:r.admin2||'',lat:r.latitude,lon:r.longitude,tz:r.timezone||(AU_STATES[st]||[])[1]||'Australia/Sydney',pop:r.population||0}; });
+}
+function loadGoogleMaps(){
+  if(window.google&&google.maps&&google.maps.importLibrary) return Promise.resolve();
+  if(!gmapsP) gmapsP=new Promise((res,rej)=>{ window.__cafecastMaps=()=>res(); const s=document.createElement('script');
+    s.src=`https://maps.googleapis.com/maps/api/js?key=${encodeURIComponent(CONFIG.googleMapsKey)}&v=weekly&loading=async&callback=__cafecastMaps`; s.async=true; s.onerror=()=>{ gmapsP=null; rej(new Error('Google Maps didn’t load')); }; document.head.appendChild(s); });
+  return gmapsP;
+}
+async function suburbsGoogle(Q,raw){
+  await loadGoogleMaps(); const {AutocompleteSuggestion}=await google.maps.importLibrary('places');
+  const {suggestions}=await AutocompleteSuggestion.fetchAutocompleteSuggestions({input:raw,includedRegionCodes:['au'],includedPrimaryTypes:['locality','sublocality','postal_code']});
+  return (suggestions||[]).filter(x=>x.placePrediction).map(x=>{ const p=x.placePrediction, main=p.mainText?p.mainText.toString():p.text.toString(), sec=p.secondaryText?p.secondaryText.toString():'';
+    const st=stateShort((sec.match(/\b(NSW|VIC|QLD|SA|WA|TAS|ACT|NT)\b/)||[])[1]||''); return {name:main,state:st,postcode:'',area:'',pred:p,pop:0}; });
+}
+async function findSuburbs(raw){
+  const Q=parseSuburbQuery(raw); if(Q.name.length<2) return [];
+  if(CONFIG.googleMapsKey){ try{ const g=await suburbsGoogle(Q,raw); if(g.length) return rankSuburbs(g,Q); }catch(e){ console.warn('Google suburb search failed, using Open-Meteo',e); } }
+  return rankSuburbs(await suburbsOpenMeteo(Q),Q);
+}
+function drawGeoList(state,msg){
+  const el=$('geo-list'); if(!el) return;
+  if(state==='busy'){ el.innerHTML='<div class="geo-msg">Searching…</div>'; return; }
+  if(state==='msg'){ el.innerHTML=`<div class="geo-msg">${esc(msg)}</div>`; return; }
+  if(!geoResults.length){ el.innerHTML=''; return; }
+  el.innerHTML=`<div class="geo-head">Pick your suburb</div>`+geoResults.map((x,j)=>`<button type="button" class="geo-opt ${j===0?'top':''}" data-act="geo-pick" data-idx="${j}"><span><strong>${esc(x.name)}</strong> ${x.state?`<span class="pill ${x.state==='NSW'?'ok':''}">${esc(x.state)}${x.postcode?' '+esc(x.postcode):''}</span>`:''}<small>${esc([x.area,x.state?AU_STATES[x.state][0]:''].filter(Boolean).join(' · '))}</small></span>${icon('chev','chev')}</button>`).join('');
+}
+async function geoSearch(now){
+  clearTimeout(geoTimer); const inp=$('geo-q'); if(!inp) return; const q=inp.value.trim();
+  if(q.length<3){ geoResults=[]; if(now) drawGeoList('msg','Type at least 3 letters of the suburb.'); else drawGeoList(); return; }
+  const run=async()=>{ const id=++geoSeq; drawGeoList('busy');
+    try{ const r=await findSuburbs(q); if(id!==geoSeq) return; geoResults=r; r.length?drawGeoList():drawGeoList('msg','No Australian suburb found with that name. Check the spelling, or add the postcode, e.g. “Burwood 2134”.'); }
+    catch(e){ if(id===geoSeq) drawGeoList('msg','Suburb search isn’t reachable right now. Check your internet connection.'); } };
+  if(now) run(); else geoTimer=setTimeout(run,350);
+}
+async function pickSuburb(x){
+  if(!x) return;
+  try{
+    if(x.pred){ const pl=x.pred.toPlace(); await pl.fetchFields({fields:['location','addressComponents']});
+      const comp=t=>(pl.addressComponents||[]).find(c=>(c.types||[]).includes(t));
+      x.lat=pl.location.lat(); x.lon=pl.location.lng(); x.state=x.state||stateShort((comp('administrative_area_level_1')||{}).shortText);
+      x.postcode=(comp('postal_code')||{}).longText||x.postcode; x.tz=(AU_STATES[x.state]||[])[1]||'Australia/Sydney'; }
+  }catch(e){ flash='Couldn’t load that suburb’s location. Try again.'; return render(); }
+  const st=x.state||'NSW';
+  if(x.tz) cafeTZ=x.tz; db.wx=null; geoResults=[];
+  Object.assign(db.settings,{tz:x.tz||db.settings.tz,lat:x.lat,lon:x.lon,place:`${x.name} ${st}${x.postcode?' '+x.postcode:''}`,state:'AU-'+st,lastScan:null});
+  flash=`Location set to ${esc(db.settings.place)}. Weather, public holidays and local events now use it.`;
+  save(); loadWeather(); scanEvents(true); render();
+}
+const geoField=(st,help)=>`<div class="field wide"><label for="geo-q">Suburb</label><div class="inline"><input id="geo-q" autocomplete="off" value="${esc(st.place||'')}" placeholder="e.g. Burwood or Strathfield 2135"><button class="btn secondary" data-act="geo">Search</button></div>
+  <div id="geo-list" class="geo-list"></div>
+  ${st.place?`<div class="help ok">✓ ${esc(st.place)} · ${esc(st.tz||TZ())}</div>`:`<div class="help">${help||'Type your suburb, then pick it from the list.'}</div>`}</div>`;
 
 /* ---------------- ORDERS ---------------- */
 const poTotal=l=>sum(l,x=>x.qty*x.cost);
@@ -1159,7 +1246,7 @@ function ensure(){
   const s=db.settings; db.impactLog=db.impactLog||[]; db.promos=db.promos||[];
   if(s.autopilot==null) s.autopilot='off'; if(s.autoLimit==null) s.autoLimit=150;
   if(s.close==null) s.close='15:00'; if(s.detail==null) s.detail=false; s.assume=s.assume||{};
-  if(s.owner==null) s.owner=DS==='littlefern'?'Sam':'';
+  if(s.owner==null||(DS==='littlefern'&&s.owner==='Sam')) s.owner=DS==='littlefern'?'Nick':'';
   if(s.liveOnly==null) s.liveOnly=true; if(!s.tz) s.tz='Australia/Sydney'; cafeTZ=s.tz;
 }
 const greeting=()=>{ const h=tzParts(Date.now()).h; return h<12?'morning':h<17?'afternoon':'evening'; };
@@ -1455,7 +1542,7 @@ function togglePromo(menuId,price,reason,saving){
   if(old){ old.active=false; flash=`Paused the ${esc((m||{}).name||'menu')} special.`; }
   else { db.promos.filter(p=>p.menuId===menuId).forEach(p=>p.active=false); db.promos.push({id:cid(),menuId,price,reason,active:true,ts:Date.now()});
     logImpact('special',`Special: ${m?m.name:'item'} at ${money(price)} to use ${reason}`,saving||0,0);
-    flash=`Special approved: ${esc(m?m.name:'menu item')} at ${money(price)}. In production this would sync to the POS.`; }
+    flash=`Special approved: ${esc(m?m.name:'menu item')} at ${money(price)}.`; }
   save(); render();
 }
 
@@ -1464,8 +1551,8 @@ function sourceChips(){
   const wx=wxStatus==='live'?['live','Weather · Open-Meteo live']:wxStatus==='cached'?['warn',`Weather · saved ${db.wx?timeStr(db.wx.ts):''}`]:wxStatus==='loading'?['warn','Weather · loading']:['off','Weather · offline'];
   const hol=!scanned?['warn','Holidays · checking']:ok.hol===false?['off','Holidays · offline']:['live','Holidays · Nager.Date live'];
   const tm=s.tmKey?(ok.tm===false?['off','Events · Ticketmaster error']:['live','Events · Ticketmaster live']):['warn','Events · optional key'];
-  const pos=DS==='mine'?(s.lastImport?['live','Sales \u00b7 Square import']:['warn','Sales \u00b7 using your estimates']):['sample',`Sales \u00b7 ${DS==='littlefern'?'spreadsheet':'demo'} POS history`];
-  const out=[wx,hol,tm,pos]; if(s.liveOnly===false) out.push(['sample','Sample café calendar on']);
+  const pos=DS==='mine'?(s.lastImport?['live','Sales \u00b7 Square import']:['warn','Sales \u00b7 using your estimates']):['live','Sales \u00b7 Square history'];
+  const out=[wx,hol,tm,pos]; if(s.liveOnly===false) out.push(['live','Café calendar on']);
   return out.map(([k,t])=>`<button class="src ${k}" data-act="setup-go" data-page="sources" title="Open Data sources"><i></i>${esc(t)}</button>`).join('');
 }
 function outlook(){ const tbl=dowTable(); return [...Array(7)].map((_,k)=>{ const d=addDaysISO(k); return {k,d,w:wxOn(d),ev:eventsOn(d),f:dayFactor(k,tbl)}; }); }
@@ -1642,9 +1729,9 @@ function renderImpact(A){
   </div>
 
   <div class="card"><h2>Assumptions</h2>
-    <p class="lead">Change these to match what the café owner tells you in interviews. Every number on this page updates.</p>
+    <p class="lead">Change these to match your café. Every number on this page updates.</p>
     <div class="assume-grid">${Object.keys(ASSUME_DEFAULT).map(asm).join('')}</div>
-    <div class="limit" style="margin-top:12px"><strong>Validate in a pilot:</strong> 2 weeks of normal ordering as a baseline, then 4 weeks with CafeCast. Compare waste $ per week, sell-outs per week, minutes the owner spends ordering (self-timed), recommendation acceptance rate and forecast error.</div>
+    <div class="limit" style="margin-top:12px"><strong>Measure it yourself:</strong> compare 2 weeks of your usual ordering with 4 weeks using CafeCast. Compare waste $ per week, sell-outs per week, minutes the owner spends ordering (self-timed), recommendation acceptance rate and forecast error.</div>
   </div>`;
 }
 
@@ -1703,7 +1790,7 @@ function connWhy(r){
   if(r.status===400) return 'Request rejected. Usually an invalid key.';
   if(r.status===429) return 'Too many requests. Wait a minute and test again.';
   if(r.status) return `The service returned an error (${r.status}). Try again shortly.`;
-  return IN_FRAME?'Blocked. This page is inside a preview frame. Open the GitHub Pages link directly in Chrome.':'Blocked before it reached the service. Usually a file preview window or a network filter (uni or work Wi-Fi). Open the GitHub Pages link in Chrome, or try a phone hotspot.';
+  return IN_FRAME?'Blocked. Open CafeCast directly in Chrome, not inside a preview window.':'Blocked before it reached the service. Usually a file preview window or a network filter (uni or work Wi-Fi). Open CafeCast directly in Chrome, or try a phone hotspot.';
 }
 async function testConnections(){
   if(connBusy) return; connBusy=true; connRes={busy:true}; render();
@@ -1794,8 +1881,7 @@ function renderWizard(){
     <div class="wiz-grid">
       <div class="field"><label>Café name</label><input data-set="cafeName" value="${esc(st.cafeName||'')}" placeholder="e.g. Corner Leaf Café"></div>
       <div class="field"><label>Your first name</label><input data-set="owner" value="${esc(st.owner||'')}" placeholder="Used in the morning brief"></div>
-      <div class="field wide"><label>Suburb</label><div class="inline"><input id="geo-q" value="${esc(st.place||'')}" placeholder="e.g. Kensington NSW"><button class="btn secondary" data-act="geo">Look up</button></div>
-        ${st.place?`<div class="help ok">✓ ${esc(st.place)} · ${esc(st.tz||TZ())}</div>`:'<div class="help">Type a suburb and tap Look up.</div>'}</div>
+      ${geoField(st)}
       <div class="field"><label>Closing time</label><input type="time" data-set="close" value="${esc(st.close||'15:00')}"><div class="help">For the closing waste-check reminder.</div></div>
     </div>`;
   if(w===2){
@@ -1869,8 +1955,8 @@ function setupMenu(A){
     ['sources','plug','Data sources',src.text,src.warn],
     ['voice','mic','Voice','Push-to-talk · Chrome, Edge, Safari',false],
     ['view','phone','View',`${viewName(viewMode)} view`,false],
-    ['account','user','Account & logins',`Signed in as ${esc(ACCT.username)}`,false],
-    ['demo','database','Demo tools',esc(DATASETS[DS]),false]];
+    ['account','user','Account',esc(ACCT.email||ACCT.username||''),false],
+    ['data','database','Café data','Download a backup or start over',false]];
   return `<div class="page-head"><div><span class="eyebrow">Setup</span><h2>Settings</h2><p>Each area opens its own page. Rows marked ⚠ need attention.</p></div></div>
     ${done<cl.length?`<button class="card checklist" data-act="setup-go" data-page="${nxt[2]}"><div class="cl-top"><strong>Setup checklist</strong><span>${done} of ${cl.length} done</span></div><div class="cl-bar"><i style="width:${done/cl.length*100}%"></i></div><div class="cl-next">Next: ${nxt[1]} ${icon('chev')}</div></button>`:''}
     <div class="card set-list">${rows.map(([id,ic,t,stt,warn])=>`<button class="set-row" data-act="setup-go" data-page="${id}"><span class="set-ic">${icon(ic)}</span><span class="set-t"><strong>${t}</strong><small class="${warn?'warn':''}">${stt}</small></span>${icon('chev','chev')}</button>`).join('')}</div>`;
@@ -1878,7 +1964,7 @@ function setupMenu(A){
 const backBtn=(label,act,page)=>`<button class="back" data-act="${act||'setup-go'}" data-page="${page||''}" data-id="">${icon('chev','flip')} ${label||'Setup'}</button>`;
 function renderSetup(A){
   if(setupPage==='wizard') return backBtn()+renderWizard();
-  const P={profile:pgProfile,menu:pgMenu,stock:pgStock,suppliers:pgSuppliers,agent:pgAgent,sources:pgSources,voice:pgVoice,view:pgView,demo:pgDemo,account:pgAccount}[setupPage];
+  const P={profile:pgProfile,menu:pgMenu,stock:pgStock,suppliers:pgSuppliers,agent:pgAgent,sources:pgSources,voice:pgVoice,view:pgView,data:pgData,account:pgAccount}[setupPage];
   if(!P){ setupPage=null; return setupMenu(A); }
   return (setupPage==='menu'&&menuOpen&&menuById(menuOpen)?'':backBtn())+P(A);
 }
@@ -1888,7 +1974,7 @@ function pgProfile(){
     <div class="wiz-grid">
       <div class="field"><label>Café name</label><input data-set="cafeName" value="${esc(st.cafeName||'')}"></div>
       <div class="field"><label>Owner first name</label><input data-set="owner" value="${esc(st.owner||'')}"><div class="help">Used in the greeting and morning brief.</div></div>
-      <div class="field wide"><label>Suburb</label><div class="inline"><input id="geo-q" value="${esc(st.place||'')}"><button class="btn secondary" data-act="geo">Look up</button></div><div class="help">Sets the location for live weather and events, the state for public holidays, and the time zone.</div></div>
+      ${geoField(st,'Sets the location for live weather and events, the state for public holidays, and the time zone.')}
       <div class="field"><label>Time zone</label><input data-set="tz" value="${esc(st.tz||'Australia/Sydney')}"><div class="help">“Today”, weekdays and cut-offs use this, whatever clock the viewing device has.</div></div>
       <div class="field"><label>Closing time</label><input type="time" data-set="close" value="${esc(st.close||'15:00')}"><div class="help">For the closing waste-check reminder.</div></div>
     </div></div>`;
@@ -1991,14 +2077,14 @@ function pgAgent(){
     <p class="lead">CafeCast only interrupts when waiting would cost money, and never more than 3 times a day. Everything else waits on the Today page.</p>
     ${Object.entries(ALERT_DEF).map(([k,[t,ic]])=>`<label class="toggle-row"><span class="set-ic">${icon(ic)}</span><span>${t}</span><input type="checkbox" class="switch" data-alert="${k}" ${cfg[k]?'checked':''}></label>`).join('')}
     <div class="actions" style="margin-top:12px"><button class="btn secondary" data-act="alert-test">Preview alerts</button></div>
-    <div class="help" style="margin-top:8px">In this prototype alerts appear inside the app. In production they would be phone push notifications.</div></div>`;
+    <div class="help" style="margin-top:8px">Alerts appear in CafeCast while it’s open on this device.</div></div>`;
 }
 function pgSources(){
   const st=db.settings, ok=st.scanOk||{}, R=connRes, busy=R&&R.busy;
   const state=(res,fallback)=>busy?['warn','Testing…']:res?[res.ok?'live':'off',connWhy(res)]:fallback;
   const wxF=wxStatus==='live'?['live','Live forecast loaded']:wxStatus==='cached'?['warn',`Using the forecast saved at ${db.wx?timeStr(db.wx.ts):'earlier'}. Works offline for today.`]:wxStatus==='loading'?['warn','Loading…']:['off','Not reachable. Tap Test connections for the reason.'];
   const holF=st.lastScan!==todayISO()?['warn','Not checked yet today']:ok.hol===false?['off','Not reachable. Tap Test connections for the reason.']:['live','Checked today for the next 7 days'];
-  const pos=DS==='mine'?(st.lastImport?['live',`Imported ${dayTimeStr(st.lastImport.ts)}`]:['warn','Not connected. CafeCast uses your usual-use estimates until you import sales.']):['sample','Sample sales history from the demo spreadsheet'];
+  const pos=DS==='mine'?(st.lastImport?['live',`Imported ${dayTimeStr(st.lastImport.ts)}`]:['warn','Not connected. CafeCast uses your usual-use estimates until you import sales.']):['live',`Square sales history · ${availableHistoryDays()} days`];
   const rows=[
     ['database','Sales history (POS)','Square CSV export · no key',pos,`<button class="btn ghost sm" data-act="tab" data-id="sales">Import on the Sales page</button>`],
     ['rain','Weather','Open-Meteo · free, no key · 16-day forecast',state(R&&R.wx,wxF),''],
@@ -2009,15 +2095,10 @@ function pgSources(){
       `<div class="field"><label>Gemini API key</label><input data-set="geminiKey" type="password" autocomplete="off" value="${esc(st.geminiKey||'')}" placeholder="Paste your Google AI Studio key"></div>
        <div class="field"><label>Model</label><select data-set="geminiModel"><option value="gemini-3.8-flash"${st.geminiModel==='gemini-3.8-flash'?' selected':''}>Gemini 3.8 Flash</option><option value="gemini-3.5-flash-lite"${st.geminiModel==='gemini-3.5-flash-lite'?' selected':''}>Gemini 3.5 Flash-Lite</option></select></div>`]];
   return `<div class="card"><div class="panel-title"><h2>${icon('plug')} Data sources</h2><button class="btn" data-act="conn-test" ${busy?'disabled':''}>${busy?'Testing…':'Test connections'}</button></div>
-    <p class="lead">Everything runs in the browser, with no server. ${R&&R.ts?`Last tested ${timeStr(R.ts)}.`:'Test before a demo to see exactly what works on this network.'}</p>
+    <p class="lead">Everything runs in the browser, with no server. ${R&&R.ts?`Last tested ${timeStr(R.ts)}.`:'Test to see exactly what works on this network.'}</p>
     <div class="src-list">${rows.map(([ic,t,sub,[k,msg],extra])=>`<div class="src-row"><span class="set-ic">${icon(ic)}</span><div class="src-main"><strong>${t}</strong><small>${sub}</small><span class="src-state ${k}"><i></i>${esc(msg)}</span>${extra?`<div class="src-extra">${extra}</div>`:''}</div></div>`).join('')}</div>
-    <div class="field" style="margin-top:14px"><label>Demand signals</label><select data-set="liveOnly" style="width:100%"><option value="1"${st.liveOnly!==false?' selected':''}>Live APIs only (weather, holidays, Ticketmaster)</option><option value="0"${st.liveOnly===false?' selected':''}>Also include the sample café calendar (demo only)</option></select></div>
-  </div>
-  <div class="card"><h2>Demo checklist</h2>
-    <ol class="demo-list"><li>Open the <strong>GitHub Pages link in Chrome</strong>, not a file preview. Previews block outside connections.</li>
-    <li>Tap <strong>Test connections</strong> on the venue’s Wi-Fi. If something shows “Blocked”, switch to a phone hotspot.</li>
-    <li>Open the app once on demo morning while online. Today’s weather is saved, so the demo still works if the Wi-Fi drops.</li>
-    <li>Optional: add a free Ticketmaster key for local events, and a Gemini key for the AI forecast.</li></ol></div>`;
+    <div class="field" style="margin-top:14px"><label>Demand signals</label><select data-set="liveOnly" style="width:100%"><option value="1"${st.liveOnly!==false?' selected':''}>Live APIs only (weather, holidays, Ticketmaster)</option><option value="0"${st.liveOnly===false?' selected':''}>Also include the café calendar (bookings and events you’ve saved)</option></select></div>
+  </div>`;
 }
 function pgVoice(){
   return `<div class="card"><h2>${icon('mic')} Voice</h2>
@@ -2026,36 +2107,33 @@ function pgVoice(){
     <div class="stat-line"><span>“Approve the dairy order”</span><span class="muted">Then “confirm”</span></div>
     <div class="stat-line"><span>“Log 3 croissants wasted”</span><span class="muted">Updates stock</span></div>
     <div class="stat-line"><span>“Note: roadworks out front, expect it quieter”</span><span class="muted">Re-forecasts</span></div>
-    <div class="help" style="margin:8px 0">Works in Chrome, Edge and Safari over HTTPS (e.g. GitHub Pages). In other browsers, type the same commands.</div>
+    <div class="help" style="margin:8px 0">Works in Chrome, Edge and Safari. In other browsers, type the same commands.</div>
     <button class="btn ghost" data-act="test-voice">Test voice</button></div>`;
 }
 function pgView(){
-  const opts=[['auto','Desktop','monitor','Adapts to the screen it’s on. Sidebar on laptops, bottom tabs on phones.'],['phone','Phone','phone','Shows the app in a 390 px phone frame with the real phone layout. Use it to rehearse the mobile demo.'],['tablet','Tablet','store','Shows an 820 px tablet frame, e.g. an iPad on the counter.']];
+  const opts=[['auto','Desktop','monitor','Adapts to the screen it’s on. Sidebar on laptops, bottom tabs on phones.'],['phone','Phone','phone','Shows the app in a 390 px phone frame with the real phone layout. Use it to check the phone layout.'],['tablet','Tablet','store','Shows an 820 px tablet frame, e.g. an iPad on the counter.']];
   return `<div class="card"><h2>${icon('phone')} View</h2><p class="lead">Preview how CafeCast looks on other devices. The choice is remembered on this computer, and all views share the same data.</p>
     <div class="view-opts">${opts.map(([v,t,ic,d])=>`<button class="view-opt ${viewMode===v?'on':''}" data-act="view-set" data-v="${v}"><span class="vo-ic">${icon(ic==='monitor'?'chart':ic)}</span><strong>${t}</strong><small>${d}</small></button>`).join('')}</div>
     ${window.innerWidth<960&&!IN_FRAME?'<div class="help" style="margin-top:10px">You’re already on a small screen, so the phone layout is showing.</div>':''}</div>`;
 }
-function pgDemo(){
-  const own=DS==='mine';
-  return `<div class="card"><h2>${icon('database')} Demo tools</h2>
-    <p class="lead">Signed in as <strong>${esc(ACCT.username)}</strong> using <strong>${esc(DATASETS[DS])}</strong>. Each login keeps its own data in this browser, so nothing here affects other logins. ${own?'':'Sample data rebuilds each new day so dates stay realistic. Your settings and keys are kept.'}</p>
-    <div class="actions" style="margin-top:12px;justify-content:flex-start;flex-wrap:wrap"><button class="btn ghost" data-act="reset-demo">Reset this login’s data</button><button class="btn danger" data-act="clear-all">Start empty</button><button class="btn secondary" data-act="signout">Switch login</button></div></div>
-  <div class="card"><h2>${icon('store')} Set up a new café</h2><p class="lead">Create a separate login for another café or use case. It gets its own data and the same features, and it never touches this login’s data. Own-data logins start with a 5-step guided setup (about 25 minutes).</p>
-    <div class="actions" style="justify-content:flex-start"><button class="btn" data-act="acct-new">Create a new café login</button>${own?'<button class="btn ghost" data-act="start-new">Run this café’s setup again</button>':''}</div></div>`;
+function pgData(){
+  const own=DS==='mine', cafe=esc(db.settings.cafeName||DATASETS[DS]);
+  return `<div class="card"><h2>${icon('database')} Café data</h2>
+    <p class="lead">Download a copy of everything CafeCast holds for ${cafe}: stock, menu and recipes, sales, orders, waste and settings.</p>
+    <div class="actions" style="justify-content:flex-start"><button class="btn secondary" data-act="data-export">Download backup</button></div></div>
+  <div class="card"><h2>${icon('alert')} Start over</h2>
+    <p class="lead">${own?'Clears this café’s stock, menu, sales, orders and waste, then runs the 5-step setup again.':'Clears orders, waste logs and specials, and restores this café’s stock, menu and sales history. Your settings and keys are kept.'}</p>
+    <div class="actions" style="justify-content:flex-start"><button class="btn danger" data-act="${own?'start-new':'reset-demo'}">Start over</button></div></div>`;
 }
 function pgAccount(){
-  const a=ACCT, kind=DS==='mine'?'Own café data':a.builtin?'Built-in demo login':'Copy of demo data';
+  const a=ACCT, canPw=!(a.mode==='local'&&a.builtin);
   return `<div class="card"><h2>${icon('user')} Account</h2>
-    <div class="stat-line"><span>Username</span><strong>${esc(a.username)}</strong></div>
+    <div class="stat-line"><span>Email</span><strong>${esc(a.email||a.username||'')}</strong></div>
     <div class="stat-line"><span>Café</span><strong>${esc(db.settings.cafeName||a.cafe||DATASETS[DS])}</strong></div>
-    <div class="stat-line"><span>Data</span><strong>${kind}</strong></div>
-    <div class="stat-line"><span>Saved</span><strong>In this browser only</strong></div>
-    ${a.builtin?`<div class="note">Built-in demo logins can’t be changed. Password: <strong>${esc(a.pw)}</strong>. Create your own login to set a password.</div>`:
-    `<h3>Change password</h3><div class="wiz-grid"><div class="field"><label>Current password</label><input id="ap-old" type="password" autocomplete="current-password"></div><div class="field"><label>New password (6+ characters)</label><input id="ap-new" type="password" autocomplete="new-password"></div></div>
-     <div class="actions" style="justify-content:flex-start"><button class="btn secondary" data-act="acct-pw">Update password</button></div>`}
-    <div class="actions" style="justify-content:flex-start;margin-top:14px"><button class="btn" data-act="signout">${icon('logout')} Sign out</button><button class="btn ghost" data-act="acct-new">Create another café login</button>${a.builtin?'':'<button class="btn danger" data-act="acct-del">Delete this login and its data</button>'}</div></div>
-  <div class="card"><h2>${icon('lock')} About logins in this prototype</h2>
-    <p class="lead">Logins and café data are stored in this browser (localStorage), so they work on GitHub Pages with no server. Another computer won’t see them. In production, sign-in and data would move to a hosted backend such as Supabase so owners can log in from any device.</p></div>`;
+    <div class="stat-line"><span>Your data</span><strong data-sync class="${sync.state==='error'||sync.state==='offline'?'warn':''}">${esc(syncText())}</strong></div>
+    ${canPw?`<h3>Change password</h3><div class="wiz-grid"><div class="field"><label for="ap-old">Current password</label><input id="ap-old" type="password" autocomplete="current-password"></div><div class="field"><label for="ap-new">New password (8+ characters)</label><input id="ap-new" type="password" autocomplete="new-password"></div></div>
+     <div class="actions" style="justify-content:flex-start"><button class="btn secondary" data-act="acct-pw">Update password</button></div>`:''}
+    <div class="actions" style="justify-content:flex-start;margin-top:14px"><button class="btn" data-act="signout">${icon('logout')} Sign out</button><button class="btn ghost" data-act="acct-new">Add another café</button></div></div>`;
 }
 
 /* ---------- ORDERS: sub-tabs + one collapsible card per supplier ---------- */
@@ -2287,10 +2365,10 @@ function renderSales(){
   return `
   <div class="card">
     <h2>Sales come from your POS</h2>
-    <p class="lead">Nobody has to log sales. CafeCast reads them from <strong>Square</strong>. In this prototype you upload Square\u2019s <em>Item Sales</em> export (CSV or Excel). The production version would connect to the Square API and sync automatically every few minutes.</p>
+    <p class="lead">Nobody has to log sales. CafeCast reads them from <strong>Square</strong>: upload Square\u2019s <em>Item Sales</em> export (CSV or Excel) and every forecast and order updates.</p>
     <label class="drop"><input type="file" id="sq-file" accept=".csv,.xlsx,.xls">\u2B06\uFE0E <strong>Choose a Square export</strong><br><span class="muted">Square Dashboard \u2192 Reports \u2192 Item sales \u2192 Export (detail CSV or Excel)</span></label>
     <div class="row" style="align-items:center">
-      <button class="btn ghost" data-act="sample-dl">Download a sample Square export</button>
+      <button class="btn ghost" data-act="sample-dl">Download an example export</button>
       <span class="muted">${li?`Last sync: ${dayTimeStr(li.ts)} \u00b7 ${esc(li.label)} \u00b7 ${li.rows} lines`:'Not synced yet'}</span>
     </div>
     <div class="note">Re-uploading the same export is safe: lines already imported are skipped. Today\u2019s sales are deducted from stock using each item\u2019s recipe. New items found in Square are added to your menu automatically.</div>
@@ -2350,13 +2428,11 @@ document.addEventListener('click',async e=>{
     case 'wiz-custom': { const n=($('wz-name').value||'').trim(); if(!n) break; wizAdd('Other',n,$('wz-unit').value,parseFloat($('wz-shelf').value)||7,1,0,1); save(); render(); break; }
     case 'start-new': { if(DS!=='mine') break; if(db.settings.setupDone&&!confirm('Run the setup again? This login\u2019s caf\u00e9 data will be replaced.')) break;
       const keep={cafeName:db.settings.cafeName,owner:db.settings.owner}; seedBlank(); Object.assign(db.settings,keep); active='today'; setupPage=null; menuOpen=null; save(); runAgent(false); window.scrollTo(0,0); break; }
-    case 'signout': signOut(); break;
-    case 'acct-new': signOut('create'); break;
+    case 'signout': await signOut(); break;
+    case 'acct-new': await signOut('create'); break;
     case 'acct-pw': changePassword(); break;
-    case 'acct-del': deleteAccount(); break;
-    case 'login-tab': loginTab=b.dataset.v||'signin'; loginErr=''; renderLogin(); break;
-    case 'login-demo': { const a=allAccounts().find(x=>x.id===id); if(a) enterAccount(a); break; }
-    case 'login-pick': { loginTab='signin'; loginErr=''; renderLogin(); const u=$('li-user'), pw=$('li-pw'); if(u) u.value=b.dataset.user||''; if(pw) pw.focus(); break; }
+    case 'data-export': download(`cafecast-${(db.settings.cafeName||'cafe').toLowerCase().replace(/[^a-z0-9]+/g,'-')}-${todayISO()}.json`,JSON.stringify(db,null,1),'application/json'); break;
+    case 'login-tab': loginTab=b.dataset.v||'signin'; loginErr=''; loginNote=''; renderLogin(); break;
     case 'jump': active='today'; render(); requestAnimationFrame(()=>{ const target=$(id); if(target) target.scrollIntoView({behavior:'smooth',block:'start'}); }); break;
     case 'jump-page': active=b.dataset.page||'today'; render(); requestAnimationFrame(()=>{ const target=$(id); if(target){ target.scrollIntoView({behavior:'smooth',block:'start'}); target.classList.add('anchor-flash'); setTimeout(()=>target.classList.remove('anchor-flash'),1200); } }); break;
     case 'scan': runAgent(true); break;
@@ -2386,7 +2462,7 @@ document.addEventListener('click',async e=>{
     case 'waste-save': saveWasteCheck(false); break;
     case 'waste-none': saveWasteCheck(true); break;
     case 'waste-other': { const i=ingById($('wo-ing').value), q=parseFloat($('wo-qty').value); if(i&&q>0){ logWaste(i,q,$('wo-reason').value,false); flash=`Logged ${q} ${esc(i.unit)} ${esc(i.name)}.`; save(); render(); } break; }
-    case 'sample-dl': download('square-item-sales-sample.csv',sampleCSV()); break;
+    case 'sample-dl': download('square-item-sales-example.csv',sampleCSV()); break;
     case 'manual-sale': { const m=menuById($('sl-item').value), q=parseInt($('sl-qty').value)||1; if(!m) break;
       db.sales.push({id:cid(),menuId:m.id,qty:q,ts:Date.now(),rev:m.price*q,src:'manual'}); deductForSale(m,q); flash=`Added ${q} \u00d7 ${esc(m.name)}.`; save(); render(); break; }
     case 'ev-add': { const n=$('ev-name').value.trim(); if(!n) break; db.events.push({id:cid(),date:todayISO(),name:n,uplift:parseFloat($('ev-up').value)||20,auto:false}); save(); render(); break; }
@@ -2403,13 +2479,15 @@ document.addEventListener('click',async e=>{
       const i={id:cid(),name,unit:$('ni-unit').value.trim()||'ea',cost:parseFloat($('ni-cost').value)||0,supplier:$('ni-supplier').value.trim(),email:$('ni-email').value.trim(),
         reorder:parseFloat($('ni-reorder').value)||0,par:null,est:parseFloat(($('ni-est')||{}).value)||null,lead:parseFloat($('ni-lead').value)||1,shelf:parseFloat($('ni-shelf').value)||null,perishable:$('ni-per').checked,batches:[]};
       addBatch(i,parseFloat($('ni-stock').value)||0,newExpiry(i)); db.ingredients.push(i); flash=`Added ${esc(name)}.`; save(); render(); break; }
-    case 'geo': geocode(); break;
-    case 'reset-demo': if(confirm(`Reset this login\u2019s data (${DATASETS[DS]}) to the original? Other logins aren\u2019t affected.`)){ seed(); weather=null; editMenu=null; save(); runAgent(true); } break;
+    case 'geo': geoSearch(true); break;
+    case 'geo-pick': pickSuburb(geoResults[+b.dataset.idx]); break;
+    case 'reset-demo': if(confirm('Start over? This clears this caf\u00e9\u2019s orders, waste logs and specials and restores its stock, menu and sales history. Your settings are kept.')){ const keep=db.settings; seed(); KEEP.forEach(k=>{ if(keep[k]!==undefined) db.settings[k]=keep[k]; }); weather=null; editMenu=null; save(); runAgent(true); } break;
     case 'clear-all': if(confirm('Delete all data and start with an empty caf\u00e9?')){ const keep=db.settings; seed(); Object.assign(db,{ingredients:[],menu:[],sales:[],waste:[],orders:[],events:[],importKeys:{}});
       db.settings.lastImport=null; db.settings.place=keep.place; db.settings.lat=keep.lat; db.settings.lon=keep.lon; save(); render(); } break;
   }
 });
 document.addEventListener('keydown',e=>{
+  if(e.target.id==='geo-q'&&e.key==='Enter'){ e.preventDefault(); geoSearch(true); return; }
   if(e.target.id==='v-text'&&e.key==='Enter'){ e.preventDefault(); handleVoice(e.target.value); e.target.value=''; return; }
   if(e.key==='Escape'&&$('voice').classList.contains('open')){ closeVoice(); return; }
   if(e.key==='Escape'&&phoneOpen){ closePhone(); return; }
@@ -2451,138 +2529,271 @@ document.addEventListener('change',e=>{
   if(t.id==='menu-filter'){ filterMenu(); return; }
   if(t.id==='sq-file'&&t.files&&t.files[0]) handleFile(t.files[0]);
 });
-document.addEventListener('input',e=>{ if(e.target.id==='menu-search') filterMenu(); if(e.target.id==='stock-search') filterStock(); });
+document.addEventListener('input',e=>{ if(e.target.id==='geo-q') geoSearch(false); if(e.target.id==='menu-search') filterMenu(); if(e.target.id==='stock-search') filterStock(); });
 document.addEventListener('toggle',e=>{ const d=e.target; if(d&&d.classList&&d.classList.contains('sup-card')) supOpen[d.dataset.sup]=d.open; },true);
 
-/* ---------------- LOGINS ----------------
-   Prototype sign-in that runs entirely in the browser, so it works on GitHub Pages with no server.
-   Each login points at its own localStorage key, so every café's data stays separate.
-   Production: swap these functions for a hosted auth + database (e.g. Supabase) without touching the rest of the app. */
-const ACCT_KEY='cafecast_accounts', SESSION_KEY='cafecast_session', DEMO_PW='cafecast';
-let loginTab='signin', loginErr='';
-function storedCafeName(key){ try{ const d=JSON.parse(localStorage.getItem(key)); return d&&d.settings&&d.settings.cafeName||''; }catch(e){ return ''; } }
-function builtinAccounts(){
-  const b=[{id:'demo',username:'demo',pw:DEMO_PW,dataset:'littlefern',cafe:'Little Fern Café',desc:'The demo dataset · use for the demo and use cases',builtin:true,primary:true},
-           {id:'sample',username:'sample',pw:DEMO_PW,dataset:'demo',cafe:'Demo café (original)',desc:'Smaller sample café · quick walkthroughs',builtin:true}];
-  /* keep any "My café" setup made before logins existed */
-  try{ if(localStorage.getItem(KEY_BASE+'_mine')) b.push({id:'mine',username:'mycafe',pw:DEMO_PW,dataset:'mine',store:KEY_BASE+'_mine',cafe:storedCafeName(KEY_BASE+'_mine')||'My café',desc:'Your earlier “My café” setup on this browser',builtin:true}); }catch(e){}
-  return b;
+/* ---------------- ACCOUNTS & SAVING ----------------
+   With Supabase set in CONFIG (top of this script), sign-in uses Supabase Auth and every café's data is saved to the
+   `cafes` table, so an owner can sign in from any device. A copy is also kept on the device so CafeCast opens instantly
+   and keeps working through a Wi-Fi drop; changes upload a moment after they're made.
+   Without Supabase set, accounts and data are kept on this device only (useful for local testing). */
+const CLOUD=!!(CONFIG.supabaseUrl&&CONFIG.supabaseAnonKey);
+const ACCT_KEY='cafecast_accounts', SESSION_KEY='cafecast_session';
+/* Device-only accounts, used when Supabase isn't set. With Supabase, create the same user in the dashboard (see the setup guide). */
+const LOCAL_SEED=[{id:'nick',email:'nick@littlefern.com.au',pw:'LittleFern#2026',dataset:'littlefern',cafe:'Little Fern Café',owner:'Nick',store:KEY_BASE+'_littlefern',builtin:true}];
+let loginTab='signin', loginErr='', loginNote='', loginBusy=false, sb=null;
+const cloudStore=id=>'cafecast_cloud_'+id, cloudMetaKey=id=>'cafecast_cloud_meta_'+id;
+
+function client(){
+  if(sb) return sb;
+  if(!(window.supabase&&window.supabase.createClient)) throw new Error('Can’t reach CafeCast right now. Check your internet connection and try again.');
+  sb=window.supabase.createClient(CONFIG.supabaseUrl,CONFIG.supabaseAnonKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+  return sb;
 }
+function niceAuthError(e){
+  const m=String(e&&e.message||e||'');
+  if(/invalid login credentials/i.test(m)) return 'That email and password don’t match.';
+  if(/email not confirmed/i.test(m)) return 'Confirm your email first: open the link we sent you, then sign in.';
+  if(/already registered|already exists/i.test(m)) return 'There’s already an account with that email. Sign in instead.';
+  if(/password.*(at least|short|weak)/i.test(m)) return 'Choose a stronger password (at least 8 characters).';
+  if(/rate limit|too many/i.test(m)) return 'Too many attempts. Wait a minute and try again.';
+  if(/fetch|network|reach/i.test(m)) return 'Can’t reach CafeCast right now. Check your internet connection and try again.';
+  return m||'Something went wrong. Please try again.';
+}
+
+/* ---- device accounts (no Supabase) ---- */
 function userAccounts(){ try{ return JSON.parse(localStorage.getItem(ACCT_KEY))||[]; }catch(e){ return []; } }
 function saveUserAccounts(list){ try{ localStorage.setItem(ACCT_KEY,JSON.stringify(list)); }catch(e){} }
-const allAccounts=()=>builtinAccounts().concat(userAccounts());
-const findAcct=u=>allAccounts().find(a=>a.username.toLowerCase()===String(u||'').trim().toLowerCase());
+const localAccounts=()=>LOCAL_SEED.concat(userAccounts());
+const findLocal=u=>{ u=String(u||'').trim().toLowerCase(); return localAccounts().find(a=>(a.email||'').toLowerCase()===u||(a.username||'').toLowerCase()===u); };
 const hasSubtle=()=>{ try{ return !!(window.crypto&&crypto.subtle&&window.TextEncoder); }catch(e){ return false; } };
-/* Passwords are salted and hashed (SHA-256 when the page is on HTTPS), never stored as typed */
 async function digest(str,alg){
   if(alg==='sha256'){ const b=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(str)); return [...new Uint8Array(b)].map(x=>x.toString(16).padStart(2,'0')).join(''); }
   let h1=0x811c9dc5,h2=0x1234567; for(let i=0;i<str.length;i++){ const c=str.charCodeAt(i); h1=Math.imul(h1^c,16777619); h2=Math.imul(h2^c,2246822519); }
   return (h1>>>0).toString(16)+(h2>>>0).toString(16);
 }
-async function checkPw(a,pw){
+async function checkLocalPw(a,pw){
   if(a.builtin) return pw===a.pw;
-  if(a.alg==='sha256'&&!hasSubtle()) throw new Error('Open CafeCast from its https:// link (e.g. GitHub Pages) to sign in to this login.');
+  if(a.alg==='sha256'&&!hasSubtle()) throw new Error('Open CafeCast from its https:// address to sign in.');
   return (await digest(a.salt+'|'+pw,a.alg))===a.hash;
 }
 
+/* ---- saving to Supabase ---- */
+let sync={state:'idle',ts:0,err:''}, syncTimer=null, syncBusy=false, syncAgain=false;
+function scheduleSync(){ if(!ACCT||ACCT.mode!=='cloud') return; clearTimeout(syncTimer); if(sync.state!=='saving') sync.state='pending'; syncTimer=setTimeout(pushCloud,1500); }
+async function pushCloud(){
+  clearTimeout(syncTimer); syncTimer=null;
+  if(!ACCT||ACCT.mode!=='cloud'||!db) return;
+  if(syncBusy){ syncAgain=true; return; }
+  syncBusy=true; sync.state='saving'; const a=ACCT, data=db;
+  try{
+    const {error}=await client().from('cafes').upsert({owner_id:a.id,name:data.settings.cafeName||a.cafe||'My café',dataset:a.dataset,data,updated_at:new Date().toISOString()},{onConflict:'owner_id'});
+    if(error) throw error;
+    sync={state:'saved',ts:Date.now(),err:''};
+  }catch(e){ sync={state:navigator.onLine===false?'offline':'error',ts:sync.ts,err:niceAuthError(e)}; console.warn('CafeCast: save to Supabase failed',e); }
+  finally{ syncBusy=false; drawSyncState(); if(syncAgain){ syncAgain=false; scheduleSync(); } }
+}
+function syncText(){
+  if(!ACCT) return '';
+  if(ACCT.mode!=='cloud') return 'Saved on this device';
+  return {saving:'Saving…',pending:'Saving…',saved:`Saved to your account · ${sync.ts?timeStr(sync.ts):''}`,offline:'Offline · changes will upload when you’re back online',error:`Not saved yet · ${sync.err||'will retry'}`,idle:'Saved to your account'}[sync.state]||'';
+}
+function drawSyncState(){ document.querySelectorAll('[data-sync]').forEach(el=>{ el.textContent=syncText(); el.classList.toggle('warn',sync.state==='error'||sync.state==='offline'); }); }
+window.addEventListener('online',()=>{ if(sync.state==='offline'||sync.state==='error') pushCloud(); });
+document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='hidden'&&syncTimer) pushCloud(); });
+
+/* ---- sign-in screen ---- */
 function renderLogin(){
   const el=$('login'); if(!el) return;
-  const users=userAccounts(), demos=builtinAccounts();
   const lPoint=(ic,t)=>`<li>${icon(ic)}<span>${t}</span></li>`;
   const hero=`<section class="login-hero"><div class="brand-mark"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h12v5a6 6 0 0 1-6 6 6 6 0 0 1-6-6Z"/><path d="M16 10h2a3 3 0 0 1 0 6h-3"/><path d="M7 3v2M11 3v2"/></svg></div>
-    <h1 class="lh-title">CafeCast</h1><p class="lh-sub">Decisions, not dashboards. Perishable ordering for independent cafés, based on real demand instead of habit.</p>
-    <ul class="lh-points">${lPoint('trend','Forecasts today’s demand from sales, weather, holidays and events')}${lPoint('package','Drafts supplier orders for you to approve')}${lPoint('waste','Flags stock before it expires, with menu specials to use it up')}</ul></section>`;
-  const seg=`<div class="seg login-seg" role="tablist"><button type="button" class="${loginTab==='signin'?'on':''}" data-act="login-tab" data-v="signin">Sign in</button><button type="button" class="${loginTab==='create'?'on':''}" data-act="login-tab" data-v="create">Create a café login</button></div>`;
+    <h1 class="lh-title">CafeCast</h1><p class="lh-sub">Easier decisions, less waste. Order what your café will actually sell, and spend less time on stock.</p>
+    <ul class="lh-points">${lPoint('trend','Forecasts today’s demand from your sales, weather, holidays and local events')}${lPoint('package','Drafts supplier orders, ready for you to approve')}${lPoint('waste','Flags stock before it expires, with specials to use it up')}</ul></section>`;
+  const seg=['signin','create'].includes(loginTab)?`<div class="seg login-seg" role="tablist"><button type="button" class="${loginTab==='signin'?'on':''}" data-act="login-tab" data-v="signin">Sign in</button><button type="button" class="${loginTab==='create'?'on':''}" data-act="login-tab" data-v="create">Create account</button></div>`:'';
+  const msg=`<div class="login-err" id="login-err">${esc(loginErr)}</div>${loginNote?`<div class="login-note">${esc(loginNote)}</div>`:''}`;
+  const btn=t=>`<button class="btn" type="submit" ${loginBusy?'disabled':''}>${loginBusy?'Please wait…':t}</button>`;
   let body;
-  if(loginTab==='create') body=`<div><span class="eyebrow">New café</span><h2>Create a café login</h2><p class="lead" style="margin:4px 0 0">Every login has its own data and the same features.</p></div>
-    <form id="create-form" autocomplete="off">
+  if(loginTab==='loading') body=`<div class="login-loading"><span class="spin"></span>${esc(loginNote||'Opening CafeCast…')}</div>`;
+  else if(loginTab==='create') body=`<div><span class="eyebrow">New café</span><h2>Create your account</h2><p class="lead" style="margin:4px 0 0">Set up takes about 25 minutes. You can stop and come back.</p></div>
+    <form id="create-form" autocomplete="on" novalidate>
       <div class="login-two"><div class="field"><label for="cr-cafe">Café name</label><input id="cr-cafe" placeholder="e.g. Corner Leaf Café" required></div>
-      <div class="field"><label for="cr-owner">Your first name</label><input id="cr-owner" placeholder="Used in the morning brief"></div></div>
-      <div class="field"><label for="cr-user">Username</label><input id="cr-user" autocapitalize="none" autocomplete="username" placeholder="e.g. cornerleaf" required></div>
-      <div class="login-two"><div class="field"><label for="cr-pw">Password</label><input id="cr-pw" type="password" autocomplete="new-password" placeholder="6+ characters" required></div>
+      <div class="field"><label for="cr-owner">Your first name</label><input id="cr-owner" autocomplete="given-name"></div></div>
+      <div class="field"><label for="cr-email">Email</label><input id="cr-email" type="email" autocapitalize="none" autocomplete="email" required></div>
+      <div class="login-two"><div class="field"><label for="cr-pw">Password</label><input id="cr-pw" type="password" autocomplete="new-password" placeholder="8+ characters" required></div>
       <div class="field"><label for="cr-pw2">Confirm password</label><input id="cr-pw2" type="password" autocomplete="new-password" required></div></div>
-      <div><label>Start with</label><div class="start-opts">
-        <label class="start-opt"><input type="radio" name="cr-start" value="mine" checked><span><strong>My café’s own data</strong><small>Starts empty, with a 5-step guided setup. Import Square sales whenever you’re ready.</small></span></label>
-        <label class="start-opt"><input type="radio" name="cr-start" value="littlefern"><span><strong>A copy of the demo dataset</strong><small>Little Fern Café data under your café name. Use it for a separate demo or use case without changing the main demo.</small></span></label>
-        <label class="start-opt"><input type="radio" name="cr-start" value="demo"><span><strong>The smaller sample café</strong><small>A simple 7-item café for quick walkthroughs.</small></span></label></div></div>
-      <div class="login-err" id="login-err">${esc(loginErr)}</div>
-      <button class="btn" type="submit">Create login and sign in</button>
-    </form>
-    <div class="limit">Prototype: logins and data are saved in this browser only. Use the same browser for your demo.</div>`;
-  else body=`<div><span class="eyebrow">Welcome back</span><h2>Sign in</h2></div>
-    <form id="login-form">
-      <div class="field"><label for="li-user">Username</label><input id="li-user" autocapitalize="none" autocomplete="username" required></div>
+      ${msg}${btn('Create account')}</form>`;
+  else if(loginTab==='forgot') body=`<div><span class="eyebrow">Password help</span><h2>Reset your password</h2><p class="lead" style="margin:4px 0 0">We’ll email you a link to choose a new one.</p></div>
+    <form id="forgot-form" novalidate><div class="field"><label for="fp-email">Email</label><input id="fp-email" type="email" autocapitalize="none" autocomplete="email" required></div>${msg}${btn('Send reset link')}</form>
+    <button type="button" class="link-btn" data-act="login-tab" data-v="signin">Back to sign in</button>`;
+  else if(loginTab==='reset') body=`<div><span class="eyebrow">Password help</span><h2>Choose a new password</h2></div>
+    <form id="reset-form" novalidate><div class="field"><label for="rp-pw">New password</label><input id="rp-pw" type="password" autocomplete="new-password" placeholder="8+ characters" required></div>
+    <div class="field"><label for="rp-pw2">Confirm new password</label><input id="rp-pw2" type="password" autocomplete="new-password" required></div>${msg}${btn('Save and sign in')}</form>`;
+  else body=`<div><span class="eyebrow">Welcome back</span><h2>Sign in to your café</h2></div>
+    <form id="login-form" novalidate>
+      <div class="field"><label for="li-user">Email</label><input id="li-user" type="text" inputmode="email" autocapitalize="none" autocomplete="username" required></div>
       <div class="field"><label for="li-pw">Password</label><input id="li-pw" type="password" autocomplete="current-password" required></div>
-      <div class="login-err" id="login-err">${esc(loginErr)}</div>
-      <button class="btn" type="submit">Sign in</button>
+      ${msg}${btn('Sign in')}
     </form>
-    <div><div class="section-label">Demo logins</div>
-      ${demos.map(a=>`<button type="button" class="demo-login ${a.primary?'primary':''}" data-act="login-demo" data-id="${a.id}"><span class="set-ic">${icon(a.dataset==='mine'?'store':'database')}</span><span><strong>${esc(a.cafe)}</strong><small>${esc(a.desc)}</small><code>${esc(a.username)} / ${esc(a.pw)}</code></span>${icon('chev','chev')}</button>`).join('')}</div>
-    ${users.length?`<div><div class="section-label">Café logins on this device</div>
-      ${users.map(a=>`<button type="button" class="demo-login" data-act="login-pick" data-user="${esc(a.username)}"><span class="set-ic">${icon(a.dataset==='mine'?'store':'database')}</span><span><strong>${esc(storedCafeName(a.store)||a.cafe)}</strong><small>${esc(a.username)} · ${a.dataset==='mine'?'own café data':'demo copy'}</small></span>${icon('chev','chev')}</button>`).join('')}</div>`:''}`;
+    ${CLOUD?'<button type="button" class="link-btn" data-act="login-tab" data-v="forgot">Forgot your password?</button>':''}`;
   el.innerHTML=`<div class="login-wrap">${hero}<section class="login-card">${seg}${body}</section></div>`;
 }
-function showLogin(tab){ document.body.classList.add('logged-out'); if(tab) loginTab=tab; loginErr=''; renderLogin(); window.scrollTo(0,0); const f=$(loginTab==='create'?'cr-cafe':'li-user'); if(f&&window.innerWidth>=700) f.focus(); }
-function loginFail(msg){ loginErr=msg; const e=$('login-err'); if(e) e.textContent=msg; }
+function showLogin(tab,note){
+  document.body.classList.add('logged-out'); loginTab=tab||'signin'; loginErr=''; loginNote=note||''; loginBusy=false; renderLogin(); window.scrollTo(0,0);
+  const f=$({create:'cr-cafe',forgot:'fp-email',reset:'rp-pw',signin:'li-user'}[loginTab]); if(f&&window.innerWidth>=700) f.focus();
+}
+const showLoading=t=>{ document.body.classList.add('logged-out'); loginTab='loading'; loginNote=t||''; renderLogin(); };
+function loginFail(m){ loginErr=m; loginBusy=false; const keep={}; document.querySelectorAll('#login input').forEach(i=>keep[i.id]=i.value); renderLogin(); Object.entries(keep).forEach(([k,v])=>{ const i=$(k); if(i&&i.type!=='password') i.value=v; }); }
+function setBusy(on){ loginBusy=on; const b=document.querySelector('#login button[type=submit]'); if(b){ b.disabled=on; b.textContent=on?'Please wait…':b.dataset.t||b.textContent; } }
+const val=id=>(($(id)||{}).value||'').trim();
+const okEmail=e=>/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
+
 async function doLogin(){
-  const u=($('li-user').value||'').trim(), pw=$('li-pw').value, a=findAcct(u);
-  if(!a) return loginFail('No login with that username on this device.');
-  try{ if(!(await checkPw(a,pw))) return loginFail('That password isn’t right.'); }catch(e){ return loginFail(e.message); }
-  enterAccount(a);
+  const email=val('li-user'), pw=($('li-pw')||{}).value||'';
+  if(!email||!pw) return loginFail('Enter your email and password.');
+  setBusy(true);
+  if(CLOUD){
+    try{ const {data,error}=await client().auth.signInWithPassword({email,password:pw}); if(error) throw error; await enterCloud(data.user); }
+    catch(e){ loginFail(niceAuthError(e)); }
+    return;
+  }
+  const a=findLocal(email);
+  try{ if(!a||!(await checkLocalPw(a,pw))) return loginFail('That email and password don’t match.'); }catch(e){ return loginFail(e.message); }
+  enterAccount({...a,mode:'local'});
 }
 async function doCreate(){
-  const v=id=>(($(id)||{}).value||'').trim();
-  const cafe=v('cr-cafe'), owner=v('cr-owner'), user=v('cr-user').toLowerCase(), pw=$('cr-pw').value, pw2=$('cr-pw2').value;
-  const start=(document.querySelector('input[name="cr-start"]:checked')||{}).value||'mine';
-  if(!cafe) return loginFail('Give the café a name.');
-  if(!/^[a-z0-9._-]{3,30}$/.test(user)) return loginFail('Username: 3–30 letters, numbers, dots, dashes or underscores.');
-  if(findAcct(user)) return loginFail('That username is already used on this device.');
-  if(pw.length<6) return loginFail('Use a password of at least 6 characters.');
+  const cafe=val('cr-cafe'), owner=val('cr-owner'), email=val('cr-email').toLowerCase(), pw=($('cr-pw')||{}).value||'', pw2=($('cr-pw2')||{}).value||'';
+  if(!cafe) return loginFail('Enter your café’s name.');
+  if(!okEmail(email)) return loginFail('Enter a valid email address.');
+  if(pw.length<8) return loginFail('Use a password of at least 8 characters.');
   if(pw!==pw2) return loginFail('The two passwords don’t match.');
+  setBusy(true);
+  if(CLOUD){
+    try{
+      const {data,error}=await client().auth.signUp({email,password:pw,options:{data:{cafe_name:cafe,owner_name:owner},emailRedirectTo:location.origin+location.pathname}});
+      if(error) throw error;
+      if(data.user&&Array.isArray(data.user.identities)&&!data.user.identities.length) return loginFail('There’s already an account with that email. Sign in instead.');
+      if(data.session) return enterCloud(data.user);
+      return showLogin('signin',`Almost done. We sent a confirmation link to ${email}. Open it, then sign in.`);
+    }catch(e){ return loginFail(niceAuthError(e)); }
+  }
+  if(findLocal(email)) return loginFail('There’s already an account with that email. Sign in instead.');
   const id='u_'+cid()+cid(), alg=hasSubtle()?'sha256':'fnv', salt=cid()+cid();
-  const a={id,username:user,cafe,owner,dataset:start,store:KEY_BASE+'_u_'+id,alg,salt,hash:await digest(salt+'|'+pw,alg),created:Date.now()};
+  const a={id,email,username:email,cafe,owner,dataset:'mine',store:KEY_BASE+'_u_'+id,alg,salt,hash:await digest(salt+'|'+pw,alg),created:Date.now()};
   const list=userAccounts(); list.push(a); saveUserAccounts(list);
-  enterAccount(a,true);
+  enterAccount({...a,mode:'local'},true);
+}
+async function doForgot(){
+  const email=val('fp-email'); if(!okEmail(email)) return loginFail('Enter the email you signed up with.');
+  setBusy(true);
+  try{ const {error}=await client().auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname}); if(error) throw error;
+    showLogin('signin',`If ${email} has a CafeCast account, a reset link is on its way. Open it on this device.`); }
+  catch(e){ loginFail(niceAuthError(e)); }
+}
+async function doReset(){
+  const pw=($('rp-pw')||{}).value||'', pw2=($('rp-pw2')||{}).value||'';
+  if(pw.length<8) return loginFail('Use a password of at least 8 characters.');
+  if(pw!==pw2) return loginFail('The two passwords don’t match.');
+  setBusy(true);
+  try{ const {data,error}=await client().auth.updateUser({password:pw}); if(error) throw error; await enterCloud(data.user); }
+  catch(e){ loginFail(niceAuthError(e)); }
+}
+
+/* Load a signed-in Supabase user's café. The first sign-in creates it. */
+async function enterCloud(user){
+  showLoading('Opening your café…');
+  const store=cloudStore(user.id), md=user.user_metadata||{};
+  let row=null, offline=false, meta=null;
+  try{ meta=JSON.parse(localStorage.getItem(cloudMetaKey(user.id))||'null'); }catch(e){}
+  try{
+    const r=await client().from('cafes').select('name,dataset,data,updated_at').eq('owner_id',user.id).maybeSingle();
+    if(r.error) throw r.error; row=r.data;
+    if(!row){
+      row={name:md.cafe_name||'My café',dataset:'mine',data:null};
+      const ins=await client().from('cafes').insert({owner_id:user.id,name:row.name,dataset:'mine'});
+      if(ins.error&&!/duplicate/i.test(ins.error.message)) throw ins.error;
+    }
+  }catch(e){
+    let cached=null; try{ cached=localStorage.getItem(store); }catch(x){}
+    if(!cached||!meta){ return showLogin('signin'), loginFail('Couldn’t open your café: '+niceAuthError(e)); }
+    offline=true; row={name:meta.name,dataset:meta.dataset,data:undefined};
+  }
+  const fresh=!offline&&!row.data;
+  try{
+    localStorage.setItem(cloudMetaKey(user.id),JSON.stringify({name:row.name,dataset:row.dataset}));
+    /* the phone preview frame shares this device's copy, which the main window has only just saved */
+    if(!offline&&!(IN_FRAME&&localStorage.getItem(store))){ if(row.data) localStorage.setItem(store,JSON.stringify(row.data)); else localStorage.removeItem(store); }
+  }catch(e){}
+  sync={state:offline?'offline':'saved',ts:offline?0:Date.now(),err:''};
+  enterAccount({mode:'cloud',id:user.id,email:user.email,dataset:row.dataset||'mine',cafe:row.name,owner:md.owner_name||'',store},fresh);
 }
 function enterAccount(a,fresh){
-  ACCT=a; DS=a.dataset; try{ localStorage.setItem(SESSION_KEY,a.id); }catch(e){}
+  ACCT=a; DS=a.dataset;
+  if(a.mode==='local'){ try{ localStorage.setItem(SESSION_KEY,a.id); }catch(e){} }
   document.body.classList.remove('logged-out');
-  setupPage=null; menuOpen=null; editMenu=null; ordersTab='drafts'; active='today'; weather=null; pending=null; voiceLog=[]; toasts=[]; drawToasts(); lastFlash='';
+  setupPage=null; menuOpen=null; editMenu=null; ordersTab='drafts'; active='today'; weather=null; pending=null; voiceLog=[]; toasts=[]; drawToasts(); lastFlash=''; geoResults=[];
   db=load();
-  if(fresh){ db.settings.cafeName=a.cafe; if(a.owner) db.settings.owner=a.owner; save();
-    flash=DS==='mine'?`Welcome! <strong>${esc(a.cafe)}</strong> has its own login. Answer 5 quick questions to set up your café data.`
-      :`<strong>${esc(a.cafe)}</strong> starts with a copy of ${esc(DATASETS[DS])}. Changes here never affect the other logins.`; }
-  drawAcct(); runAgent(false); window.scrollTo(0,0);
+  if(fresh){ db.settings.cafeName=a.cafe||db.settings.cafeName; if(a.owner) db.settings.owner=a.owner;
+    if(DS==='mine') flash=`Welcome to CafeCast${a.owner?', '+esc(a.owner):''}! Answer 5 quick questions to set up <strong>${esc(db.settings.cafeName||'your café')}</strong>.`; }
+  save(); drawAcct(); runAgent(false); window.scrollTo(0,0);
   if(!IN_FRAME&&viewMode!=='auto'&&window.innerWidth>=960) openPhone();
   setTimeout(checkAlerts,4000);
 }
-function signOut(tab){
-  if(db) save(); stopSpeech(); stopListen(); $('voice').classList.remove('open');
+async function signOut(tab){
+  const a=ACCT;
+  if(db) save();
+  if(a&&a.mode==='cloud'&&(syncTimer||sync.state==='pending'||sync.state==='error')) await pushCloud();
+  stopSpeech(); stopListen(); $('voice').classList.remove('open');
   if(phoneOpen){ phoneOpen=false; $('phone-ov').classList.remove('open'); $('phone-frame').src='about:blank'; document.body.style.overflow=''; }
-  ACCT=null; db=null; try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
-  toasts=[]; drawToasts(); drawAcct(); showLogin(tab||'signin');
+  ACCT=null; db=null; toasts=[]; drawToasts(); drawAcct();
+  try{ localStorage.removeItem(SESSION_KEY); }catch(e){}
+  if(a&&a.mode==='cloud'){
+    /* clear this device's copy once it's safely in the account */
+    if(sync.state==='saved'){ try{ localStorage.removeItem(a.store); }catch(e){} }
+    try{ await client().auth.signOut(); }catch(e){}
+  }
+  sync={state:'idle',ts:0,err:''};
+  showLogin(tab||'signin');
 }
 function drawAcct(){
   const el=$('acct-box'); if(!el) return; if(!ACCT){ el.innerHTML=''; return; }
   const cafe=(db&&db.settings.cafeName)||ACCT.cafe||DATASETS[DS];
-  el.innerHTML=`<div class="acct"><span class="acct-av">${esc(String(cafe).trim().charAt(0).toUpperCase()||'C')}</span><span class="acct-t"><strong>${esc(cafe)}</strong><small>${esc(ACCT.username)} · ${DS==='mine'?'own café data':ACCT.builtin?'demo login':'demo copy'}</small></span><button class="acct-out" data-act="signout" title="Sign out">${icon('logout')}<span>Sign out</span></button></div>`;
+  el.innerHTML=`<div class="acct"><span class="acct-av">${esc(String(cafe).trim().charAt(0).toUpperCase()||'C')}</span><span class="acct-t"><strong>${esc(cafe)}</strong><small>${esc(ACCT.email||ACCT.username||'')}</small></span><button class="acct-out" data-act="signout" title="Sign out">${icon('logout')}<span>Sign out</span></button></div>`;
 }
 async function changePassword(){
-  const o=$('ap-old').value, n=$('ap-new').value, list=userAccounts(), a=list.find(x=>x.id===ACCT.id); if(!a) return;
-  try{ if(!(await checkPw(a,o))){ flash='The current password isn’t right.'; return render(); } }catch(e){ flash=esc(e.message); return render(); }
-  if(n.length<6){ flash='Use a new password of at least 6 characters.'; return render(); }
-  a.alg=hasSubtle()?'sha256':'fnv'; a.salt=cid()+cid(); a.hash=await digest(a.salt+'|'+n,a.alg); saveUserAccounts(list); ACCT=a;
-  flash='Password updated.'; render();
-}
-function deleteAccount(){
-  if(ACCT.builtin||!confirm(`Delete the login “${ACCT.username}” and all of its café data on this device? This can’t be undone.`)) return;
-  const a=ACCT; saveUserAccounts(userAccounts().filter(x=>x.id!==a.id)); try{ localStorage.removeItem(a.store); }catch(e){}
-  db=null; signOut();
+  const o=$('ap-old').value, n=$('ap-new').value;
+  if(n.length<8){ flash='Use a new password of at least 8 characters.'; return render(); }
+  try{
+    if(ACCT.mode==='cloud'){
+      const chk=await client().auth.signInWithPassword({email:ACCT.email,password:o}); if(chk.error){ flash='The current password isn’t right.'; return render(); }
+      const {error}=await client().auth.updateUser({password:n}); if(error) throw error;
+    }else{
+      const list=userAccounts(), a=list.find(x=>x.id===ACCT.id); if(!a) return;
+      if(!(await checkLocalPw(a,o))){ flash='The current password isn’t right.'; return render(); }
+      a.alg=hasSubtle()?'sha256':'fnv'; a.salt=cid()+cid(); a.hash=await digest(a.salt+'|'+n,a.alg); saveUserAccounts(list);
+    }
+    flash='Password updated.';
+  }catch(e){ flash=esc(niceAuthError(e)); }
+  render();
 }
 document.addEventListener('submit',e=>{
-  if(e.target.id==='login-form'){ e.preventDefault(); doLogin(); }
-  if(e.target.id==='create-form'){ e.preventDefault(); doCreate(); }
+  const f={'login-form':doLogin,'create-form':doCreate,'forgot-form':doForgot,'reset-form':doReset}[e.target.id];
+  if(f){ e.preventDefault(); if(!loginBusy) f(); }
 });
+async function startApp(){
+  if(CLOUD){
+    const recovery=/type=recovery/.test(location.hash)||/type=recovery/.test(location.search);
+    showLoading();
+    try{ if(!(window.supabase&&window.supabase.createClient)) await loadScript('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2'); }catch(e){}
+    let c; try{ c=client(); }catch(e){ showLogin(); return loginFail(e.message); }
+    c.auth.onAuthStateChange(ev=>{ if(ev==='PASSWORD_RECOVERY') setTimeout(()=>showLogin('reset'),0); });
+    let session=null; try{ session=(await c.auth.getSession()).data.session; }catch(e){}
+    if(recovery&&session) return showLogin('reset');
+    if(session) return enterCloud(session.user);
+    return showLogin();
+  }
+  let a=null; try{ const sid=localStorage.getItem(SESSION_KEY); a=sid&&localAccounts().find(x=>x.id===sid); }catch(e){}
+  if(a) enterAccount({...a,mode:'local'}); else showLogin();
+}
 
 /* ---------------- PHONE PREVIEW ----------------
    Loads this same page in a 390 px frame so the real phone layout (media queries, bottom tabs) can be checked on a laptop. */
@@ -2602,8 +2813,7 @@ setInterval(tick,60e3);
 document.addEventListener('visibilitychange',()=>{ if(document.visibilityState==='visible') tick(); });
 
 /* ---------------- START ---------------- */
-(()=>{ let a=null; try{ const sid=localStorage.getItem(SESSION_KEY); a=sid&&allAccounts().find(x=>x.id===sid); }catch(e){}
-  if(a) enterAccount(a); else showLogin(); })();
+startApp();
 </script>
 </body>
 </html>
