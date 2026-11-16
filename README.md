@@ -149,4 +149,14 @@ The value of AI isn't simply in predicting demand, but in making complex informa
 2. **Refine:** Improve forecast accuracy and usability
 3. **Scale:** Explore initiatives to drive adoption
 
-
+## Document Dictionary
+|Document|Description|
+|---|---|
+|[README.md](README.md)|Project overview - problem, solution, workflow, use cases, user testing and learnings|
+|[index.html](index.html)|The CafeCast app - a single-file web app (HTML, CSS and JavaScript) hosted on GitHub Pages|
+|[data file.html](data%20file.html)|Earlier version of the app that first added the Little Fern Café dataset, kept for reference|
+|[SPEC.md](SPEC.md)|Product specification - users, core features, data model and what is out of scope|
+|[SETUP.md](SETUP.md)|Step-by-step guide to deploying CafeCast with Supabase and GitHub Pages, including troubleshooting|
+|[PROMPTS.md](PROMPTS.md)|AI prompts log - the prompts used to build each change to the app, in order|
+|[supabase-setup.sql](supabase-setup.sql)|Database setup script - creates the cafes table, security rules and links example persona Nick's account to the Little Fern Café data|
+|[gemini-forecast.ts](gemini-forecast.ts)|Supabase Edge Function that connects CafeCast to Gemini AI, keeping the API key on the server|
