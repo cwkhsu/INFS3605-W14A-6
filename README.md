@@ -128,9 +128,9 @@ Moderated user testing sessions assessed whether café owners could benefit from
 - Live prototype in Sandbox environment: Little Fern Café demo dataset with Square sandbox sales. Coffee beans have low inventory, bread expires tomorrow and local event logged tomorrow.
 
 ## 3 Tasks
-Spot what items require attention (i.e. low stock, near expiry)
-Approve today’s stock order and contact suppliers
-Close the day by logging waste and its associated cost
+- Spot what items require attention (i.e. low stock, near expiry)
+- Approve today’s stock order and contact suppliers
+- Close the day by logging waste and its associated cost
 
 # Key learnings
 ## User centred design drives adoption
@@ -141,6 +141,7 @@ AI provides valuable forecasting and computing capabilities but owner control is
 
 ## Iterative delivery drives better outcomes
 Agile delivery and cross functional collaboration nurtures creativity and innovation.
+
 The value of AI isn't simply in predicting demand, but in making complex information accessible, actionable and trustworthy for everyday business owners.
 
 # What's next for CafeCast?
