@@ -90,3 +90,62 @@ Predict demand → Check what’s at risk → Time the next step · on launch & 
 Approve each order, or Autopilot for routine orders within a spending limit
 ### Proactive & hands-free
 Cut-off & expiry alerts, ask “What do I need to order?” or say “Approve orders”
+
+# Use Case #1: Demand Forecasting
+As a cafe owner, I want to know how busy today will be and why, so that I can plan stock and prepare ahead based on real demand instead of habit while I set up.
+1. Pulls sales & live data for plan
+2. Hears the forecast & reasons
+3. Add an extra note (manual/voice)
+4. Forecast is updated
+5. Recommended decisions update
+
+With CafeCast: a daily plan built on real demand that users can check and adjust, hands-free
+
+# Use Case #2: Inventory Management & Replenishment
+As a cafe owner, I want all my supplier orders to be in one place, so I can order the right amount without wasting time manually preparing orders by hand.
+1. CafeCast drafts order
+2. Checks reasons & calculations
+3. Reviews & edits orders
+4. Approves; PO is emailed
+5. Delivery is received
+
+With CafeCast: ordering decisions drafted automatically, owner reviews and approves
+
+# Use Case #3: Waste Prevention & Logging
+As a cafe owner, I want to see which perishables will go to waste before they’re used and log waste quickly, so I spend and waste less
+1. Checks the expiry watchlist
+2. Menu specials recommendations
+3. At close, check flagged items
+4. Logs whats binned & why
+5. See saving and impact
+
+With CafeCast: risks flagged early, waste logged in minutes, and saves in monetary value
+
+# User Testing Plan
+Moderated user testing sessions assessed whether café owners could benefit from CafeCast and use it without help, using realistic demo data.
+- 5 participants: Cafe owners and managers who regularly place stock orders. Recruited through personal connections, with various levels of technical expertise.
+- 30-min session: 3-min brief, 20-min on three tasks, 7-min debrief and interview. One facilitator and no hints provided, audio recorded with consent.
+- Live prototype in Sandbox environment: Little Fern Café demo dataset with Square sandbox sales. Coffee beans have low inventory, bread expires tomorrow and local event logged tomorrow.
+
+## 3 Tasks
+Spot what items require attention (i.e. low stock, near expiry)
+Approve today’s stock order and contact suppliers
+Close the day by logging waste and its associated cost
+
+# Key learnings
+## User centred design drives adoption
+Continuous owner engagement validated real pain points and shaped a practical solution.
+
+## AI capabilities + human judgement works best
+AI provides valuable forecasting and computing capabilities but owner control is essential for building trust.
+
+## Iterative delivery drives better outcomes
+Agile delivery and cross functional collaboration nurtures creativity and innovation.
+The value of AI isn't simply in predicting demand, but in making complex information accessible, actionable and trustworthy for everyday business owners.
+
+# What's next for CafeCast?
+1. Pilot: Validate with independent cafes
+2. Refine: Improve forecast accuracy and usability
+3. Scale: Explore initiatives to drive adoption
+
+
