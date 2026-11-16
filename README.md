@@ -67,8 +67,26 @@ Demo deployment - GitHub Pages
 |Input fields|Mobile and desktop layout|Integration with Supabase and Gemini|
 
 ## Data Connections
+|Data|Source|
+|---|---|
 |Cafe Data|Cafe’s POS system APIs - connect live sales, menus<br>CSV/Excel files - weekly sales report, parsed by SheetJS|
 |Data Storage|Supabase - account data and device sync<br>Local storage - for uploaded data|
 |External Data - APIs|Open-Meteo - weather<br>Nager - holidays<br>Google Maps Platform - location|
 |AI Connection|Gemini Flash Lite - allows owners to add context to shape forecasts|
 |System Communication|Webhooks - communicate with external email platforms|
+
+## Deploying for cafe use
+Our demo is currently deployed on GitHub pages but for real-life use case, we need to use platforms that allow us to publish the CafeCast web platform for commercial use. Some options include: Vercel (pro), Netlify (pro) and Cloudflare.
+
+# Agentic Feature | A day with CafeCast
+Predict demand → Check what’s at risk → Time the next step · on launch & in background
+| |Trigger|CafeCast|Owner|
+|---|---|---|---|
+|Before opening|Owner opens the morning brief|Uses sales, weather, holidays & events to brief demand and priorities|Checks the brief and plans the day|
+|Before supplier cut-off|Expected demand > available stock|Uses stock cover & cut-offs to draft orders and show what’s at risk|Reviews quantities, approves in one tap|
+|At closing|Cafe’s closing time|Uses stock & expiry dates to flag perishables for the waste check|Checks flagged items, records actual waste|
+
+## Owner sets the autonomy
+Approve each order, or Autopilot for routine orders within a spending limit
+### Proactive & hands-free
+Cut-off & expiry alerts, ask “What do I need to order?” or say “Approve orders”
