@@ -29,12 +29,12 @@ This needs to change by implementing a faster and more reliable way to understan
 Because without clear insight, there are risks of over-ordering, stock shortages and food waste. In turn, this can affect profitability, pricing and consumer satisfaction, impacting the cafe's performance; which is detrimental in a competitive industry
 
 ## Objectives
-Connect POS sales and inventory data in one system to streamline operations
-Implement a forecasting system for owners to predict events that may impact sales
-Minimise waste levels from perishable stock being underutilised
+- Connect POS sales and inventory data in one system to streamline operations
+- Implement a forecasting system for owners to predict events that may impact sales
+- Minimise waste levels from perishable stock being underutilised
 
 # Our Solution: CafeCast
-Low-Code App: CaféCast (Founder’s Second Brain)
+Low-Code App: CafeCast (Founder’s Second Brain)
 | |Decision|Reason|
 |---|---|---|
 |**Forecast**|Combine sales, stock and external demand factors.|Fragmented information is a current barrier to accurate stock ordering.|
