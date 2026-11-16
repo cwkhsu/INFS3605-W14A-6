@@ -75,73 +75,117 @@ our new gemini api keys are on the newer models. can you change the default to g
 8. Proof of value, voice and tutor feedback
 
 with this app, i need to incorporate proof of value
-i.e. how will this improve revenue - what is the commercial impact of some of these tools, (not just revenuw but other metrics, e.g. time saved etc), as well as how do we make it voice enabled as well,
-for the following notes of improvement feedback:
+
+i.e. how will this improve revenue - what is the commercial impact of some of these tools, (not just revenuw but other metrics, e.g. time saved etc), as well as how do we make it voice enabled as well, for the following notes of improvement feedback:
+
 Improvements:
+
 Voice enabled?
+
 How do we integrate our app into the lifestyle of cafe owners?
+
 Consider if it should be more mobile/web app based ?? user testing considerations
+
 Need to validate our app dimensions with our core problem owner.
+
 How often will this application be used by the owner?
+
 How do we make our app trusted by business owners and improve explainability?
+
 How are aspects such as weather demand fluctuations calculated? How do we translate this information so that it is visible for the owner?
+
 Clearly communicate how calculations and decisions are made.
+
 Is it too much information? What amount of information is the right amount of information? Can we abstract the data which makes it more simple for the owner to interact with?
+
 How much is enough and how should we present this information?
+
 How much of the agentic feature is dependent on the owner? How do we hand over more work to the agent? Find opportunities to reduce friction and time.
+
 TRIM IT!
+
 How impacts business e.g. revenue impact?
+
 Consider if they don't take the recommendation, what is the impact of that?
 
 
 9. Owner input in the top box, real APIs, date fix, mobile view and dropdowns
 
 i want to make revisions to the html.
+
 move the agentic owner input into the top bar like it was in the previous iteration so users can immedieatly add their change and generate a forecast in the first dashboard box
+
 Are invoices, orders part of agentic workflow or is it triggered by decision-making agents rn -> please explain this
+
 Fix on the day/dates setting? Cuz homepage seems to be mixing up tuesday/wednesday for the event and weather apis --> explain why this is the case and fix it.
+
 can you please also make sure it uses real life apis instead of the dataset forecast this may be connected to the problem above.
+
 i also want to make this more readable in mobile view. - can you give us a toggle that modifies the view for this so i can review it and check for the demo
 
 I have further feedback:
+
 Draft order page is long, maybe drop downs for each order?
+
 Drop down tabs or secondary pages for setup page
+
 Separate pages examples:
+
 menu recipes >
+
 stock items >
+
 sending orders to suppliers >
+
 Etc.
+
 Do we need a notification menu?
 
 
 10. Logins and a readable Ask CafeCast with read aloud
 
 for the current code app, would you be able to add these features:
+
 i want to add a login sectors -> please provide a default login i can use to use for the demo datasset that we have been usinig, but i also want to be able to have logins for other demos and use cases and users.
+
 for example i want to be able to set up from scratch with a login that can connect to their own specific cafe data setup. this should have the same functionalities however.
-i.e. Login: one specific login is with the demodataset we have
-Used for the demo & use cases
+
+i.e. Login: one specific login is with the demodataset we have Used for the demo & use cases
 Another login is with connecting to their own specific cafe data, setup etc.
+
 additionally, For the feature: ask Cafecast, the CafeCast response is very hard to read. Can you make it more readable with paragraphs that are split into the different decisions so it is easier to read at a glance. Also add a read outloud feature when the response is given alongside the text response.
 
 
 11. Working app for Nick: Supabase, no demo wording, suburb fix
 
 for our prototype this is feedback and fixes i want to make:
+
 Change the "Hi user…" → for our specific target user
+
 For the demo being stored, i want it to be our user Nick instead
+
 Change the motto subheading to something more aligned to … i dont want decisions, not dashboards
 Relate it more to a vision/goal → aim to make decisions, reduce waste, ease decision making
+
 Remove the auto demo login - have it just in the data base saved instead?
+
 Too demo like - need it to be more app like and store those logins and data separately
 Have an example username and password that is connected to the demo dataset - i dont want it to be named demo,
+
 Can you give me a guide on how i can connect this to something like a supabase for that as well which can be stored and connected to it → this isn't just a general proof of concept, this is supposed to be a working app, but i have a working login i can use for a demo
+
 Currently it says its only saved into the browser, but i want to be able to save it to a database
+
 I also don't want any decisions relating to a demo to be stated within the ux.
+
 E.g. in the current profile setup: it states: About logins in this prototype - Logins and café data are stored in this browser (localStorage), so they work on GitHub Pages with no server. Another computer won't see them. In production, sign-in and data would move to a hosted backend such as Supabase so owners can log in from any device.
+
 I want it to be fully working production instead
+
 Cafe set up: the suburbs are wrong
+
 E.g. if i answer burwood it looks up burwood, victoria but i want burwood sydney etc. can you make the suburb lookup better → is it possible to connect to google maps api?
+
 E.g. strathfield is in queensland → why is none of this to do with new south wales?
 Only if i do something like eastwood, then its correct.
 
