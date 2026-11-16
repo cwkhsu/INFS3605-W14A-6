@@ -1,5 +1,5 @@
 # INFS3605-W14A-6
-INFS3605 Information Systems Innovation &amp; Transformation Capstone Project : W14A-6
+**INFS3605 Information Systems Innovation &amp; Transformation Capstone Project : W14A-6**
 
 Jenny Dang - Scrum Master
 
@@ -37,9 +37,9 @@ Minimise waste levels from perishable stock being underutilised
 Low-Code App: CaféCast (Founder’s Second Brain)
 | |Decision|Reason|
 |---|---|---|
-|Forecast|Combine sales, stock and external demand factors.|Fragmented information is a current barrier to accurate stock ordering.|
-|Recommend|Recommend quantities and decisions instead of simply displaying data.|Local cafe owners rely on experience, intuition and manual processes to estimate orders.|
-|Approve|Keep owner in control of orders|Purchasing decisions have high stake in cafe operations. Requiring owner approval keeps the final decision with the cafe operator.|
+|**Forecast**|Combine sales, stock and external demand factors.|Fragmented information is a current barrier to accurate stock ordering.|
+|**Recommend**|Recommend quantities and decisions instead of simply displaying data.|Local cafe owners rely on experience, intuition and manual processes to estimate orders.|
+|**Approve**|Keep owner in control of orders|Purchasing decisions have high stake in cafe operations. Requiring owner approval keeps the final decision with the cafe operator.|
 
 # Solution Workflow and Agent’s Role
 ## 1. Collect Data
@@ -82,9 +82,9 @@ Our demo is currently deployed on GitHub pages but for real-life use case, we ne
 Predict demand → Check what’s at risk → Time the next step · on launch & in background
 | |Trigger|CafeCast|Owner|
 |---|---|---|---|
-|Before opening|Owner opens the morning brief|Uses sales, weather, holidays & events to brief demand and priorities|Checks the brief and plans the day|
-|Before supplier cut-off|Expected demand > available stock|Uses stock cover & cut-offs to draft orders and show what’s at risk|Reviews quantities, approves in one tap|
-|At closing|Cafe’s closing time|Uses stock & expiry dates to flag perishables for the waste check|Checks flagged items, records actual waste|
+|**Before opening**|Owner opens the morning brief|Uses sales, weather, holidays & events to brief demand and priorities|Checks the brief and plans the day|
+|**Before supplier cut-off**|Expected demand > available stock|Uses stock cover & cut-offs to draft orders and show what’s at risk|Reviews quantities, approves in one tap|
+|**At closing**|Cafe’s closing time|Uses stock & expiry dates to flag perishables for the waste check|Checks flagged items, records actual waste|
 
 ## Owner sets the autonomy
 Approve each order, or Autopilot for routine orders within a spending limit
@@ -144,8 +144,8 @@ Agile delivery and cross functional collaboration nurtures creativity and innova
 The value of AI isn't simply in predicting demand, but in making complex information accessible, actionable and trustworthy for everyday business owners.
 
 # What's next for CafeCast?
-1. Pilot: Validate with independent cafes
-2. Refine: Improve forecast accuracy and usability
-3. Scale: Explore initiatives to drive adoption
+1. **Pilot:** Validate with independent cafes
+2. **Refine:** Improve forecast accuracy and usability
+3. **Scale:** Explore initiatives to drive adoption
 
 
